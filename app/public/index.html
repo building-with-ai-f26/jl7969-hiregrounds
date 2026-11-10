@@ -7,14 +7,29 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Hire Grounds</span>
+      </div>
+      <span class="brand-tag">Coffee chat prep</span>
+    </div>
+  </header>
+
   <main>
-    <header>
-      <h1>Hire Grounds</h1>
-      <p>Prep for your next coffee chat using only what's true about you and them.</p>
-    </header>
+    <section class="hero">
+      <h1>Walk into every coffee chat prepared.</h1>
+      <p>Get an outreach email, five questions, and a tailored intro, built only from what's true about you and the person you're meeting.</p>
+    </section>
 
     <details id="profile-section" class="panel" open>
-      <summary><span>1. Your profile</span> <small id="profile-status">Not saved yet</small></summary>
+      <summary>
+        <span class="step" aria-hidden="true">1</span>
+        <span class="panel-title">Your profile</span>
+        <small id="profile-status" class="status">Not saved yet</small>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
       <form id="profile-form">
         <label>Resume PDF
           <input type="file" id="resume-file" name="resumeFile" accept="application/pdf,.pdf">
@@ -26,13 +41,18 @@
           <span class="hint">Interests, background, goals, and stories you like to tell.</span>
           <textarea id="personal-stories" name="personalStories" rows="6" required></textarea>
         </label>
-        <button type="submit" id="save-profile">Save profile</button>
-        <p class="message" id="profile-message" role="status"></p>
+        <div class="actions">
+          <button type="submit" id="save-profile">Save profile</button>
+          <p class="message" id="profile-message" role="status"></p>
+        </div>
       </form>
     </details>
 
     <section class="panel">
-      <h2>2. Who are you meeting?</h2>
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">2</span>
+        <h2 class="panel-title">Who are you meeting?</h2>
+      </div>
       <form id="contact-form">
         <div class="row">
           <label>Name <input name="name" required></label>
@@ -42,14 +62,22 @@
         <label>Past experience <textarea name="pastExperience" rows="4"></textarea></label>
         <label>How you're connected <textarea name="connection" rows="2"></textarea></label>
         <label>Anything else <textarea name="notes" rows="2"></textarea></label>
-        <button type="submit" id="generate">Generate</button>
-        <p class="message" id="generate-message" role="status"></p>
+        <div class="actions">
+          <button type="submit" id="generate">Generate prep</button>
+          <p class="message" id="generate-message" role="status"></p>
+        </div>
       </form>
     </section>
 
     <section id="results" hidden>
-      <h2>3. Your prep</h2>
-      <p class="overlap"><strong>Overlap check:</strong> <span id="overlap"></span></p>
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">3</span>
+        <h2 class="panel-title">Your prep</h2>
+      </div>
+      <div class="overlap">
+        <span class="overlap-label">Overlap check</span>
+        <p id="overlap"></p>
+      </div>
       <div id="cards"></div>
     </section>
   </main>

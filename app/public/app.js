@@ -20,7 +20,8 @@ async function api(url, options) {
 function showProfile(profile) {
   $('resume-text').value = profile.resumeText;
   $('personal-stories').value = profile.personalStories;
-  $('profile-status').textContent = `Saved ${new Date(profile.updatedAt).toLocaleString()}`;
+  const saved = new Date(profile.updatedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  $('profile-status').textContent = `Saved ${saved}`;
   $('profile-section').open = false;
 }
 
@@ -98,7 +99,8 @@ $('contact-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   const button = $('generate');
   button.disabled = true;
-  setMessage($('generate-message'), 'Generating, usually a few seconds...');
+  button.classList.add('is-loading');
+  setMessage($('generate-message'), 'Generating. This can take up to 30 seconds.');
   try {
     const result = await api('/api/generate', {
       method: 'POST',
@@ -125,5 +127,6 @@ $('contact-form').addEventListener('submit', async (event) => {
     setMessage($('generate-message'), err.message, true);
   } finally {
     button.disabled = false;
+    button.classList.remove('is-loading');
   }
 });
