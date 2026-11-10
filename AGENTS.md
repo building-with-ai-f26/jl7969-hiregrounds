@@ -5,11 +5,11 @@
 ## 1. Project Overview
 - **What this repo builds:** Hire Grounds, a local coffee chat prep tool. It turns a resume, personal stories, and a contact's background into an outreach email, 5 questions, and 1- and 2-minute intros.
 - **Primary user & core workflow:** [See the living PRD in `docs/index.html`]
-- **Tech stack:** Node.js / Express (`app/server.js`) / plain HTML, CSS, JS (`app/public/`) / OpenRouter API. The model is set in `app/config.js`.
+- **Tech stack:** Node.js / Express (`app/server.js`) / plain HTML, CSS, JS (`app/public/`) / Claude API via the official `@anthropic-ai/sdk`. The model is set in `app/config.js`.
 
 ## 2. Commands
 - **Install dependencies:** `npm install` (in Windows PowerShell: `npm.cmd install`)
-- **Run locally:** copy `.env.example` to `.env`, set `OPENROUTER_API_KEY`, then `npm start` (PowerShell: `npm.cmd start`) and open http://localhost:3000
+- **Run locally:** copy `.env.example` to `.env`, set `ANTHROPIC_API_KEY`, then `npm start` (PowerShell: `npm.cmd start`) and open http://localhost:3000
 - **Run deterministic tests:** none yet
 - **Run model evals:** none yet (Build 4)
 

@@ -8,6 +8,7 @@
     "start": "node app/server.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.7.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "multer": "^2.0.2",

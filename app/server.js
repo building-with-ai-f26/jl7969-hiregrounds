@@ -7,10 +7,12 @@ const express = require('express');
 const multer = require('multer');
 // Import the library file directly: pdf-parse's index.js runs a debug routine on load.
 const pdfParse = require('pdf-parse/lib/pdf-parse.js');
-const { MODEL, PRICE_PER_MILLION, MAX_EMAIL_WORDS } = require('./config');
+const Anthropic = require('@anthropic-ai/sdk').default;
+const { MODEL, EFFORT, PRICE_PER_MILLION, MAX_EMAIL_WORDS } = require('./config');
 
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data');
+// DATA_DIR can point a demo or test run at a separate folder so it doesn't touch your saved profile.
+const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const PROFILE_PATH = path.join(DATA_DIR, 'profile.json');
 
 const app = express();
@@ -114,38 +116,72 @@ Anything else: ${contact.notes}
 </CONTACT>`;
 }
 
+// The key comes from ANTHROPIC_API_KEY in the root .env and never reaches the browser.
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+// The exact JSON shape Claude must return (structured outputs).
+const OUTPUT_SCHEMA = {
+  type: 'object',
+  properties: {
+    overlap_assessment: { type: 'string' },
+    outreach_email: { type: 'string' },
+    questions: { type: 'array', items: { type: 'string' } },
+    tmay_1min: { type: 'string' },
+    tmay_2min: { type: 'string' },
+  },
+  required: ['overlap_assessment', 'outreach_email', 'questions', 'tmay_1min', 'tmay_2min'],
+  additionalProperties: false,
+};
+
 async function callModel(messages) {
+  const request = {
+    model: MODEL,
+    max_tokens: 16000,
+    system: SYSTEM_PROMPT,
+    messages,
+    output_config: { effort: EFFORT, format: { type: 'json_schema', schema: OUTPUT_SCHEMA } },
+  };
+  // If Claude declines a request, the API retries it on another Claude model in the same call.
+  // Claude Haiku has no server-side fallback, so this is skipped for Haiku models.
+  if (!MODEL.includes('haiku')) {
+    request.betas = ['server-side-fallback-2026-07-01'];
+    request.fallbacks = 'default';
+  }
+
   let response;
   try {
-    response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-        'X-Title': 'Hire Grounds',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages,
-        response_format: { type: 'json_object' },
-        temperature: 0.4,
-        max_tokens: 2000,
-        usage: { include: true },
-      }),
-    });
-  } catch {
-    throw new HttpError(502, 'Could not reach OpenRouter. Check your connection and try again.');
+    response = await anthropic.beta.messages.create(request);
+  } catch (err) {
+    if (err instanceof Anthropic.AuthenticationError) {
+      throw new HttpError(502, 'Claude rejected the API key. Check ANTHROPIC_API_KEY in .env, then restart the server.');
+    }
+    if (err instanceof Anthropic.PermissionDeniedError) {
+      throw new HttpError(502, "This API key isn't allowed to use this model. Check your Claude Console account.");
+    }
+    if (err instanceof Anthropic.RateLimitError) {
+      throw new HttpError(429, 'Claude rate limit reached. Wait a minute and try again.');
+    }
+    if (err instanceof Anthropic.APIConnectionError) {
+      throw new HttpError(502, 'Could not reach Claude. Check your connection and try again.');
+    }
+    if (err instanceof Anthropic.APIError) {
+      throw new HttpError(502, `Claude API error ${err.status}: ${err.message}`);
+    }
+    throw err;
   }
 
-  const body = await response.json().catch(() => null);
-  if (!response.ok) {
-    const detail = body && body.error && body.error.message ? body.error.message : `HTTP ${response.status}`;
-    throw new HttpError(502, `OpenRouter error: ${detail}`);
+  if (response.stop_reason === 'refusal') {
+    throw new HttpError(502, 'Claude declined this request. Try rewording the contact details.');
   }
-
-  const content = body && body.choices && body.choices[0] && body.choices[0].message.content;
-  if (!content) throw new HttpError(502, 'The model returned an empty response. Try again.');
-  return { content, usage: body.usage || {} };
+  if (response.stop_reason === 'max_tokens') {
+    throw new HttpError(502, 'The response was cut off before it finished. Try again.');
+  }
+  const content = response.content
+    .filter((block) => block.type === 'text')
+    .map((block) => block.text)
+    .join('');
+  if (!content) throw new HttpError(502, 'Claude returned an empty response. Try again.');
+  return { content, usage: response.usage || {}, model: response.model };
 }
 
 function parseOutput(content) {
@@ -165,24 +201,23 @@ function parseOutput(content) {
   return output;
 }
 
-function logCost(usages) {
-  const inputTokens = usages.reduce((sum, u) => sum + (u.prompt_tokens || 0), 0);
-  const outputTokens = usages.reduce((sum, u) => sum + (u.completion_tokens || 0), 0);
-  const reported = usages.every((u) => typeof u.cost === 'number');
-  const cost = reported
-    ? usages.reduce((sum, u) => sum + u.cost, 0)
-    : (inputTokens * PRICE_PER_MILLION.input + outputTokens * PRICE_PER_MILLION.output) / 1e6;
+function logCost(calls) {
+  const inputTokens = calls.reduce((sum, c) => sum + (c.usage.input_tokens || 0), 0);
+  // Output tokens include Claude's reasoning, which is billed as output.
+  const outputTokens = calls.reduce((sum, c) => sum + (c.usage.output_tokens || 0), 0);
+  const cost = (inputTokens * PRICE_PER_MILLION.input + outputTokens * PRICE_PER_MILLION.output) / 1e6;
+  const servedBy = [...new Set(calls.map((c) => c.model).filter(Boolean))].join(',') || MODEL;
   console.log(
-    `[generate] model=${MODEL} calls=${usages.length} input_tokens=${inputTokens} ` +
-      `output_tokens=${outputTokens} approx_cost=$${cost.toFixed(6)} (${reported ? 'reported by OpenRouter' : 'estimated'})`
+    `[generate] model=${MODEL} served_by=${servedBy} calls=${calls.length} input_tokens=${inputTokens} ` +
+      `output_tokens=${outputTokens} approx_cost=$${cost.toFixed(6)} (estimated from list prices)`
   );
 }
 
 app.post('/api/generate', async (req, res, next) => {
   try {
-    const key = process.env.OPENROUTER_API_KEY || '';
+    const key = process.env.ANTHROPIC_API_KEY || '';
     if (!key || key.includes('replace-with-your-key')) {
-      throw new HttpError(500, 'OPENROUTER_API_KEY is not set. Add your key to the .env file in the repo root and restart the server.');
+      throw new HttpError(500, 'ANTHROPIC_API_KEY is not set. Add your key to the .env file in the repo root and restart the server.');
     }
     const profile = readProfile();
     if (!profile) throw new HttpError(400, 'Save your profile first.');
@@ -200,15 +235,12 @@ app.post('/api/generate', async (req, res, next) => {
       throw new HttpError(400, "Add the contact's name, role, and company.");
     }
 
-    const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'user', content: buildUserMessage(profile, contact) },
-    ];
-    const usages = [];
+    const messages = [{ role: 'user', content: buildUserMessage(profile, contact) }];
+    const calls = [];
 
     try {
       const first = await callModel(messages);
-      usages.push(first.usage);
+      calls.push(first);
       let output = parseOutput(first.content);
 
       // Models often miss word limits, so enforce this one with a single retry.
@@ -221,14 +253,14 @@ app.post('/api/generate', async (req, res, next) => {
             content: `The outreach_email is ${countWords(output.outreach_email)} words. Shorten it to under ${MAX_EMAIL_WORDS} words including the subject line, adding no new facts. Return the full JSON object again.`,
           },
         ]);
-        usages.push(retry.usage);
+        calls.push(retry);
         output = parseOutput(retry.content);
       }
 
       const emailWords = countWords(output.outreach_email);
       res.json({ ...output, email_words: emailWords, email_over_limit: emailWords >= MAX_EMAIL_WORDS });
     } finally {
-      if (usages.length) logCost(usages);
+      if (calls.length) logCost(calls);
     }
   } catch (err) {
     next(err);

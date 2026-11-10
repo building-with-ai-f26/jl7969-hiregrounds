@@ -35,7 +35,7 @@ Create your PostHog account in Week 1. Install it on the Product Page and local 
 
 ## Local setup
 
-Requires Node.js 18+ and an [OpenRouter API key](https://openrouter.ai/keys). Run these from the repo root. In Windows PowerShell, use `npm.cmd` instead of `npm`.
+Requires Node.js 18+ and a Claude API key from the [Claude Console](https://console.anthropic.com) (API Keys page). Run these from the repo root. In Windows PowerShell, use `npm.cmd` instead of `npm`.
 
 ```bash
 git clone https://github.com/building-with-ai-f26/jl7969-hiregrounds.git
@@ -44,7 +44,7 @@ npm install
 cp .env.example .env
 ```
 
-Open `.env` and set `OPENROUTER_API_KEY` (PowerShell: `Copy-Item .env.example .env`, then `notepad .env`). Then run:
+Open `.env` and set `ANTHROPIC_API_KEY` (PowerShell: `Copy-Item .env.example .env`, then `notepad .env`). Then run:
 
 ```bash
 npm start

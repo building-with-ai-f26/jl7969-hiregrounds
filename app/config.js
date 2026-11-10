@@ -1,11 +1,16 @@
 // Change the model here. This is the only place it is set.
-// Browse options at https://openrouter.ai/models
+// Options include 'claude-opus-5-5' (best writing) and 'claude-haiku-5-5' (cheapest).
+// If you change MODEL, also update PRICE_PER_MILLION so the cost log stays accurate.
 module.exports = {
-  MODEL: 'google/gemini-2.5-flash-lite',
+  MODEL: 'claude-opus-5-5',
 
-  // USD per 1M tokens. Only used as a fallback estimate if OpenRouter does not
-  // report the actual cost. Update these if you change MODEL.
-  PRICE_PER_MILLION: { input: 0.1, output: 0.4 },
+  // How much Claude reasons before answering: 'low', 'medium', or 'high'.
+  // Higher can improve quality but costs more and takes longer.
+  EFFORT: 'medium',
+
+  // USD per 1M tokens, used to estimate the cost of each generation.
+  // Claude Opus 5.5: input 4, output 20. Claude Haiku 5.5: input 0.1, output 0.5.
+  PRICE_PER_MILLION: { input: 4, output: 20 },
 
   MAX_EMAIL_WORDS: 120,
 };
