@@ -158,11 +158,15 @@
       <h2>Product Showcase (Prototype / Live App / 2-Min Video)</h2>
       <p>
         <strong>Current Status:</strong> Build 1: Local Prototype<br />
-        <strong>Demo:</strong> Hire Grounds local prototype screenshot below; add the live cloud app URL in Build 5.
+        <strong>Demo:</strong> Hire Grounds local prototype screenshots below: real output first, then the input screen. Add the live cloud app URL in Build 5.
       </p>
       <figure style="margin: 16px 0;">
-        <img src="assets/hire-grounds-input.jpg" alt="Hire Grounds local prototype showing the profile and contact forms, filled in with fictional sample data" width="800" height="1173" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
-        <figcaption class="meta">Hire Grounds running locally, shown with fictional sample data.</figcaption>
+        <img src="assets/hire-grounds-output.jpg" alt="Hire Grounds output: an overlap check, a 118-word outreach email, and five tailored questions for a sample contact" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
+        <figcaption class="meta">Output from a real Claude Opus 5.5 run on Nov 10 (about $0.06), using a fictional sample student and contact.</figcaption>
+      </figure>
+      <figure style="margin: 16px 0;">
+        <img src="assets/hire-grounds-input.jpg" alt="Hire Grounds input screen showing the profile and contact forms, filled in with fictional sample data" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
+        <figcaption class="meta">Input screen: your saved profile and the contact's background, shown with fictional sample data.</figcaption>
       </figure>
     </section>
 
@@ -192,11 +196,11 @@
       <div class="grid-2">
         <div class="stat-box">
           <div class="stat-label">Cumulative Build Spend</div>
-          <div class="stat-value">$0.00 (OpenRouter, through Nov 10)</div>
+          <div class="stat-value">$0.06 (Claude API, through Nov 10)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">Est. Cost Per User Run</div>
-          <div class="stat-value">[Not yet estimated]</div>
+          <div class="stat-value">~$0.06 (Claude Opus 5.5)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">User Evidence (Analytics from Build 2)</div>
@@ -217,10 +221,10 @@
       <div class="log-entry">
         <h3>Build 1 · Intent.md & Throwaway Prototype (Due Nov 9)</h3>
         <ul>
-          <li><strong>What shipped:</strong> A local Hire Grounds prototype (Node/Express with OpenRouter) that saves a resume and personal stories, takes a contact's background, and is built to generate an outreach email, 5 questions, and 1- and 2-minute intros. Screenshot above.</li>
+          <li><strong>What shipped:</strong> A local Hire Grounds prototype (Node/Express with the Claude API, using Claude Opus 5.5) that saves a resume and personal stories, takes a contact's background, and generates an outreach email, 5 questions, and 1- and 2-minute intros. The code is in the repo's app/ folder. Screenshots above.</li>
           <li><strong>Things learned with AI:</strong> I learned basic terminal commands like pwd, ls, and cd, and the differences between Git and GitHub and between push and pull, through the Claude analogies and quizzes.</li>
-          <li><strong>What broke / changed in PRD:</strong> PDF resume uploads failed at first with a parsing error and needed a fix. PowerShell blocked npm, so I run npm.cmd instead. PRD v1 updates: added the product name and tagline, target user, before and after workflows, core workflow, and three non-goals.</li>
-          <li><strong>Cost & time this week:</strong> $0.00 · 5 hours (0 OpenRouter tokens, no live generations yet; about 162K Claude Code tokens on the Pro plan)</li>
+          <li><strong>What broke / changed in PRD:</strong> PDF resume uploads failed at first with a parsing error and needed a fix. PowerShell blocked npm, so I run npm.cmd instead. PRD v1 updates: added the product name and tagline, target user, before and after workflows, core workflow, and three non-goals. On Nov 10, I switched from OpenRouter to the Claude API (Claude Opus 5.5) and refreshed the app's design.</li>
+          <li><strong>Cost & time this week:</strong> $0.06 · 5 hours (one real Claude Opus 5.5 run on Nov 10: 1,165 input and 2,860 output tokens; about 162K Claude Code tokens on the Pro plan)</li>
         </ul>
       </div>
 
