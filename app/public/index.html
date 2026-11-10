@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hire Grounds</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Hire Grounds</h1>
+      <p>Prep for your next coffee chat using only what's true about you and them.</p>
+    </header>
+
+    <details id="profile-section" class="panel" open>
+      <summary><span>1. Your profile</span> <small id="profile-status">Not saved yet</small></summary>
+      <form id="profile-form">
+        <label>Resume PDF
+          <input type="file" id="resume-file" name="resumeFile" accept="application/pdf,.pdf">
+        </label>
+        <label>Or paste your resume
+          <textarea id="resume-text" name="resumeText" rows="8"></textarea>
+        </label>
+        <label>Personal stories
+          <span class="hint">Interests, background, goals, and stories you like to tell.</span>
+          <textarea id="personal-stories" name="personalStories" rows="6" required></textarea>
+        </label>
+        <button type="submit" id="save-profile">Save profile</button>
+        <p class="message" id="profile-message" role="status"></p>
+      </form>
+    </details>
+
+    <section class="panel">
+      <h2>2. Who are you meeting?</h2>
+      <form id="contact-form">
+        <div class="row">
+          <label>Name <input name="name" required></label>
+          <label>Role <input name="role" required></label>
+          <label>Company <input name="company" required></label>
+        </div>
+        <label>Past experience <textarea name="pastExperience" rows="4"></textarea></label>
+        <label>How you're connected <textarea name="connection" rows="2"></textarea></label>
+        <label>Anything else <textarea name="notes" rows="2"></textarea></label>
+        <button type="submit" id="generate">Generate</button>
+        <p class="message" id="generate-message" role="status"></p>
+      </form>
+    </section>
+
+    <section id="results" hidden>
+      <h2>3. Your prep</h2>
+      <p class="overlap"><strong>Overlap check:</strong> <span id="overlap"></span></p>
+      <div id="cards"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

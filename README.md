@@ -35,11 +35,19 @@ Create your PostHog account in Week 1. Install it on the Product Page and local 
 
 ## Local setup
 
-Clone **your own repository** and ask your coding agent to document the exact install and run commands here and in `AGENTS.md`.
+Requires Node.js 18+ and an [OpenRouter API key](https://openrouter.ai/keys). Run these from the repo root. In Windows PowerShell, use `npm.cmd` instead of `npm`.
 
 ```bash
-git clone https://github.com/building-with-ai-f26/<your-repo-name>.git
-cd <your-repo-name>
+git clone https://github.com/building-with-ai-f26/jl7969-hiregrounds.git
+cd jl7969-hiregrounds
+npm install
+cp .env.example .env
 ```
 
-If your app needs API keys, use a local environment file such as `.env`. Keep private keys out of source code, browser code, screenshots, and commits. The template ignores `.env`; `.env.example` contains placeholders only.
+Open `.env` and set `OPENROUTER_API_KEY` (PowerShell: `Copy-Item .env.example .env`, then `notepad .env`). Then run:
+
+```bash
+npm start
+```
+
+Open http://localhost:3000. Each generation prints its token counts and approximate cost to the terminal. Your saved profile is stored in `app/data/profile.json`, which is gitignored, and uploaded PDFs are read in memory and never saved. Keep private keys out of source code, browser code, screenshots, and commits.

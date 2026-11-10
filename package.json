@@ -1,0 +1,16 @@
+{
+  "name": "hire-grounds",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Coffee chat prep tool for MBA students",
+  "main": "app/server.js",
+  "scripts": {
+    "start": "node app/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^2.0.2",
+    "pdf-parse": "1.1.1"
+  }
+}

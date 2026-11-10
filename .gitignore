@@ -28,3 +28,7 @@ build/
 out/
 .DS_Store
 *.log
+
+# Hire Grounds personal data (resume text and stories) and uploads
+data/
+uploads/
