@@ -9,14 +9,17 @@
   <script src="https://us-assets.i.posthog.com/static/array.js" crossorigin="anonymous"></script>
   <script src="analytics.js"></script>
 </head>
-<body>
+<body data-page="prep">
   <header class="site-header">
     <div class="site-header-inner">
-      <div class="brand">
+      <a class="brand" href="/">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">Hire Grounds</span>
-      </div>
-      <span class="brand-tag">Coffee chat prep</span>
+      </a>
+      <nav class="site-nav" aria-label="Pages">
+        <a href="/profile" data-page="profile">Your profile</a>
+        <a href="/" data-page="prep">Coffee chat prep</a>
+      </nav>
     </div>
   </header>
 
@@ -26,80 +29,18 @@
       <p>Get an outreach email, five questions, and a tailored intro, built only from what's true about you and the person you're meeting.</p>
     </section>
 
-    <details id="profile-section" class="panel" open>
-      <summary>
-        <span class="step" aria-hidden="true">1</span>
-        <span class="panel-title">Your profile</span>
-        <small id="profile-status" class="status">Not saved yet</small>
-        <span class="chevron" aria-hidden="true"></span>
-      </summary>
-      <div class="subsection">
-        <div class="subsection-head">
-          <h3>Resumes</h3>
-          <button type="button" class="secondary small" id="add-resume">Add resume</button>
-        </div>
-        <p class="hint">Keep more than one version, like "Consulting" and "Tech PM", and choose one each time you generate.</p>
-        <div id="resume-list" class="resume-list"></div>
-        <p class="message" id="resume-message" role="status"></p>
-
-        <form id="resume-editor" class="editor" hidden>
-          <h4 id="editor-title">Add a resume</h4>
-          <label>Name
-            <input name="name" id="editor-name" maxlength="60" placeholder="e.g. Consulting resume">
-          </label>
-          <label>Upload a PDF
-            <input type="file" name="resumeFile" id="editor-file" accept="application/pdf,.pdf">
-          </label>
-          <label>Or paste or edit the text
-            <textarea name="resumeText" id="editor-text" rows="10"></textarea>
-          </label>
-          <div class="actions">
-            <button type="submit" id="editor-save">Save resume</button>
-            <button type="button" class="secondary" id="editor-cancel">Cancel</button>
-            <p class="message" id="editor-message" role="status"></p>
-          </div>
-        </form>
-        <input type="file" id="replace-file" accept="application/pdf,.pdf" hidden>
-      </div>
-
-      <form id="profile-form" class="subsection">
-        <h3>About you</h3>
-        <label>Personal stories
-          <span class="hint">Interests, background, goals, and stories you like to tell.</span>
-          <textarea id="personal-stories" name="personalStories" rows="6"></textarea>
-        </label>
-        <label>Your LinkedIn URL
-          <span class="input-with-button">
-            <input id="my-linkedin-url" name="linkedinUrl" placeholder="linkedin.com/in/your-name" autocomplete="off">
-            <a id="open-my-linkedin" class="button secondary" target="_blank" rel="noopener noreferrer">Open</a>
-          </span>
-        </label>
-        <div class="file-field">
-          <label for="my-linkedin-file">Your LinkedIn PDF
-            <span class="hint">Optional. On your LinkedIn profile, click More, then Save to PDF, and upload it here.</span>
-          </label>
-          <input type="file" id="my-linkedin-file" accept="application/pdf,.pdf">
-          <p class="inline-status" id="my-linkedin-status" hidden>
-            <span id="my-linkedin-summary"></span>
-            <button type="button" class="link-button" id="my-linkedin-remove">Remove</button>
-          </p>
-        </div>
-        <div class="actions">
-          <button type="submit" id="save-profile">Save</button>
-          <p class="message" id="profile-message" role="status"></p>
-        </div>
-      </form>
-    </details>
-
     <section class="panel">
       <div class="panel-head">
-        <span class="step" aria-hidden="true">2</span>
+        <span class="step" aria-hidden="true">1</span>
         <h2 class="panel-title">Who are you meeting?</h2>
       </div>
       <form id="contact-form">
-        <label>Resume to use
-          <select id="resume-select" name="resumeId"></select>
-        </label>
+        <div class="label-row">
+          <label for="resume-select">Your resume for this chat</label>
+          <a class="text-link" href="/profile">Edit your profile</a>
+        </div>
+        <p class="hint field-hint">Which of your saved resumes Hire Grounds should draw on when tailoring your email and intros for this person.</p>
+        <select id="resume-select" name="resumeId"></select>
         <div class="row">
           <label>Name <input name="name" required></label>
           <label>Role <input name="role" required></label>
@@ -127,6 +68,18 @@
         <label>Past experience <textarea name="pastExperience" rows="4"></textarea></label>
         <label>How you're connected <textarea name="connection" rows="2"></textarea></label>
         <label>Anything else <textarea name="notes" rows="2"></textarea></label>
+        <div class="tone-field">
+          <label for="tone">Tone for your intros
+            <span class="hint">Type any tone, or pick a suggestion. Leave it blank for Professional.</span>
+          </label>
+          <input id="tone" name="tone" maxlength="60" placeholder="e.g. warm but concise" autocomplete="off">
+          <div class="chips" id="tone-chips" role="group" aria-label="Suggested tones"></div>
+          <div class="tone-feedback" id="tone-feedback" role="alert" hidden>
+            <p class="tone-feedback-title">Let's try a different tone</p>
+            <p id="tone-feedback-text"></p>
+            <div class="chips" id="tone-feedback-chips" role="group" aria-label="Suggested alternatives"></div>
+          </div>
+        </div>
         <div class="actions">
           <button type="submit" id="generate">Generate prep</button>
           <p class="message" id="generate-message" role="status"></p>
@@ -136,7 +89,7 @@
 
     <section id="results" hidden>
       <div class="panel-head">
-        <span class="step" aria-hidden="true">3</span>
+        <span class="step" aria-hidden="true">2</span>
         <h2 class="panel-title">Your prep</h2>
       </div>
       <div class="overlap">
@@ -146,6 +99,7 @@
       <div id="cards"></div>
     </section>
   </main>
-  <script src="app.js"></script>
+  <script src="common.js"></script>
+  <script src="prep.js"></script>
 </body>
 </html>

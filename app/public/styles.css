@@ -51,6 +51,43 @@ body {
   box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.18);
 }
 .brand-name { font-weight: 700; letter-spacing: -0.01em; }
+a.brand { color: inherit; text-decoration: none; }
+
+/* Page navigation */
+.site-nav { display: flex; gap: 4px; }
+.site-nav a {
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.site-nav a:hover { background: var(--bg); color: var(--ink); }
+.site-nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); }
+
+.welcome {
+  margin: -8px 0 20px;
+  padding: 12px 16px;
+  border: 1px solid #ead9cb;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.next-step { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+.next-step .hint { margin: 0; }
+.button.primary { background: var(--accent); color: #fff; border-color: var(--accent); padding: 12px 20px; }
+.button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+/* Label with a link on the right, e.g. "Your resume for this chat ... Edit your profile" */
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.label-row label { margin-bottom: 0; }
+.text-link { color: var(--accent); font-size: 0.85rem; font-weight: 600; }
+.text-link:hover { color: var(--accent-hover); }
+.field-hint { margin: 2px 0 0; font-size: 0.85rem; }
+#resume-select { margin-bottom: 16px; }
 .brand-tag { font-size: 0.8rem; color: var(--muted); }
 
 main { max-width: 760px; margin: 0 auto; padding: 36px 16px 80px; }
@@ -275,7 +312,7 @@ button.secondary, .button.secondary {
   color: var(--ink-2);
 }
 button.secondary:hover, .button.secondary:hover { background: var(--bg); border-color: #a8a29e; }
-button.small { padding: 5px 11px; font-size: 0.8rem; }
+button.small { padding: 5px 11px; font-size: 0.8rem; white-space: nowrap; }
 button.danger { color: var(--error); }
 button.danger:hover { border-color: #f1b0a8; background: #fef3f2; }
 .link-button {
@@ -323,6 +360,52 @@ select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px
 .inline-status { display: flex; align-items: center; gap: 12px; margin: 8px 0 0; font-size: 0.85rem; color: var(--ink-2); }
 .preview { margin-top: 12px; }
 .preview label { margin-bottom: 6px; }
+
+/* Tone */
+.tone-field { margin-bottom: 16px; }
+.tone-field > label { margin-bottom: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip {
+  padding: 4px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.chip:hover { background: var(--bg); border-color: #a8a29e; }
+.chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.tone-feedback {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid #f3c99b;
+  border-radius: 10px;
+  background: #fff7ed;
+}
+.tone-feedback p { margin: 0 0 4px; font-size: 0.88rem; color: var(--ink-2); }
+.tone-feedback .tone-feedback-title { font-weight: 700; color: #9a3412; }
+
+/* Phrases added for tone (not facts) */
+mark.tone-added {
+  padding: 1px 2px;
+  border-radius: 3px;
+  background: #fcefc7;
+  box-shadow: inset 0 -2px 0 #e3b341;
+  color: inherit;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.card-legend { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 12px; font-size: 0.8rem; color: var(--muted); }
+.legend-swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  border-radius: 3px;
+  background: #fcefc7;
+  box-shadow: inset 0 -2px 0 #e3b341;
+}
 
 @media (max-width: 640px) {
   .resume-card { flex-direction: column; align-items: stretch; }

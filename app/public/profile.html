@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your profile · Hire Grounds</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- PostHog analytics: library from PostHog's US servers, then our settings in analytics.js. -->
+  <script src="https://us-assets.i.posthog.com/static/array.js" crossorigin="anonymous"></script>
+  <script src="analytics.js"></script>
+</head>
+<body data-page="profile">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Hire Grounds</span>
+      </a>
+      <nav class="site-nav" aria-label="Pages">
+        <a href="/profile" data-page="profile">Your profile</a>
+        <a href="/" data-page="prep">Coffee chat prep</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Set up your profile</h1>
+      <p>Save your resumes and your story once. Hire Grounds uses them to prep for every coffee chat, and you can come back and edit them anytime.</p>
+    </section>
+
+    <p class="welcome" id="welcome" hidden>Welcome! Start by adding your resume. Then continue to coffee chat prep.</p>
+
+    <section class="panel">
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">1</span>
+        <h2 class="panel-title">Your resumes</h2>
+        <small id="profile-status" class="status">Loading...</small>
+      </div>
+      <div class="subsection">
+        <div class="subsection-head">
+          <p class="hint">Keep more than one version, like "Consulting" and "Tech PM", and choose one for each coffee chat.</p>
+          <button type="button" class="secondary small" id="add-resume">Add resume</button>
+        </div>
+        <div id="resume-list" class="resume-list"></div>
+        <p class="message" id="resume-message" role="status"></p>
+
+        <form id="resume-editor" class="editor" hidden>
+          <h4 id="editor-title">Add a resume</h4>
+          <label>Name
+            <input name="name" id="editor-name" maxlength="60" placeholder="e.g. Consulting resume">
+          </label>
+          <label>Upload a PDF
+            <input type="file" name="resumeFile" id="editor-file" accept="application/pdf,.pdf">
+          </label>
+          <label>Or paste or edit the text
+            <textarea name="resumeText" id="editor-text" rows="10"></textarea>
+          </label>
+          <div class="actions">
+            <button type="submit" id="editor-save">Save resume</button>
+            <button type="button" class="secondary" id="editor-cancel">Cancel</button>
+            <p class="message" id="editor-message" role="status"></p>
+          </div>
+        </form>
+        <input type="file" id="replace-file" accept="application/pdf,.pdf" hidden>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <span class="step" aria-hidden="true">2</span>
+        <h2 class="panel-title">About you</h2>
+      </div>
+      <form id="profile-form">
+        <label>Personal stories
+          <span class="hint">Interests, background, goals, and stories you like to tell.</span>
+          <textarea id="personal-stories" name="personalStories" rows="6"></textarea>
+        </label>
+        <label>Your LinkedIn URL
+          <span class="input-with-button">
+            <input id="my-linkedin-url" name="linkedinUrl" placeholder="linkedin.com/in/your-name" autocomplete="off">
+            <a id="open-my-linkedin" class="button secondary" target="_blank" rel="noopener noreferrer">Open</a>
+          </span>
+        </label>
+        <div class="file-field">
+          <label for="my-linkedin-file">Your LinkedIn PDF
+            <span class="hint">Optional. On your LinkedIn profile, click More, then Save to PDF, and upload it here.</span>
+          </label>
+          <input type="file" id="my-linkedin-file" accept="application/pdf,.pdf">
+          <p class="inline-status" id="my-linkedin-status" hidden>
+            <span id="my-linkedin-summary"></span>
+            <button type="button" class="link-button" id="my-linkedin-remove">Remove</button>
+          </p>
+        </div>
+        <div class="actions">
+          <button type="submit" id="save-profile" class="secondary">Save</button>
+          <p class="message" id="profile-message" role="status"></p>
+        </div>
+      </form>
+    </section>
+
+    <div class="next-step">
+      <a id="continue" class="button primary" aria-disabled="true">Continue to coffee chat prep →</a>
+      <p class="hint" id="continue-hint">Add at least one resume to continue.</p>
+    </div>
+  </main>
+  <script src="common.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>
