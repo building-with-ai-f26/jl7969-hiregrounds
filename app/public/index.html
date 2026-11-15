@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hire Grounds</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- PostHog analytics: library from PostHog's US servers, then our settings in analytics.js. -->
+  <script src="https://us-assets.i.posthog.com/static/array.js" crossorigin="anonymous"></script>
+  <script src="analytics.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -138,7 +141,7 @@
       </div>
       <div class="overlap">
         <span class="overlap-label">Overlap check</span>
-        <p id="overlap"></p>
+        <p id="overlap" class="ph-no-capture"></p>
       </div>
       <div id="cards"></div>
     </section>

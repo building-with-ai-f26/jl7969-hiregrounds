@@ -94,7 +94,7 @@ function resumeCard(resume) {
   card.className = resume.id === profile.activeResumeId ? 'resume-card active' : 'resume-card';
 
   const info = document.createElement('div');
-  info.className = 'resume-info';
+  info.className = 'resume-info ph-no-capture';
   const name = document.createElement('div');
   name.className = 'resume-name';
   name.textContent = resume.name;
@@ -163,8 +163,11 @@ $('resume-editor').addEventListener('submit', async (event) => {
   button.disabled = true;
   setMessage($('editor-message'), 'Saving...');
   try {
+    const wasEditing = Boolean(editingId);
+    const usedPdf = form.has('resumeFile');
     const url = editingId ? `/api/resumes/${encodeURIComponent(editingId)}` : '/api/resumes';
     const { profile: next } = await api(url, { method: editingId ? 'PUT' : 'POST', body: form });
+    track(wasEditing ? 'resume updated' : 'resume added', { source: usedPdf ? 'pdf' : 'text', resume_count: next.resumes.length });
     closeEditor();
     renderProfile(next, { keepOpen: true });
     setMessage($('resume-message'), 'Resume saved.');
@@ -183,6 +186,7 @@ $('replace-file').addEventListener('change', async () => {
   setMessage($('resume-message'), 'Replacing...');
   try {
     const { profile: next } = await api(`/api/resumes/${encodeURIComponent(replacingId)}`, { method: 'PUT', body: form });
+    track('resume pdf replaced', { resume_count: next.resumes.length });
     renderProfile(next, { keepOpen: true });
     setMessage($('resume-message'), 'Resume replaced with the new PDF.');
   } catch (err) {
@@ -197,6 +201,7 @@ async function deleteResume(resume) {
   if (!window.confirm(`Delete "${resume.name}"? This can't be undone.`)) return;
   try {
     const { profile: next } = await api(`/api/resumes/${encodeURIComponent(resume.id)}`, { method: 'DELETE' });
+    track('resume deleted', { resume_count: next.resumes.length });
     renderProfile(next, { keepOpen: true });
     setMessage($('resume-message'), 'Resume deleted.');
   } catch (err) {
@@ -217,6 +222,7 @@ $('profile-form').addEventListener('submit', async (event) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ personalStories: $('personal-stories').value, linkedinUrl: $('my-linkedin-url').value }),
     });
+    track('profile saved', { has_stories: Boolean(next.personalStories), has_linkedin_url: Boolean(next.linkedinUrl) });
     renderProfile(next, { keepOpen: true });
     setMessage($('profile-message'), 'Saved.');
   } catch (err) {
@@ -234,6 +240,7 @@ $('my-linkedin-file').addEventListener('change', async () => {
   setMessage($('profile-message'), 'Reading your LinkedIn PDF...');
   try {
     const { profile: next } = await api('/api/profile/linkedin', { method: 'POST', body: form });
+    track('linkedin pdf added', { whose: 'mine' });
     renderProfile(next, { keepOpen: true });
     setMessage($('profile-message'), '');
   } catch (err) {
@@ -264,6 +271,7 @@ $('their-linkedin-file').addEventListener('change', async () => {
     const { text } = await api('/api/extract-pdf', { method: 'POST', body: form });
     $('their-linkedin-text').value = text;
     $('their-linkedin-preview').hidden = false;
+    track('linkedin pdf added', { whose: 'theirs' });
     setMessage($('generate-message'), '');
   } catch (err) {
     setMessage($('generate-message'), err.message, true);
@@ -296,6 +304,7 @@ function addCard({ title, text, list, note, noteIsError }) {
     try {
       await navigator.clipboard.writeText(value);
       copy.textContent = 'Copied';
+      track('output copied', { section: title });
     } catch {
       copy.textContent = 'Copy failed';
     }
@@ -306,6 +315,7 @@ function addCard({ title, text, list, note, noteIsError }) {
 
   if (list) {
     const ol = document.createElement('ol');
+    ol.className = 'ph-no-capture';
     for (const item of list) {
       const li = document.createElement('li');
       li.textContent = item;
@@ -314,7 +324,7 @@ function addCard({ title, text, list, note, noteIsError }) {
     card.append(ol);
   } else {
     const body = document.createElement('p');
-    body.className = 'card-body';
+    body.className = 'card-body ph-no-capture';
     body.textContent = text;
     card.append(body);
   }
@@ -339,6 +349,8 @@ $('contact-form').addEventListener('submit', async (event) => {
   button.disabled = true;
   button.classList.add('is-loading');
   setMessage($('generate-message'), 'Generating. This can take up to 30 seconds.');
+  const startedAt = Date.now();
+  const usedTheirLinkedin = Boolean($('their-linkedin-text').value.trim());
   try {
     const result = await api('/api/generate', {
       method: 'POST',
@@ -360,10 +372,18 @@ $('contact-form').addEventListener('submit', async (event) => {
     addCard({ title: 'Tell me about yourself: 2 minutes', text: result.tmay_2min });
     $('results').hidden = false;
     setMessage($('generate-message'), '');
+    track('prep generated', {
+      duration_ms: Date.now() - startedAt,
+      resume_count: profile.resumes.length,
+      used_their_linkedin_pdf: usedTheirLinkedin,
+      email_words: result.email_words,
+      email_over_limit: result.email_over_limit,
+    });
     $('results').scrollIntoView({ behavior: 'smooth' });
     // The server remembers the chosen resume; reflect that in the list.
     api('/api/profile').then(({ profile: next }) => renderProfile(next)).catch(() => {});
   } catch (err) {
+    track('prep generation failed', { duration_ms: Date.now() - startedAt });
     setMessage($('generate-message'), err.message, true);
   } finally {
     button.disabled = false;
