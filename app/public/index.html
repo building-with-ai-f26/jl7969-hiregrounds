@@ -70,10 +70,11 @@
         <label>Anything else <textarea name="notes" rows="2"></textarea></label>
         <div class="tone-field">
           <label for="tone">Tone for your intros
-            <span class="hint">Type any tone, or pick a suggestion. Leave it blank for Professional.</span>
+            <span class="hint">Pick up to 3, or type your own (separate tones with commas). Leave it blank for Professional.</span>
           </label>
-          <input id="tone" name="tone" maxlength="60" placeholder="e.g. warm but concise" autocomplete="off">
-          <div class="chips" id="tone-chips" role="group" aria-label="Suggested tones"></div>
+          <input id="tone" name="tone" maxlength="80" placeholder="e.g. warm but concise" autocomplete="off">
+          <div class="chips" id="tone-chips" role="group" aria-label="Suggested tones, pick up to 3"></div>
+          <p class="hint tone-count" id="tone-count" aria-live="polite"></p>
           <div class="tone-feedback" id="tone-feedback" role="alert" hidden>
             <p class="tone-feedback-title">Let's try a different tone</p>
             <p id="tone-feedback-text"></p>

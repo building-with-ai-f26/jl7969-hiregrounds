@@ -37,21 +37,56 @@ $('their-linkedin-remove').addEventListener('click', () => {
 
 // ---------- Tone ----------
 
-function setTone(value) {
-  $('tone').value = value;
+// Up to maxTones tones, kept in the tone field as a comma-separated list, e.g. "Warm, Curious".
+let maxTones = 3;
+let toneSuggestions = [];
+const sameTone = (a, b) => a.toLowerCase() === b.toLowerCase();
+const toneItems = () => $('tone').value.split(',').map((t) => t.trim()).filter(Boolean);
+const setToneItems = (items) => { $('tone').value = items.join(', '); };
+
+// Clicking a chip adds or removes that tone, up to the limit.
+function toggleTone(value) {
+  const items = toneItems();
+  const index = items.findIndex((t) => sameTone(t, value));
+  if (index >= 0) items.splice(index, 1);
+  else if (items.length < maxTones) items.push(value);
+  setToneItems(items);
+  updateToneChips();
+  $('tone-feedback').hidden = true;
+}
+
+// A suggested alternative after pushback replaces the typed tones and keeps any chips already picked.
+function useAlternative(value) {
+  const kept = toneItems().filter((t) => toneSuggestions.some((s) => sameTone(s, t)) && !sameTone(t, value));
+  setToneItems([...kept.slice(0, maxTones - 1), value]);
   updateToneChips();
   $('tone-feedback').hidden = true;
   $('tone').focus();
 }
 
 function updateToneChips() {
-  const current = $('tone').value.trim().toLowerCase();
-  for (const chip of $('tone-chips').children) chip.classList.toggle('active', chip.textContent.toLowerCase() === current);
+  const items = toneItems();
+  const full = items.length >= maxTones;
+  for (const chip of $('tone-chips').children) {
+    const on = items.some((t) => sameTone(t, chip.textContent));
+    chip.classList.toggle('active', on);
+    chip.setAttribute('aria-pressed', String(on));
+    chip.disabled = full && !on;
+  }
+  const over = items.length > maxTones;
+  $('tone-count').textContent = over
+    ? `That's ${items.length} tones. Pick up to ${maxTones}.`
+    : items.length
+      ? `${items.length} of ${maxTones} selected${full ? '. Remove one to pick another.' : ''}`
+      : `Pick up to ${maxTones}.`;
+  $('tone-count').classList.toggle('error', over);
 }
 
 api('/api/tones')
-  .then(({ suggestions }) => {
-    $('tone-chips').replaceChildren(...suggestions.map((t) => chipButton(t, () => setTone(t))));
+  .then(({ suggestions, maxTones: limit }) => {
+    toneSuggestions = suggestions;
+    if (limit) maxTones = limit;
+    $('tone-chips').replaceChildren(...suggestions.map((t) => chipButton(t, () => toggleTone(t))));
     updateToneChips();
   })
   .catch(() => {});
@@ -63,7 +98,7 @@ $('tone').addEventListener('input', () => {
 
 function showToneFeedback(feedback) {
   $('tone-feedback-text').textContent = feedback.reason || "That tone may not land well in a networking chat.";
-  $('tone-feedback-chips').replaceChildren(...(feedback.suggestions || []).map((t) => chipButton(t, () => setTone(t))));
+  $('tone-feedback-chips').replaceChildren(...(feedback.suggestions || []).map((t) => chipButton(t, () => useAlternative(t))));
   $('tone-feedback').hidden = false;
   $('tone-feedback').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -152,6 +187,11 @@ $('contact-form').addEventListener('submit', async (event) => {
   event.preventDefault();
   if (!profile || !profile.resumes.length) {
     location.href = '/profile?setup=1';
+    return;
+  }
+  if (toneItems().length > maxTones) {
+    setMessage($('generate-message'), `Pick up to ${maxTones} tones.`, true);
+    $('tone').focus();
     return;
   }
   const button = $('generate');

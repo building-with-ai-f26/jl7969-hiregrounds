@@ -18,5 +18,6 @@ module.exports = {
   // anything else the user types is checked by Claude first.
   DEFAULT_TONE: 'Professional',
   TONE_SUGGESTIONS: ['Professional', 'Warm', 'Cheerful', 'Confident', 'Curious', 'Humble', 'Enthusiastic'],
-  MAX_TONE_CHARS: 60,
+  MAX_TONE_CHARS: 80,
+  MAX_TONES: 3, // tones can be combined, e.g. "Warm, Curious"
 };

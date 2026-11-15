@@ -376,6 +376,10 @@ select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px
 }
 .chip:hover { background: var(--bg); border-color: #a8a29e; }
 .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.chip.active::before { content: "✓"; margin-right: 5px; }
+.chip:disabled { opacity: 0.4; cursor: not-allowed; background: var(--surface); }
+.tone-count { margin: 6px 0 0; font-size: 0.8rem; }
+.tone-count.error { color: var(--error); }
 .tone-feedback {
   margin-top: 12px;
   padding: 12px 14px;
