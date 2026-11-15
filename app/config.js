@@ -13,4 +13,10 @@ module.exports = {
   PRICE_PER_MILLION: { input: 4, output: 20 },
 
   MAX_EMAIL_WORDS: 120,
+
+  // Tone for the 1- and 2-minute intros. Suggested tones skip the tone check;
+  // anything else the user types is checked by Claude first.
+  DEFAULT_TONE: 'Professional',
+  TONE_SUGGESTIONS: ['Professional', 'Warm', 'Cheerful', 'Confident', 'Curious', 'Humble', 'Enthusiastic'],
+  MAX_TONE_CHARS: 60,
 };
