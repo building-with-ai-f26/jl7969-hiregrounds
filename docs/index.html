@@ -166,17 +166,21 @@
       <h2>Product Showcase (Prototype / Live App / 2-Min Video)</h2>
       <p>
         <strong>Current Status:</strong> Build 2: Local App<br />
-        <strong>Demo:</strong> One full user action on my laptop with a real Claude call: choose a saved resume, add the contact and their LinkedIn PDF, and generate prep. Add the live cloud app URL in Build 5.
+        <strong>Demo:</strong> One full user action on my laptop with a real Claude call: set up my profile once on its own page, then on the prep page choose my resume for this chat, add the contact and their LinkedIn PDF, pick a tone, and generate prep. Add the live cloud app URL in Build 5.
       </p>
       <figure style="margin: 16px 0;">
-        <img src="assets/hire-grounds-b2-input.jpg" alt="Hire Grounds contact form with a saved resume selected, the contact's details, their LinkedIn URL with an Open button, and text from their LinkedIn PDF" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
-        <figcaption class="meta">Step 1: pick a saved resume, enter the contact, and add their LinkedIn URL and PDF (fictional sample data).</figcaption>
+        <img src="assets/hire-grounds-prep-input.jpg" alt="Hire Grounds prep page with my resume for this chat selected, the contact's details, their LinkedIn URL with an Open button, and text from their LinkedIn PDF" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
+        <figcaption class="meta">Step 1: on the prep page, choose which of my saved resumes to use for this chat, enter the contact, and add their LinkedIn URL and PDF (fictional sample data).</figcaption>
       </figure>
       <figure style="margin: 16px 0;">
         <img src="assets/hire-grounds-b2-output.jpg" alt="Hire Grounds output: an overlap check, a 116-word outreach email, and five tailored questions for a sample contact" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
         <figcaption class="meta">Step 2: output from a real Claude Opus 5.5 run on Nov 14 (26 seconds, about $0.05), using a fictional sample student and contact.</figcaption>
       </figure>
-      <p class="meta">Build 1 screenshots: <a href="assets/hire-grounds-output.jpg">output</a> and <a href="assets/hire-grounds-input.jpg">input</a>.</p>
+      <figure style="margin: 16px 0;">
+        <img src="assets/hire-grounds-tone-intros.jpg" alt="Hire Grounds 1- and 2-minute intros in a warm but concise tone, with phrases added for tone highlighted in amber" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
+        <figcaption class="meta">Step 3: intros in a "warm but concise" tone from a real Claude Opus 5.5 run on Nov 15 (fictional sample data). Amber highlights mark phrases added for tone or flow, not facts from my inputs.</figcaption>
+      </figure>
+      <p class="meta">Earlier screenshots: <a href="assets/hire-grounds-b2-input.jpg">Build 2 input</a>, <a href="assets/hire-grounds-output.jpg">Build 1 output</a>, and <a href="assets/hire-grounds-input.jpg">Build 1 input</a>.</p>
     </section>
 
     <!-- LIVING PRD (Updated every week!) -->
@@ -191,7 +195,7 @@
 
       <h3>2. Scope & Explicit Non-Goals</h3>
       <ul>
-        <li><strong>In Scope (Core Workflow):</strong> Resume (chosen from saved versions) + pre-set personal story + contact background, with optional LinkedIn PDFs for both people -> AI generates a tailored outreach email, 5 coffee chat questions, and a 1-min and 2-min intro pitch, using only facts from my own input, resume, and those LinkedIn profiles.</li>
+        <li><strong>In Scope (Core Workflow):</strong> Set up my profile once (saved resumes, personal story, optional LinkedIn PDF), then for each chat: my chosen resume + contact background + optional LinkedIn PDF for them + an optional tone for my intros -> AI generates a tailored outreach email, 5 coffee chat questions, and a 1-min and 2-min intro pitch, using only facts from my own input, resume, and those LinkedIn profiles, with anything added for tone highlighted.</li>
         <li><strong>Out of Scope #1:</strong> Auto-sending emails or LinkedIn messages. The tool drafts, and the user reviews and sends. </li>
         <li><strong>Out of Scope #2:</strong> Auto-applying to jobs. The tool may later help tailor materials, but it never submits applications.</li>
         <li><strong>Out of Scope #3:</strong> Pooling contacts across classmate. It’s built for one person’s recruiting, which avoids privacy issues with other people’s contact data. </li>
@@ -203,21 +207,22 @@
       <ul>
         <li><strong>Guardrails in the product:</strong> the AI may use only facts from my resume, my stories, the contact's details, and optional LinkedIn PDFs. An "overlap check" states the real overlap, or says plainly when there's little. LinkedIn PDFs give it a verified source for the other person instead of guesses.</li>
         <li><strong>Fact check of each real run:</strong> I trace every claim in the output back to an input. Nov 14 run (fictional sample data): every employer, role, date, the volunteer role, and the alumni connection traced back to an input, with no invented facts. The 2-minute intro did add feelings and framing that weren't in the inputs (for example, that the food bank work "felt very personal"), so next I'll tighten the prompt for the longer intro and check again.</li>
+        <li><strong>Transparency for tone (added Nov 15):</strong> students can pick or type a tone for their intros, like "warm but concise." The intros come back with every phrase the AI added for tone or flow highlighted in amber, so it's clear what is a fact and what is framing. A tone that wouldn't land well, like "furious," gets pushback and suggested alternatives instead of output. Nov 15 real run, checked by hand: all 13 highlighted phrases were feelings or framing, and all unhighlighted text traced back to an input.</li>
         <li><strong>Usage signal in PostHog:</strong> how often students copy a section after generating ("output copied" ÷ "prep generated"). Copying suggests they trust the text enough to use it.</li>
       </ul>
       <p><strong>Simple Architecture:</strong> [Browser on my laptop: resume, stories, contact, LinkedIn PDFs] → [Local Node/Express server: reads PDFs, saves my profile in a local file, builds the prompt] → [Claude Opus 5.5 via the Claude API: returns a fixed JSON format] → [Overlap check, email, 5 questions, and 1- and 2-minute intros, each with a Copy button]</p>
       <p><strong>How it works:</strong> Everything runs on my laptop. My resumes and stories are saved in a local file that is never pushed to GitHub, and the API key stays on the server, never in the browser. Each "Generate" sends one request to Claude with strict fact rules, and the server checks that the email is under 120 words and asks Claude to shorten it if not. PostHog records pageviews, clicks, and session replays with all text and inputs masked.</p>
-      <p><strong>Cost per run:</strong> about $0.05 to $0.06 with Claude Opus 5.5 (Nov 14: 1,515 input and 2,180 output tokens, about $0.05). Switching to Claude Haiku would cut that to under $0.01 if quality holds.</p>
+      <p><strong>Cost per run:</strong> about $0.10 with Claude Opus 5.5 now that the intros are labeled phrase by phrase (Nov 15: about $0.10 including a $0.004 tone check). Before labeling it was about $0.05 (Nov 14: 1,515 input and 2,180 output tokens). Next I'll test a lower reasoning-effort setting or Claude Haiku to bring it back down if quality holds.</p>
 
       <h3>4. Unit Economics & Analytics Snapshot (Updated Weekly)</h3>
       <div class="grid-2">
         <div class="stat-box">
           <div class="stat-label">Cumulative Build Spend</div>
-          <div class="stat-value">$0.11 (Claude API, 2 real runs through Nov 14)</div>
+          <div class="stat-value">$0.22 (Claude API, 3 real runs and 1 tone check through Nov 15)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">Est. Cost Per User Run</div>
-          <div class="stat-value">~$0.05–0.06 (Claude Opus 5.5)</div>
+          <div class="stat-value">~$0.10 (Claude Opus 5.5, with tone labeling)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">User Evidence (Analytics from Build 2)</div>
@@ -248,10 +253,10 @@
       <div class="log-entry">
         <h3>Build 2 · Smallest Local Version & PostHog (Due Nov 16)</h3>
         <ul>
-          <li><strong>What shipped:</strong> The full user action works on my laptop with a real Claude call (screenshots above). New features: save several resumes and edit, replace, or delete each one, then choose which to use for each contact; add my LinkedIn URL and PDF; add the contact's LinkedIn URL with an Open button and their LinkedIn PDF as a fact source. PostHog is on this page and in the local app, with pageviews, clicks, named events, and session replay that masks all text and inputs. PRD v2 is above, and AGENTS.md now maps the project structure and setup.</li>
-          <li><strong>Lessons:</strong> A fact check is the real test of trust. Short outputs stuck to the facts, but the longest output (the 2-minute intro) drifted into feelings and framing I never gave it. LinkedIn PDFs gave the AI better facts about the other person than a pasted summary. I also learned that PostHog ignores automated browsers, so test traffic has to look like a real visit.</li>
-          <li><strong>What broke / changed in PRD:</strong> Editing a resume right after the upgrade to the new multi-resume format failed until I saved the upgrade immediately, and a hidden file picker showed up on screen until I fixed the styling. PRD v2 changes: the riskiest assumption is trust and accuracy, the core workflow now includes choosing a resume and optional LinkedIn PDFs, and I added how the app works and cost per run.</li>
-          <li><strong>Cost & time this week:</strong> $0.05 · 4 hours (one real Claude Opus 5.5 run on Nov 14: 1,515 input and 2,180 output tokens)</li>
+          <li><strong>What shipped:</strong> The full user action works on my laptop with a real Claude call (screenshots above). New features: save several resumes and edit, replace, or delete each one, then choose which to use for each contact; add my LinkedIn URL and PDF; add the contact's LinkedIn URL with an Open button and their LinkedIn PDF as a fact source. PostHog is on this page and in the local app, with pageviews, clicks, named events, and session replay that masks all text and inputs. PRD v2 is above, and AGENTS.md now maps the project structure and setup. Nov 15: split the app into two pages (set up "Your profile" once, then "Coffee chat prep" with an Edit profile link), relabeled the picker as "Your resume for this chat," and added a tone option for the intros with pushback on tones that wouldn't land well and highlighting of anything added for tone.</li>
+          <li><strong>Lessons:</strong> A fact check is the real test of trust. Short outputs stuck to the facts, but the longest output (the 2-minute intro) drifted into feelings and framing I never gave it. LinkedIn PDFs gave the AI better facts about the other person than a pasted summary. I also learned that PostHog ignores automated browsers, so test traffic has to look like a real visit. Making the AI label its own added phrases made the drift visible, but it doubled the output and the cost per run.</li>
+          <li><strong>What broke / changed in PRD:</strong> Editing a resume right after the upgrade to the new multi-resume format failed until I saved the upgrade immediately, and a hidden file picker showed up on screen until I fixed the styling. PRD v2 changes: the riskiest assumption is trust and accuracy, the core workflow now includes choosing a resume and optional LinkedIn PDFs, and I added how the app works and cost per run. The "Resume to use" label was confusing (it sounded like the other person's resume), so it now says "Your resume for this chat."</li>
+          <li><strong>Cost & time this week:</strong> $0.16 · 4 hours (Claude Opus 5.5: one run on Nov 14 at about $0.05, plus a tone check and a tone-labeled run on Nov 15 at about $0.11; 4,863 input and 6,925 output tokens in total)</li>
         </ul>
       </div>
 
