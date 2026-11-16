@@ -30,6 +30,7 @@
 - Tone only changes word choice and feeling in the two intros; it never adds facts. Keep the intros as labeled segments (`added: true` for anything not from the inputs) so the page can highlight them. A custom tone (anything not in `TONE_SUGGESTIONS`) must pass the tone check before generating.
 - Keep session replay masking (`maskAllInputs`, `maskTextSelector: '*'`) and the `ph-no-capture` classes on resume cards and AI output, so personal data and generated text never reach PostHog.
 - Keep the cost log printed for each generation. Do not log resume or contact content.
+- Keep `TODO.md` current: add new requests, and check items off (with the date) when they ship.
 
 ## 5. Project Structure
 
