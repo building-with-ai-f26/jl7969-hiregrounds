@@ -420,3 +420,7 @@ mark.tone-added {
   .row { grid-template-columns: 1fr; gap: 0; }
   .brand-tag { display: none; }
 }
+
+/* Recording notice */
+.site-footer { max-width: 760px; margin: 0 auto; padding: 0 16px 40px; }
+.site-footer p { margin: 0; font-size: 0.78rem; color: var(--muted); }
