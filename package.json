@@ -5,7 +5,8 @@
   "description": "Coffee chat prep tool for MBA students",
   "main": "app/server.js",
   "scripts": {
-    "start": "node app/server.js"
+    "start": "node app/server.js",
+    "dev": "node --watch app/server.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.7.0",

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coffee chats · Hire Grounds</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- PostHog analytics: library from PostHog's US servers, then our settings in analytics.js. -->
+  <script src="https://us-assets.i.posthog.com/static/array.js" crossorigin="anonymous"></script>
+  <script src="analytics.js"></script>
+</head>
+<body data-page="chats">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Hire Grounds</span>
+      </a>
+      <nav class="site-nav" aria-label="Pages">
+        <a href="/profile" data-page="profile">Your profile</a>
+        <a href="/" data-page="prep">Coffee chat prep</a>
+        <a href="/chats" data-page="chats">Coffee chats</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Your coffee chats</h1>
+      <p>Keep track of who you've met, who's coming up, and who needs a follow-up. Open anyone to prep for your chat with them.</p>
+    </section>
+
+    <div class="stats" id="stats">
+      <div class="stat"><span class="stat-number" id="stat-upcoming">0</span><span class="stat-name">Upcoming chats</span></div>
+      <div class="stat"><span class="stat-number" id="stat-followups">0</span><span class="stat-name">Follow-ups due</span></div>
+      <div class="stat"><span class="stat-number" id="stat-completed">0</span><span class="stat-name">People you've met</span></div>
+      <div class="stat"><span class="stat-number" id="stat-total">0</span><span class="stat-name">People tracked</span></div>
+    </div>
+
+    <section class="panel">
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search name, company, role, or notes" autocomplete="off" aria-label="Search your coffee chats">
+        <select id="status-filter" aria-label="Filter by status">
+          <option value="">All statuses</option>
+        </select>
+        <button type="button" id="add-chat">Add a person</button>
+      </div>
+
+      <form id="chat-editor" class="editor" hidden>
+        <h4 id="chat-editor-title">Add a person</h4>
+        <div class="row">
+          <label>Name <input name="name" id="chat-name" maxlength="100" required></label>
+          <label>Role <input name="role" maxlength="100"></label>
+          <label>Company <input name="company" maxlength="100"></label>
+        </div>
+        <div class="row row-2">
+          <label>Email <input name="email" type="email" maxlength="200" placeholder="name@company.com"></label>
+          <label>LinkedIn URL <input name="linkedinUrl" maxlength="300" placeholder="linkedin.com/in/their-name" autocomplete="off"></label>
+        </div>
+        <div class="row">
+          <label>Status <select name="status" id="chat-status"></select></label>
+          <label>Next chat <input name="nextChatDate" type="date"></label>
+          <label>Last chat <input name="lastChatDate" type="date"></label>
+        </div>
+        <div class="row row-2">
+          <label>Follow up by <input name="followUpDate" type="date"></label>
+          <label>How you're connected <input name="howConnected" maxlength="300" placeholder="e.g. alumni directory, intro from a classmate"></label>
+        </div>
+        <label>Notes
+          <span class="hint">What you talked about, advice they gave, next steps, referrals.</span>
+          <textarea name="notes" rows="4" maxlength="5000"></textarea>
+        </label>
+        <label class="checkbox"><input type="checkbox" name="thankYouSent" value="true"> Thank-you note sent</label>
+        <div class="actions">
+          <button type="submit" id="chat-save">Save</button>
+          <button type="button" class="secondary" id="chat-cancel">Cancel</button>
+          <p class="message" id="chat-editor-message" role="status"></p>
+        </div>
+      </form>
+      <p class="message" id="chats-message" role="status"></p>
+    </section>
+
+    <div id="chat-groups"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Hire Grounds records usage with PostHog (pageviews, clicks, and session replays) to improve the app. Everything you type and everything generated is masked in recordings.</p>
+  </footer>
+  <script src="common.js"></script>
+  <script src="chats.js"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 3000;
 // DATA_DIR can point a demo or test run at a separate folder so it doesn't touch your saved profile.
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const PROFILE_PATH = path.join(DATA_DIR, 'profile.json');
+const CHATS_PATH = path.join(DATA_DIR, 'chats.json');
 
 const app = express();
 // Resumes stay in memory. Only the extracted text is saved, in data/profile.json.
@@ -24,8 +25,9 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 *
 
 app.use(express.json({ limit: '200kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
-// The profile setup page lives at /profile; the main page (/) is coffee chat prep.
+// Pages: / is coffee chat prep, /profile is profile setup, /chats is the coffee chat tracker.
 app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, 'public', 'profile.html')));
+app.get('/chats', (req, res) => res.sendFile(path.join(__dirname, 'public', 'chats.html')));
 
 class HttpError extends Error {
   constructor(status, message) {
@@ -189,6 +191,92 @@ app.delete('/api/resumes/:id', route(async (req, res) => {
 app.post('/api/extract-pdf', upload.single('file'), route(async (req, res) => {
   if (!req.file) throw new HttpError(400, 'Choose a PDF first.');
   res.json({ text: await pdfToText(req.file) });
+}));
+
+// ---------- Coffee chat tracker ----------
+// People you've met or plan to meet, saved in data/chats.json (gitignored, like the profile).
+
+const CHAT_STATUSES = ['To reach out', 'Reached out', 'Scheduled', 'Completed', 'Follow-up needed'];
+
+function readChats() {
+  if (!fs.existsSync(CHATS_PATH)) return [];
+  const raw = JSON.parse(fs.readFileSync(CHATS_PATH, 'utf8'));
+  return Array.isArray(raw.chats) ? raw.chats : [];
+}
+
+function writeChats(chats) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(CHATS_PATH, JSON.stringify({ chats }, null, 2));
+  return chats;
+}
+
+// Dates are calendar days in YYYY-MM-DD form (from the browser's date picker), or empty.
+function cleanDate(value, label) {
+  const raw = clean(value);
+  if (!raw) return '';
+  const parsed = new Date(`${raw}T00:00:00Z`);
+  // The round trip rejects impossible dates such as Feb 31.
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw) || Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== raw) {
+    throw new HttpError(400, `${label} isn't a valid date.`);
+  }
+  return raw;
+}
+
+// Builds a tracker entry from form input, validating every field.
+function chatFromInput(body, existing = {}) {
+  const name = clean(body.name).slice(0, 100);
+  if (!name) throw new HttpError(400, "Add the person's name.");
+  const email = clean(body.email).slice(0, 200);
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new HttpError(400, "That email address doesn't look right.");
+  return {
+    ...existing,
+    name,
+    email,
+    linkedinUrl: normalizeLinkedinUrl(body.linkedinUrl),
+    company: clean(body.company).slice(0, 100),
+    role: clean(body.role).slice(0, 100),
+    status: CHAT_STATUSES.includes(body.status) ? body.status : 'To reach out',
+    nextChatDate: cleanDate(body.nextChatDate, 'Next chat date'),
+    lastChatDate: cleanDate(body.lastChatDate, 'Last chat date'),
+    followUpDate: cleanDate(body.followUpDate, 'Follow-up date'),
+    howConnected: clean(body.howConnected).slice(0, 300),
+    notes: clean(body.notes).slice(0, 5000),
+    thankYouSent: body.thankYouSent === true || body.thankYouSent === 'true' || body.thankYouSent === 'on',
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function findChat(chats, id) {
+  const chat = chats.find((c) => c.id === id);
+  if (!chat) throw new HttpError(404, 'That person is no longer in your tracker. Refresh the page.');
+  return chat;
+}
+
+app.get('/api/chats', (req, res) => {
+  res.json({ chats: readChats(), statuses: CHAT_STATUSES });
+});
+
+app.post('/api/chats', route(async (req, res) => {
+  const chats = readChats();
+  if (chats.length >= 1000) throw new HttpError(400, 'Your tracker is full (1,000 people). Delete some to add more.');
+  const chat = chatFromInput(req.body || {}, { id: crypto.randomUUID(), createdAt: new Date().toISOString() });
+  chats.push(chat);
+  writeChats(chats);
+  res.json({ chat, chats });
+}));
+
+app.put('/api/chats/:id', route(async (req, res) => {
+  const chats = readChats();
+  const index = chats.indexOf(findChat(chats, req.params.id));
+  chats[index] = chatFromInput(req.body || {}, chats[index]);
+  writeChats(chats);
+  res.json({ chat: chats[index], chats });
+}));
+
+app.delete('/api/chats/:id', route(async (req, res) => {
+  const chats = readChats();
+  findChat(chats, req.params.id);
+  res.json({ chats: writeChats(chats.filter((c) => c.id !== req.params.id)) });
 }));
 
 const SYSTEM_PROMPT = `You help an MBA student prepare for a coffee chat. Write in the student's first-person voice where applicable.

@@ -19,6 +19,7 @@
       <nav class="site-nav" aria-label="Pages">
         <a href="/profile" data-page="profile">Your profile</a>
         <a href="/" data-page="prep">Coffee chat prep</a>
+        <a href="/chats" data-page="chats">Coffee chats</a>
       </nav>
     </div>
   </header>
@@ -34,7 +35,9 @@
         <span class="step" aria-hidden="true">1</span>
         <h2 class="panel-title">Who are you meeting?</h2>
       </div>
+      <p class="welcome" id="from-tracker" hidden></p>
       <form id="contact-form">
+        <input type="hidden" id="chat-id" value="">
         <div class="label-row">
           <label for="resume-select">Your resume for this chat</label>
           <a class="text-link" href="/profile">Edit your profile</a>
@@ -98,6 +101,11 @@
         <p id="overlap" class="ph-no-capture"></p>
       </div>
       <div id="cards"></div>
+      <div class="tracker-cta" id="tracker-cta" hidden>
+        <p id="tracker-cta-text">Keep track of this person: save them to your coffee chat tracker.</p>
+        <button type="button" class="secondary" id="add-to-tracker">Add to coffee chat tracker</button>
+        <a class="text-link" id="open-in-tracker" href="/chats" hidden>Open in your tracker</a>
+      </div>
     </section>
   </main>
   <footer class="site-footer">

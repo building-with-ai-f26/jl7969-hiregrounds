@@ -227,6 +227,7 @@ $('contact-form').addEventListener('submit', async (event) => {
     addCard({ title: 'Tell me about yourself: 1 minute', segments: result.tmay_1min, legend: legendFor(result.tmay_1min) });
     addCard({ title: 'Tell me about yourself: 2 minutes', segments: result.tmay_2min, legend: legendFor(result.tmay_2min) });
     $('results').hidden = false;
+    showTrackerCta();
     setMessage($('generate-message'), '');
     track('prep generated', {
       duration_ms: Date.now() - startedAt,
@@ -254,6 +255,71 @@ $('contact-form').addEventListener('submit', async (event) => {
   }
 });
 
+// ---------- Coffee chat tracker ----------
+
+// Arriving from the tracker (/?chat=<id>) fills in that person's details.
+async function prefillFromTracker(chatId) {
+  try {
+    const { chats } = await api('/api/chats');
+    const chat = chats.find((c) => c.id === chatId);
+    if (!chat) return;
+    const f = $('contact-form');
+    f.elements.name.value = chat.name;
+    f.elements.role.value = chat.role || '';
+    f.elements.company.value = chat.company || '';
+    f.elements.connection.value = chat.howConnected || '';
+    f.elements.notes.value = chat.notes || '';
+    $('their-linkedin-url').value = chat.linkedinUrl || '';
+    $('their-linkedin-url').dispatchEvent(new Event('input'));
+    $('chat-id').value = chat.id;
+    $('from-tracker').textContent = `Prepping for ${chat.name} from your coffee chat tracker. Check the details below, then generate.`;
+    $('from-tracker').hidden = false;
+  } catch {
+    // The form still works if the tracker can't be read.
+  }
+}
+
+// After generating, offer to save this person to the tracker (or link to them if already there).
+function showTrackerCta() {
+  const inTracker = Boolean($('chat-id').value);
+  $('tracker-cta-text').textContent = inTracker
+    ? 'This person is in your coffee chat tracker. Update their status or notes there after your chat.'
+    : 'Keep track of this person: save them to your coffee chat tracker.';
+  $('add-to-tracker').hidden = inTracker;
+  $('open-in-tracker').hidden = !inTracker;
+  if (inTracker) $('open-in-tracker').href = `/chats?open=${encodeURIComponent($('chat-id').value)}`;
+  $('tracker-cta').hidden = false;
+}
+
+$('add-to-tracker').addEventListener('click', async () => {
+  const f = $('contact-form');
+  const button = $('add-to-tracker');
+  button.disabled = true;
+  try {
+    const { chat } = await api('/api/chats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: f.elements.name.value,
+        role: f.elements.role.value,
+        company: f.elements.company.value,
+        linkedinUrl: $('their-linkedin-url').value,
+        howConnected: f.elements.connection.value,
+        notes: f.elements.notes.value,
+        status: 'To reach out',
+      }),
+    });
+    $('chat-id').value = chat.id;
+    track('chat added', { status: 'To reach out', from: 'prep page' });
+    showTrackerCta();
+    $('tracker-cta-text').textContent = `Added ${chat.name} to your coffee chat tracker.`;
+  } catch (err) {
+    $('tracker-cta-text').textContent = err.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
 // ---------- Start ----------
 
 // New users set up their profile first.
@@ -264,5 +330,7 @@ api('/api/profile')
       return;
     }
     renderResumeSelect(loaded);
+    const chatId = new URLSearchParams(location.search).get('chat');
+    if (chatId) prefillFromTracker(chatId);
   })
   .catch((err) => setMessage($('generate-message'), err.message, true));
