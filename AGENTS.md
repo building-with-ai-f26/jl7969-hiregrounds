@@ -10,6 +10,7 @@
 ## 2. Commands
 - **Install dependencies:** `npm install` (in Windows PowerShell: `npm.cmd install`)
 - **Run locally:** copy `.env.example` to `.env`, set `ANTHROPIC_API_KEY`, then `npm start` (PowerShell: `npm.cmd start`) and open http://localhost:3000
+- **Run locally while editing code:** `npm run dev` (PowerShell: `npm.cmd run dev`) restarts the server automatically when server code changes. A server left running on old code caused a "page not found" error on the Your profile tab, so use this during development.
 - **Run deterministic tests:** none yet
 - **Run model evals:** none yet (Build 4)
 
@@ -39,13 +40,15 @@
 ├── app/                     Hire Grounds local app
 │   ├── server.js            Express server: profile and resume APIs, PDF reading, tone check, prompt, Claude call, cost log
 │   ├── config.js            Model name, reasoning effort, prices for the cost log, email word limit, tone suggestions
-│   ├── data/                Saved profile (profile.json). Gitignored; created on first save
+│   ├── data/                Saved profile (profile.json) and coffee chat tracker (chats.json). Gitignored
 │   └── public/              Browser files served at http://localhost:3000
 │       ├── profile.html     "Your profile" page (/profile): resumes, stories, your LinkedIn, Continue button
 │       ├── profile.js       Profile page behavior: resume list and editor, About you, saves before Continue
 │       ├── index.html       "Coffee chat prep" page (/): your resume for this chat, contact, tone, results
 │       ├── prep.js          Prep page behavior: their LinkedIn, tone chips and pushback, Generate, highlights, Copy
-│       ├── common.js        Helpers shared by both pages (API calls, LinkedIn links, nav)
+│       ├── chats.html       "Coffee chats" tracker page (/chats): stats, search, filters, people grouped by status
+│       ├── chats.js         Tracker behavior: add, edit, delete, Prep for this chat (links to /?chat=<id>)
+│       ├── common.js        Helpers shared by all pages (API calls, LinkedIn links, nav)
 │       ├── analytics.js     PostHog setup (US project) and the track() helper for named events
 │       └── styles.css       Design
 ├── docs/                    Public Product Page (GitHub Pages, from main /docs)
@@ -65,6 +68,7 @@
 - `POST /api/resumes`, `PUT /api/resumes/:id`, and `DELETE /api/resumes/:id` add, edit or replace, and delete resumes.
 - `POST /api/extract-pdf` reads a contact's LinkedIn PDF and saves nothing.
 - `GET /api/tones` returns the default tone and the suggested tones.
+- `GET /api/chats`, `POST /api/chats`, `PUT /api/chats/:id`, and `DELETE /api/chats/:id` list, add, edit, and delete people in the coffee chat tracker. Fields: name (required), email, LinkedIn URL, company, role, status, next chat date, last chat date, follow-up date, how connected, notes, and thank-you sent. The server validates every field.
 - `POST /api/generate` runs one generation, including the tone check for a custom tone.
 
 **Useful settings:** `PORT` changes the port (default 3000). `DATA_DIR` points the app at a different data folder, so demos and tests don't touch your saved profile.

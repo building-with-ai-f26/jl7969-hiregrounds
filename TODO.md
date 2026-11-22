@@ -1,7 +1,7 @@
 # Hire Grounds To-Do
 
 Living list of what's next. Check items off (`[x]`) when they ship, and note the commit or build.
-Last updated: Nov 15, 2026.
+Last updated: Nov 21, 2026.
 
 ## Up next
 
@@ -34,6 +34,8 @@ Last updated: Nov 15, 2026.
 
 ## Done
 
+- [x] Coffee chat tracker page: people with email, LinkedIn, company, role, status, chat and follow-up dates, notes, and thank-you; links to and from the prep page (Nov 21)
+- [x] Fixed the Your profile tab error (stale server); added `npm run dev`, which auto-restarts (Nov 21)
 - [x] Tone for intros: free text plus up to 3 suggested tones, pushback on tones that wouldn't land well, and highlighted tone-added phrases (Nov 15)
 - [x] Two-page flow: Your profile, then Coffee chat prep, with an Edit profile link (Nov 15)
 - [x] Clear "Your resume for this chat" label (Nov 15)
