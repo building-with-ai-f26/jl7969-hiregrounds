@@ -24,6 +24,9 @@ Why no database: storing classmates' resumes and contacts on a server would requ
   - **Fix:** trust exactly 3 hops (`TRUST_PROXY_HOPS`, default 3), then remove the IP-check route (commit `88be471`).
   - **Re-test after the fix: ✅** 10 × `400`, then 20 × `429`, with the first `429` at call 11, exactly as designed.
   - **Spoofing check: ✅** a request with a made-up `X-Forwarded-For` header was still blocked. The fake value lands to the left of the 3 trusted entries and is ignored.
+  - **Final run for submission (Nov 22, 10:12 PM ET): ✅** requests 1 to 10 returned `400`, requests 11 to 30 returned `429`, and request 31's full response shows `429 Too Many Requests`, `ratelimit: limit=10, remaining=0`, and `retry-after: 893`. The image below shows the real output of those test commands, laid out for readability.
+
+    ![Rate-limit test on the live site: requests 1 to 10 return 400, requests 11 to 30 return 429 Too Many Requests](docs/assets/security-rate-limit-429.png)
 - **No server-side data to steal:** ✅ the old routes that stored profiles and trackers on the server (`/api/profile`, `/api/resumes`, `/api/chats`) were removed and return `404`, both locally and on the live site.
 - **Laptop import route:** ✅ `/api/local-import` returns `404` on the live site.
 - **Security headers on the live site:** ✅ Content-Security-Policy, Strict-Transport-Security, `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: no-referrer`, and `Cross-Origin-Opener-Policy: same-origin`, with `X-Powered-By` removed.
