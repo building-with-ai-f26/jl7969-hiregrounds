@@ -50,4 +50,6 @@ Open `.env` and set `ANTHROPIC_API_KEY` (PowerShell: `Copy-Item .env.example .en
 npm start
 ```
 
-Open http://localhost:3000. Each generation prints its token counts and approximate cost to the terminal. Your saved profile is stored in `app/data/profile.json`, which is gitignored, and uploaded PDFs are read in memory and never saved. Keep private keys out of source code, browser code, screenshots, and commits.
+Open http://localhost:3000. Each generation prints its token counts and approximate cost to the terminal. Your profile and chat tracker are saved in your browser (localStorage), not on the server, and uploaded PDFs are read in memory and never saved. While editing code, run `npm run dev` instead, which restarts the server automatically. Keep private keys out of source code, browser code, screenshots, and commits.
+
+The app is deployed on Render; see the Shipping section in [AGENTS.md](./AGENTS.md) and the security audit in [SECURITY.md](./SECURITY.md).
