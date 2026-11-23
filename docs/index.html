@@ -164,8 +164,9 @@
     <section id="live-demo">
       <h2>Product Showcase (Prototype / Live App / 2-Min Video)</h2>
       <p>
-        <strong>Current Status:</strong> Build 2: Local App<br />
-        <strong>Demo:</strong> One full user action on my laptop with a real Claude call: set up my profile once on its own page, then on the prep page choose my resume for this chat, add the contact and their LinkedIn PDF, pick a tone, and generate prep. Add the live cloud app URL in Build 5.
+        <strong>Current Status:</strong> Build 3: Live on Render<br />
+        <strong>Live app:</strong> <a href="https://jl7969-hiregrounds.onrender.com" onclick="window.posthog && posthog.capture('clicked_open_live_app')">jl7969-hiregrounds.onrender.com</a> (works on phones; on the free plan, the first visit after a quiet period can take up to a minute to wake up)<br />
+        <strong>Demo:</strong> Set up my profile once on its own page, then on the prep page choose my resume for this chat, add the contact and their LinkedIn PDF, pick a tone, and generate prep with a real Claude call. Save people in the Chat tracker. The screenshots below are from local runs with fictional sample data.
       </p>
       <figure style="margin: 16px 0;">
         <img src="assets/hire-grounds-prep-input.jpg" alt="Hire Grounds prep page with my resume for this chat selected, the contact's details, their LinkedIn URL with an Open button, and text from their LinkedIn PDF" width="820" height="1180" style="display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 8px;" />
@@ -209,15 +210,23 @@
         <li><strong>Transparency for tone (added Nov 15):</strong> students can pick or type a tone for their intros, like "warm but concise." The intros come back with every phrase the AI added for tone or flow highlighted in amber, so it's clear what is a fact and what is framing. A tone that wouldn't land well, like "furious," gets pushback and suggested alternatives instead of output. Nov 15 real run, checked by hand: all 13 highlighted phrases were feelings or framing, and all unhighlighted text traced back to an input.</li>
         <li><strong>Usage signal in PostHog:</strong> how often students copy a section after generating ("output copied" ÷ "prep generated"). Copying suggests they trust the text enough to use it.</li>
       </ul>
-      <p><strong>Simple Architecture:</strong> [Browser on my laptop: resume, stories, contact, LinkedIn PDFs] → [Local Node/Express server: reads PDFs, saves my profile in a local file, builds the prompt] → [Claude Opus 5.5 via the Claude API: returns a fixed JSON format] → [Overlap check, email, 5 questions, and 1- and 2-minute intros, each with a Copy button]</p>
-      <p><strong>How it works:</strong> Everything runs on my laptop. My resumes and stories are saved in a local file that is never pushed to GitHub, and the API key stays on the server, never in the browser. Each "Generate" sends one request to Claude with strict fact rules, and the server checks that the email is under 120 words and asks Claude to shorten it if not. PostHog records pageviews, clicks, and session replays with all text and inputs masked.</p>
+      <p><strong>Simple Architecture (v3, live):</strong> [Visitor's browser: resumes, stories, LinkedIn text, and chat tracker saved in the browser] → [Node/Express server on Render: reads PDFs in memory, rate limits, builds the prompt, stores nothing] → [Claude Opus 5.5 via the Claude API: returns a fixed JSON format] → [Overlap check, email, 5 questions, and 1- and 2-minute intros, each with a Copy button]</p>
+      <p><strong>How it works:</strong> Each visitor's profile and chat tracker are saved in their own browser, never on the server. When they click "Generate," the browser sends the chosen resume and the contact's details to the server, which sends one request to Claude with strict fact rules, checks that the email is under 120 words (asking Claude to shorten it if not), and returns the results without saving anything. The API key stays on the server. PostHog records pageviews, clicks, and session replays with all text and inputs masked.</p>
+
+      <h3>PRD v3: Hosting, Data, and Security Choices (Build 3)</h3>
+      <ul>
+        <li><strong>Hosting:</strong> a free Render web service, built from the GitHub <code>main</code> branch and redeployed on every push. I chose Render because Hire Grounds needs a server, both to keep the Claude API key secret and to read PDFs, which a static host like GitHub Pages can't do. Trade-off: the free plan sleeps when idle, so the first visit can take up to a minute.</li>
+        <li><strong>Data: no database and no sign-in yet.</strong> Each visitor's resumes, stories, and chat tracker live in their own browser (localStorage). Visitors can't see each other's data, nothing is lost when the server restarts, and the server holds no personal data that could leak. Trade-off: data stays on one device and is lost if the browser data is cleared. Sign-in and a real database with Row Level Security are planned for Build 5.</li>
+        <li><strong>Security:</strong> the API key lives only in Render's environment variables. Per-visitor rate limits (10 generations per 15 minutes, 20 PDF uploads per 10 minutes), a daily ceiling of 60 Claude calls, and a $3/month hard spending cap in the Claude Console protect the bill. Security headers (a content security policy, HSTS, no framing) are on. Uploaded PDFs are read in memory and never saved, and <code>npm audit</code> found 0 vulnerabilities. The full audit is in <a href="https://github.com/building-with-ai-f26/jl7969-hiregrounds/blob/main/SECURITY.md">SECURITY.md</a>.</li>
+        <li><strong>What the security audit found and fixed:</strong> on the live site, the rate limit leaked (the first block came at request 17 of 30 instead of 11) because Render routes each request through 3 proxies and the app trusted only 1. I measured the hops, fixed the setting, and re-tested: exactly 10 requests got through, then everything after was blocked, including requests with a faked IP header.</li>
+      </ul>
       <p><strong>Cost per run:</strong> about $0.10 with Claude Opus 5.5 now that the intros are labeled phrase by phrase (Nov 15: about $0.10 including a $0.004 tone check). Before labeling it was about $0.05 (Nov 14: 1,515 input and 2,180 output tokens). Next I'll test a lower reasoning-effort setting or Claude Haiku to bring it back down if quality holds.</p>
 
       <h3>4. Unit Economics & Analytics Snapshot (Updated Weekly)</h3>
       <div class="grid-2">
         <div class="stat-box">
           <div class="stat-label">Cumulative Build Spend</div>
-          <div class="stat-value">$0.22 (Claude API, 3 real runs and 1 tone check through Nov 15)</div>
+          <div class="stat-value">$0.22 (Claude API, 3 real runs and 1 tone check through Nov 22; Render free)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">Est. Cost Per User Run</div>
@@ -262,9 +271,10 @@
       <div class="log-entry">
         <h3>Build 3 · Build.exe: The Core Workflow (Due Nov 23)</h3>
         <ul>
-          <li><strong>What shipped:</strong> [End-to-end workflow working with real inputs + PostHog funnel events]</li>
-          <li><strong>What broke / changed in PRD:</strong> [Fill in]</li>
-          <li><strong>Cost & time this week:</strong> $[0.00] · [0] hours</li>
+          <li><strong>What shipped:</strong> Hire Grounds is live at <a href="https://jl7969-hiregrounds.onrender.com">jl7969-hiregrounds.onrender.com</a> on a free Render web service. I moved everyone's profile and chat tracker into their own browser so the public site holds no personal data, and added per-visitor rate limits, a daily ceiling, a $3 Claude spending cap, and security headers. I also added a Chat tracker page (people, statuses, chat and follow-up dates, notes, and a "Prep for this chat" button), renamed it from "Coffee chats," and fixed the Your profile tab. I completed the security audit in SECURITY.md and added Shipping, Ask me first, and lessons-learned rules to AGENTS.md. PostHog and session replay work on the live site.</li>
+          <li><strong>Lessons:</strong> A website with a server needs real hosting: GitHub Pages can show my Product Page, but only a server like Render can keep an API key secret. Secrets belong in the host's environment settings, never in code. A security check isn't done until it runs on the live site: the rate limit passed on my laptop but leaked online because of proxies I couldn't see locally. Storing data in the browser was the simplest way to keep classmates' resumes private without building sign-in yet.</li>
+          <li><strong>What broke / changed in PRD:</strong> The Your profile tab showed "page not found" because an old server was still running; I now use a command that restarts automatically. The live rate limit leaked (first block at request 17 of 30) until I measured Render's 3 proxy hops and set the app to trust them. PRD v3 changes: the app is hosted on Render, data moved from a file on my laptop to each visitor's browser, and I added the security choices and audit results.</li>
+          <li><strong>Cost & time this week:</strong> $0.00 · 3.5 hours (no paid Claude calls this week: tests used a stand-in model, or requests the server rejected before reaching Claude; Render free plan)</li>
         </ul>
       </div>
 
