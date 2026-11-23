@@ -46,7 +46,7 @@
 │       ├── profile.js       Profile page behavior: resume list and editor, About you, saves before Continue
 │       ├── index.html       "Coffee chat prep" page (/): your resume for this chat, contact, tone, results
 │       ├── prep.js          Prep page behavior: their LinkedIn, tone chips and pushback, Generate, highlights, Copy
-│       ├── chats.html       "Coffee chats" tracker page (/chats): stats, search, filters, people grouped by status
+│       ├── chats.html       "Chat tracker" page (/chats): stats, search, filters, people grouped by status
 │       ├── chats.js         Tracker behavior: add, edit, delete, Prep for this chat (links to /?chat=<id>)
 │       ├── common.js        Helpers shared by all pages (API calls, LinkedIn links, nav)
 │       ├── analytics.js     PostHog setup (US project) and the track() helper for named events
