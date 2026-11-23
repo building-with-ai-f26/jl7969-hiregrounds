@@ -51,6 +51,7 @@ Stop and get Jackson's explicit OK in the chat before doing any of these. Approv
 - **Check the diff size before committing.** On Nov 10 the agent edited `docs/index.html` with a script that left one stray carriage return, and Git showed all 270 lines as changed. If a small edit shows a whole file as changed, fix the line endings first (`git diff --stat`, then check for lone `\r`).
 - **Save data-format upgrades immediately.** On Nov 14 the agent upgraded old single-resume profiles on read without saving, so the upgraded resume got a new ID on every read and editing it failed with "no longer exists." Any upgrade that creates IDs must be saved right away.
 - **Restart the server after server changes.** On Nov 15–21 a server left running on old code made the Your profile tab show "page not found." Use `npm run dev` locally, and redeploy on Render after pushing server changes.
+- **Measure proxy hops; don't guess them.** On Nov 22 the agent set Express `trust proxy` to 1 for Render, but Render has 3 hops (Cloudflare, Render's load balancer, a local proxy), so rate limits keyed to rotating proxy IPs and leaked (the first 429 came at call 17 of 30). Measure with a temporary IP-check route on the live site, set the count, remove the route, and re-run the 30-call test.
 - **Match test selectors exactly.** On Nov 22 a test picked the card containing "PM resume," which also matched "Tech PM resume," and edited the wrong one. Match full names in tests.
 
 ## 6. Project Structure

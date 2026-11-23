@@ -25,24 +25,13 @@ const PROFILE_PATH = path.join(DATA_DIR, 'profile.json');
 const CHATS_PATH = path.join(DATA_DIR, 'chats.json');
 
 const app = express();
-// Behind Render's proxy, trust one hop so rate limits see each visitor's real IP address.
-if (IS_HOSTED) app.set('trust proxy', 1);
-
-// TEMPORARY (Nov 22): shows the caller their own IP as the server sees it, to count Render's proxy hops
-// for the rate limit. Remove after measuring.
-app.get('/api/ip-check', (req, res) => {
-  const h = req.headers;
-  res.json({
-    reqIp: req.ip,
-    reqIps: req.ips,
-    xForwardedFor: h['x-forwarded-for'] || null,
-    cfConnectingIp: h['cf-connecting-ip'] || null,
-    trueClientIp: h['true-client-ip'] || null,
-    xRealIp: h['x-real-ip'] || null,
-    forwarded: h.forwarded || null,
-    socket: req.socket.remoteAddress,
-  });
-});
+// On Render, each request passes 3 proxy hops before reaching the app (measured on the live site, Nov 22):
+//   visitor -> Cloudflare edge -> Render load balancer -> local proxy (127.0.0.1) -> app.
+// Trusting exactly 3 hops makes req.ip the visitor's real IP, so per-visitor rate limits work. A visitor can't
+// fake it: a made-up X-Forwarded-For value lands further left, past the 3 trusted entries, and is ignored.
+// If Render's setup changes, re-measure and set TRUST_PROXY_HOPS in Render's environment variables.
+const TRUST_PROXY_HOPS = Number(process.env.TRUST_PROXY_HOPS || 3);
+if (IS_HOSTED) app.set('trust proxy', TRUST_PROXY_HOPS);
 
 // Security headers. The content security policy only allows our own files plus PostHog analytics.
 app.use(helmet({
