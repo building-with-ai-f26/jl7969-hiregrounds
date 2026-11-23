@@ -20,4 +20,14 @@ module.exports = {
   TONE_SUGGESTIONS: ['Professional', 'Warm', 'Cheerful', 'Confident', 'Curious', 'Humble', 'Enthusiastic'],
   MAX_TONE_CHARS: 80,
   MAX_TONES: 3, // tones can be combined, e.g. "Warm, Curious"
+
+  // Limits that protect the Claude bill on the public site.
+  RATE_LIMITS: {
+    // Per visitor (IP address): Generate clicks in a rolling window. A click counts once, even with a tone check.
+    generate: { windowMinutes: 15, max: 10 },
+    // Per visitor: PDF uploads (resumes and LinkedIn exports).
+    pdf: { windowMinutes: 10, max: 20 },
+    // All visitors together: Claude calls per day (tone checks and email retries count).
+    dailyGenerationsTotal: 60,
+  },
 };

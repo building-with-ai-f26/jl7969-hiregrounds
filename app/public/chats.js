@@ -186,29 +186,34 @@ $('chat-editor').addEventListener('submit', async (event) => {
   const form = event.target;
   const body = Object.fromEntries(new FormData(form));
   body.thankYouSent = form.elements.thankYouSent.checked;
-  const button = $('chat-save');
-  button.disabled = true;
-  setMessage($('chat-editor-message'), 'Saving...');
   try {
     const wasEditing = Boolean(editingChatId);
-    const url = editingChatId ? `/api/chats/${encodeURIComponent(editingChatId)}` : '/api/chats';
-    const result = await api(url, { method: editingChatId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    chats = result.chats;
-    track(wasEditing ? 'chat updated' : 'chat added', { status: body.status, has_email: Boolean(body.email), has_linkedin: Boolean(body.linkedinUrl) });
+    const current = loadChats();
+    let saved;
+    if (wasEditing) {
+      const index = current.findIndex((c) => c.id === editingChatId);
+      if (index < 0) throw new Error('That person is no longer in your tracker. Refresh the page.');
+      saved = buildChat(body, current[index]);
+      current[index] = saved;
+    } else {
+      if (current.length >= MAX_CHATS) throw new Error('Your tracker is full (1,000 people). Delete some to add more.');
+      saved = buildChat(body);
+      current.push(saved);
+    }
+    chats = saveChats(current);
+    track(wasEditing ? 'chat updated' : 'chat added', { status: saved.status, has_email: Boolean(saved.email), has_linkedin: Boolean(saved.linkedinUrl) });
     closeChatEditor();
     render();
-    setMessage($('chats-message'), wasEditing ? 'Saved.' : `Added ${result.chat.name}.`);
+    setMessage($('chats-message'), wasEditing ? 'Saved.' : `Added ${saved.name}.`);
   } catch (err) {
     setMessage($('chat-editor-message'), err.message, true);
-  } finally {
-    button.disabled = false;
   }
 });
 
-async function deleteChat(chat) {
+function deleteChat(chat) {
   if (!window.confirm(`Delete ${chat.name} from your tracker? This can't be undone.`)) return;
   try {
-    ({ chats } = await api(`/api/chats/${encodeURIComponent(chat.id)}`, { method: 'DELETE' }));
+    chats = saveChats(loadChats().filter((c) => c.id !== chat.id));
     track('chat deleted', {});
     render();
     setMessage($('chats-message'), `Deleted ${chat.name}.`);
@@ -222,16 +227,16 @@ $('status-filter').addEventListener('change', render);
 
 // ---------- Start ----------
 
-api('/api/chats')
-  .then((result) => {
-    chats = result.chats;
-    statuses = result.statuses;
-    $('status-filter').append(...statuses.map((s) => new Option(s, s)));
-    $('chat-status').replaceChildren(...statuses.map((s) => new Option(s, s)));
-    render();
-    // Arriving from the prep page's "Add to tracker" opens that person.
-    const openId = new URLSearchParams(location.search).get('open');
-    const chat = openId && chats.find((c) => c.id === openId);
-    if (chat) openChatEditor(chat);
-  })
-  .catch((err) => setMessage($('chats-message'), err.message, true));
+// The tracker is read from this browser.
+importLocalDataOnce().then((imported) => {
+  chats = loadChats();
+  statuses = CHAT_STATUSES;
+  $('status-filter').append(...statuses.map((s) => new Option(s, s)));
+  $('chat-status').replaceChildren(...statuses.map((s) => new Option(s, s)));
+  render();
+  if (imported && imported.chats) setMessage($('chats-message'), `Moved ${imported.chats} saved ${imported.chats === 1 ? 'person' : 'people'} into this browser.`);
+  // Arriving from the prep page's "Open in your tracker" opens that person.
+  const openId = new URLSearchParams(location.search).get('open');
+  const chat = openId && chats.find((c) => c.id === openId);
+  if (chat) openChatEditor(chat);
+});

@@ -1,9 +1,10 @@
-// Profile page: resumes, personal stories, and your LinkedIn.
-let profile = null;
+// Profile page: resumes, personal stories, and your LinkedIn. Everything is saved in this browser.
+let profile = emptyProfile();
 let editingId = null; // resume being edited, or null when adding
 let replacingId = null; // resume whose PDF is being replaced
 let aboutDirty = false; // unsaved changes in "About you"
 
+const MAX_DOC_CHARS = 40000;
 const updateMyOpen = wireOpenButton($('my-linkedin-url'), $('open-my-linkedin'));
 
 if (new URLSearchParams(location.search).has('setup')) $('welcome').hidden = false;
@@ -40,7 +41,7 @@ function renderProfile(next) {
   if (ready) $('continue').href = '/';
   else $('continue').removeAttribute('href');
   $('continue-hint').textContent = ready
-    ? 'Your profile is saved. You can come back and edit it anytime.'
+    ? 'Your profile is saved in this browser. You can come back and edit it anytime.'
     : 'Add at least one resume to continue.';
 }
 
@@ -113,16 +114,27 @@ $('editor-cancel').addEventListener('click', closeEditor);
 $('resume-editor').addEventListener('submit', async (event) => {
   event.preventDefault();
   const button = $('editor-save');
-  const form = new FormData(event.target);
-  if (!$('editor-file').files.length) form.delete('resumeFile');
+  const file = $('editor-file').files[0];
   button.disabled = true;
-  setMessage($('editor-message'), 'Saving...');
+  setMessage($('editor-message'), file ? 'Reading your PDF...' : 'Saving...');
   try {
+    // A chosen PDF wins over pasted text.
+    const text = (file ? await pdfText(file) : $('editor-text').value.trim()).slice(0, MAX_DOC_CHARS);
+    if (!text) throw new Error(editingId ? "A resume can't be empty. Delete it instead." : 'Add the resume as a PDF or pasted text.');
+    const name = $('editor-name').value.trim().slice(0, 60);
     const wasEditing = Boolean(editingId);
-    const usedPdf = form.has('resumeFile');
-    const url = editingId ? `/api/resumes/${encodeURIComponent(editingId)}` : '/api/resumes';
-    const { profile: next } = await api(url, { method: editingId ? 'PUT' : 'POST', body: form });
-    track(wasEditing ? 'resume updated' : 'resume added', { source: usedPdf ? 'pdf' : 'text', resume_count: next.resumes.length });
+    const next = loadProfile();
+    if (wasEditing) {
+      const resume = next.resumes.find((r) => r.id === editingId);
+      if (!resume) throw new Error('That resume no longer exists. Refresh the page.');
+      Object.assign(resume, { name: name || resume.name, text, source: file ? 'pdf' : 'text', updatedAt: new Date().toISOString() });
+    } else {
+      const resume = { id: newId(), name: name || `Resume ${next.resumes.length + 1}`, text, source: file ? 'pdf' : 'text', updatedAt: new Date().toISOString() };
+      next.resumes.push(resume);
+      next.activeResumeId = resume.id;
+    }
+    saveProfile(next);
+    track(wasEditing ? 'resume updated' : 'resume added', { source: file ? 'pdf' : 'text', resume_count: next.resumes.length });
     closeEditor();
     renderProfile(next);
     setMessage($('resume-message'), 'Resume saved.');
@@ -136,11 +148,14 @@ $('resume-editor').addEventListener('submit', async (event) => {
 $('replace-file').addEventListener('change', async () => {
   const file = $('replace-file').files[0];
   if (!file || !replacingId) return;
-  const form = new FormData();
-  form.append('resumeFile', file);
-  setMessage($('resume-message'), 'Replacing...');
+  setMessage($('resume-message'), 'Reading your PDF...');
   try {
-    const { profile: next } = await api(`/api/resumes/${encodeURIComponent(replacingId)}`, { method: 'PUT', body: form });
+    const text = (await pdfText(file)).slice(0, MAX_DOC_CHARS);
+    const next = loadProfile();
+    const resume = next.resumes.find((r) => r.id === replacingId);
+    if (!resume) throw new Error('That resume no longer exists. Refresh the page.');
+    Object.assign(resume, { text, source: 'pdf', updatedAt: new Date().toISOString() });
+    saveProfile(next);
     track('resume pdf replaced', { resume_count: next.resumes.length });
     renderProfile(next);
     setMessage($('resume-message'), 'Resume replaced with the new PDF.');
@@ -152,10 +167,13 @@ $('replace-file').addEventListener('change', async () => {
   }
 });
 
-async function deleteResume(resume) {
+function deleteResume(resume) {
   if (!window.confirm(`Delete "${resume.name}"? This can't be undone.`)) return;
   try {
-    const { profile: next } = await api(`/api/resumes/${encodeURIComponent(resume.id)}`, { method: 'DELETE' });
+    const next = loadProfile();
+    next.resumes = next.resumes.filter((r) => r.id !== resume.id);
+    if (next.activeResumeId === resume.id) next.activeResumeId = next.resumes.length ? next.resumes[0].id : null;
+    saveProfile(next);
     track('resume deleted', { resume_count: next.resumes.length });
     renderProfile(next);
     setMessage($('resume-message'), 'Resume deleted.');
@@ -173,40 +191,38 @@ for (const id of ['personal-stories', 'my-linkedin-url']) {
   });
 }
 
-async function saveAbout() {
-  const { profile: next } = await api('/api/profile', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ personalStories: $('personal-stories').value, linkedinUrl: $('my-linkedin-url').value }),
-  });
+function saveAbout() {
+  const url = $('my-linkedin-url').value.trim();
+  const href = linkedinHref(url);
+  if (url && !href) throw new Error('Use a linkedin.com profile URL.');
+  const next = loadProfile();
+  next.personalStories = $('personal-stories').value.trim().slice(0, MAX_DOC_CHARS);
+  next.linkedinUrl = href;
+  saveProfile(next);
   aboutDirty = false;
   track('profile saved', { has_stories: Boolean(next.personalStories), has_linkedin_url: Boolean(next.linkedinUrl) });
   renderProfile(next);
 }
 
-$('profile-form').addEventListener('submit', async (event) => {
+$('profile-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  const button = $('save-profile');
-  button.disabled = true;
-  setMessage($('profile-message'), 'Saving...');
   try {
-    await saveAbout();
+    saveAbout();
     setMessage($('profile-message'), 'Saved.');
   } catch (err) {
     setMessage($('profile-message'), err.message, true);
-  } finally {
-    button.disabled = false;
   }
 });
 
 $('my-linkedin-file').addEventListener('change', async () => {
   const file = $('my-linkedin-file').files[0];
   if (!file) return;
-  const form = new FormData();
-  form.append('linkedinFile', file);
   setMessage($('profile-message'), 'Reading your LinkedIn PDF...');
   try {
-    const { profile: next } = await api('/api/profile/linkedin', { method: 'POST', body: form });
+    const text = (await pdfText(file)).slice(0, MAX_DOC_CHARS);
+    const next = loadProfile();
+    next.linkedinText = text;
+    saveProfile(next);
     track('linkedin pdf added', { whose: 'mine' });
     renderProfile(next);
     setMessage($('profile-message'), aboutDirty ? 'Unsaved changes.' : '');
@@ -217,9 +233,11 @@ $('my-linkedin-file').addEventListener('change', async () => {
   }
 });
 
-$('my-linkedin-remove').addEventListener('click', async () => {
+$('my-linkedin-remove').addEventListener('click', () => {
   try {
-    const { profile: next } = await api('/api/profile/linkedin', { method: 'DELETE' });
+    const next = loadProfile();
+    next.linkedinText = '';
+    saveProfile(next);
     renderProfile(next);
   } catch (err) {
     setMessage($('profile-message'), err.message, true);
@@ -229,15 +247,15 @@ $('my-linkedin-remove').addEventListener('click', async () => {
 // ---------- Continue to prep ----------
 
 // Saves unsaved "About you" changes before leaving, so nothing typed is lost.
-$('continue').addEventListener('click', async (event) => {
-  if (!profile || !profile.resumes.length) {
+$('continue').addEventListener('click', (event) => {
+  if (!profile.resumes.length) {
     event.preventDefault();
     return;
   }
   if (!aboutDirty) return;
   event.preventDefault();
   try {
-    await saveAbout();
+    saveAbout();
     location.href = '/';
   } catch (err) {
     setMessage($('profile-message'), err.message, true);
@@ -248,6 +266,11 @@ window.addEventListener('beforeunload', (event) => {
   if (aboutDirty) event.preventDefault();
 });
 
-api('/api/profile')
-  .then(({ profile: loaded }) => renderProfile(loaded))
-  .catch((err) => setMessage($('resume-message'), err.message, true));
+// ---------- Start ----------
+
+importLocalDataOnce().then((imported) => {
+  renderProfile(loadProfile());
+  if (imported) {
+    setMessage($('resume-message'), `Moved your saved profile into this browser (${imported.resumes} resume${imported.resumes === 1 ? '' : 's'}).`);
+  }
+});

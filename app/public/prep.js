@@ -14,12 +14,9 @@ function renderResumeSelect(next) {
 $('their-linkedin-file').addEventListener('change', async () => {
   const file = $('their-linkedin-file').files[0];
   if (!file) return;
-  const form = new FormData();
-  form.append('file', file);
   setMessage($('generate-message'), 'Reading their LinkedIn PDF...');
   try {
-    const { text } = await api('/api/extract-pdf', { method: 'POST', body: form });
-    $('their-linkedin-text').value = text;
+    $('their-linkedin-text').value = await pdfText(file);
     $('their-linkedin-preview').hidden = false;
     track('linkedin pdf added', { whose: 'theirs' });
     setMessage($('generate-message'), '');
@@ -201,11 +198,27 @@ $('contact-form').addEventListener('submit', async (event) => {
   const startedAt = Date.now();
   const usedTheirLinkedin = Boolean($('their-linkedin-text').value.trim());
   try {
+    // Your profile lives in this browser, so the chosen resume and profile text go with the request.
+    const fresh = loadProfile();
+    const resume = fresh.resumes.find((r) => r.id === $('resume-select').value) || fresh.resumes[0];
+    if (!resume) throw new Error('Add a resume to your profile first.');
+    const fields = Object.fromEntries(new FormData(event.target));
+    delete fields.resumeId;
     const result = await api('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(Object.fromEntries(new FormData(event.target))),
+      body: JSON.stringify({
+        ...fields,
+        resumeText: resume.text,
+        personalStories: fresh.personalStories,
+        myLinkedinText: fresh.linkedinText,
+      }),
     });
+    // Remember the chosen resume so it's selected next time.
+    if (fresh.activeResumeId !== resume.id) {
+      fresh.activeResumeId = resume.id;
+      try { saveProfile(fresh); } catch { /* not critical */ }
+    }
     $('overlap').textContent = result.overlap_assessment;
     $('cards').replaceChildren();
     addCard({
@@ -258,10 +271,9 @@ $('contact-form').addEventListener('submit', async (event) => {
 // ---------- Coffee chat tracker ----------
 
 // Arriving from the tracker (/?chat=<id>) fills in that person's details.
-async function prefillFromTracker(chatId) {
+function prefillFromTracker(chatId) {
   try {
-    const { chats } = await api('/api/chats');
-    const chat = chats.find((c) => c.id === chatId);
+    const chat = loadChats().find((c) => c.id === chatId);
     if (!chat) return;
     const f = $('contact-form');
     f.elements.name.value = chat.name;
@@ -291,24 +303,23 @@ function showTrackerCta() {
   $('tracker-cta').hidden = false;
 }
 
-$('add-to-tracker').addEventListener('click', async () => {
+$('add-to-tracker').addEventListener('click', () => {
   const f = $('contact-form');
   const button = $('add-to-tracker');
   button.disabled = true;
   try {
-    const { chat } = await api('/api/chats', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: f.elements.name.value,
-        role: f.elements.role.value,
-        company: f.elements.company.value,
-        linkedinUrl: $('their-linkedin-url').value,
-        howConnected: f.elements.connection.value,
-        notes: f.elements.notes.value,
-        status: 'To reach out',
-      }),
+    const chats = loadChats();
+    if (chats.length >= MAX_CHATS) throw new Error('Your tracker is full (1,000 people). Delete some to add more.');
+    const chat = buildChat({
+      name: f.elements.name.value,
+      role: f.elements.role.value,
+      company: f.elements.company.value,
+      linkedinUrl: $('their-linkedin-url').value,
+      howConnected: f.elements.connection.value,
+      notes: f.elements.notes.value,
+      status: 'To reach out',
     });
+    saveChats([...chats, chat]);
     $('chat-id').value = chat.id;
     track('chat added', { status: 'To reach out', from: 'prep page' });
     showTrackerCta();
@@ -322,15 +333,14 @@ $('add-to-tracker').addEventListener('click', async () => {
 
 // ---------- Start ----------
 
-// New users set up their profile first.
-api('/api/profile')
-  .then(({ profile: loaded }) => {
-    if (!loaded.resumes.length) {
-      location.replace('/profile?setup=1');
-      return;
-    }
-    renderResumeSelect(loaded);
-    const chatId = new URLSearchParams(location.search).get('chat');
-    if (chatId) prefillFromTracker(chatId);
-  })
-  .catch((err) => setMessage($('generate-message'), err.message, true));
+// New users set up their profile first. Your profile is read from this browser.
+importLocalDataOnce().then(() => {
+  const loaded = loadProfile();
+  if (!loaded.resumes.length) {
+    location.replace('/profile?setup=1');
+    return;
+  }
+  renderResumeSelect(loaded);
+  const chatId = new URLSearchParams(location.search).get('chat');
+  if (chatId) prefillFromTracker(chatId);
+});

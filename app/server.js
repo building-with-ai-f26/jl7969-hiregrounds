@@ -6,28 +6,81 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const multer = require('multer');
+const helmet = require('helmet');
+const { rateLimit } = require('express-rate-limit');
 // Import the library file directly: pdf-parse's index.js runs a debug routine on load.
 const pdfParse = require('pdf-parse/lib/pdf-parse.js');
 const Anthropic = require('@anthropic-ai/sdk').default;
 const {
-  MODEL, EFFORT, PRICE_PER_MILLION, MAX_EMAIL_WORDS, DEFAULT_TONE, TONE_SUGGESTIONS, MAX_TONE_CHARS, MAX_TONES,
+  MODEL, EFFORT, PRICE_PER_MILLION, MAX_EMAIL_WORDS, DEFAULT_TONE, TONE_SUGGESTIONS, MAX_TONE_CHARS, MAX_TONES, RATE_LIMITS,
 } = require('./config');
 
 const PORT = process.env.PORT || 3000;
-// DATA_DIR can point a demo or test run at a separate folder so it doesn't touch your saved profile.
+// Render sets RENDER=true. When hosted, listen on all interfaces; locally, only on this laptop.
+const IS_HOSTED = Boolean(process.env.RENDER) || process.env.NODE_ENV === 'production';
+const HOST = process.env.HOST || (IS_HOSTED ? '0.0.0.0' : '127.0.0.1');
+// Older versions saved data in these files on the laptop. They're read only to import into the browser once.
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const PROFILE_PATH = path.join(DATA_DIR, 'profile.json');
 const CHATS_PATH = path.join(DATA_DIR, 'chats.json');
 
 const app = express();
-// Resumes stay in memory. Only the extracted text is saved, in data/profile.json.
+// Behind Render's proxy, trust one hop so rate limits see each visitor's real IP address.
+if (IS_HOSTED) app.set('trust proxy', 1);
+
+// Security headers. The content security policy only allows our own files plus PostHog analytics.
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", 'https://us-assets.i.posthog.com'],
+      connectSrc: ["'self'", 'https://us.i.posthog.com', 'https://us-assets.i.posthog.com'],
+      imgSrc: ["'self'", 'data:', 'https://us.i.posthog.com', 'https://us-assets.i.posthog.com'],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      workerSrc: ["'self'", 'blob:'],
+      frameAncestors: ["'none'"],
+      objectSrc: ["'none'"],
+      formAction: ["'self'"],
+    },
+  },
+}));
+
+// Uploaded PDFs stay in memory and are never saved.
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 
-app.use(express.json({ limit: '200kb' }));
+app.use(express.json({ limit: '300kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
-// Pages: / is coffee chat prep, /profile is profile setup, /chats is the coffee chat tracker.
+// Pages: / is coffee chat prep, /profile is profile setup, /chats is the chat tracker.
 app.get('/profile', (req, res) => res.sendFile(path.join(__dirname, 'public', 'profile.html')));
 app.get('/chats', (req, res) => res.sendFile(path.join(__dirname, 'public', 'chats.html')));
+
+// Per-visitor rate limits on routes that cost money (Claude) or server work (PDF reading).
+const limitMessage = (text) => ({ error: text });
+const generateLimiter = rateLimit({
+  windowMs: RATE_LIMITS.generate.windowMinutes * 60 * 1000,
+  limit: RATE_LIMITS.generate.max,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: limitMessage(`You've reached the limit of ${RATE_LIMITS.generate.max} generations per ${RATE_LIMITS.generate.windowMinutes} minutes. Try again later.`),
+});
+const pdfLimiter = rateLimit({
+  windowMs: RATE_LIMITS.pdf.windowMinutes * 60 * 1000,
+  limit: RATE_LIMITS.pdf.max,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: limitMessage('Too many PDF uploads. Wait a few minutes and try again.'),
+});
+
+// A daily ceiling on Claude calls across all visitors, on top of the Claude Console spending cap.
+let dailyCalls = { day: '', count: 0 };
+function checkDailyBudget() {
+  const today = new Date().toISOString().slice(0, 10);
+  if (dailyCalls.day !== today) dailyCalls = { day: today, count: 0 };
+  if (dailyCalls.count >= RATE_LIMITS.dailyGenerationsTotal) {
+    throw new HttpError(429, 'Hire Grounds has reached its daily limit. Please try again tomorrow.');
+  }
+  dailyCalls.count += 1;
+}
 
 class HttpError extends Error {
   constructor(status, message) {
@@ -43,41 +96,27 @@ function clean(value) {
   return typeof value === 'string' ? value.trim() : '';
 }
 
-function emptyProfile() {
-  return { resumes: [], activeResumeId: null, personalStories: '', linkedinUrl: '', linkedinText: '', updatedAt: null };
-}
-
-// Reads the saved profile and upgrades the older single-resume format to the resume list.
-function readProfile() {
-  if (!fs.existsSync(PROFILE_PATH)) return emptyProfile();
+// Reads the profile an older version saved on this laptop, in either the old or new format.
+function readLegacyProfile() {
+  if (!fs.existsSync(PROFILE_PATH)) return null;
   const raw = JSON.parse(fs.readFileSync(PROFILE_PATH, 'utf8'));
-  const profile = { ...emptyProfile(), ...raw };
-  if (!Array.isArray(raw.resumes)) {
-    profile.resumes = raw.resumeText
-      ? [{ id: crypto.randomUUID(), name: 'My resume', text: raw.resumeText, source: 'text', updatedAt: raw.updatedAt || new Date().toISOString() }]
-      : [];
-    delete profile.resumeText;
-    profile.activeResumeId = profile.resumes.length ? profile.resumes[0].id : null;
-    // Save the upgrade right away so the new resume keeps the same id on every read.
-    fs.writeFileSync(PROFILE_PATH, JSON.stringify(profile, null, 2));
-  }
-  if (!profile.resumes.some((r) => r.id === profile.activeResumeId)) {
-    profile.activeResumeId = profile.resumes.length ? profile.resumes[0].id : null;
-  }
-  return profile;
+  const resumes = Array.isArray(raw.resumes)
+    ? raw.resumes
+    : raw.resumeText ? [{ id: crypto.randomUUID(), name: 'My resume', text: raw.resumeText, source: 'text', updatedAt: raw.updatedAt || new Date().toISOString() }] : [];
+  return {
+    resumes,
+    activeResumeId: raw.activeResumeId || (resumes[0] && resumes[0].id) || null,
+    personalStories: raw.personalStories || '',
+    linkedinUrl: raw.linkedinUrl || '',
+    linkedinText: raw.linkedinText || '',
+    updatedAt: raw.updatedAt || null,
+  };
 }
 
-function writeProfile(profile) {
-  profile.updatedAt = new Date().toISOString();
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(PROFILE_PATH, JSON.stringify(profile, null, 2));
-  return profile;
-}
-
-function findResume(profile, id) {
-  const resume = profile.resumes.find((r) => r.id === id);
-  if (!resume) throw new HttpError(404, 'That resume no longer exists. Refresh the page.');
-  return resume;
+function readLegacyChats() {
+  if (!fs.existsSync(CHATS_PATH)) return [];
+  const raw = JSON.parse(fs.readFileSync(CHATS_PATH, 'utf8'));
+  return Array.isArray(raw.chats) ? raw.chats : [];
 }
 
 async function pdfToText(file) {
@@ -118,165 +157,16 @@ function countWords(text) {
 // Wraps async route handlers so thrown errors reach the error handler.
 const route = (handler) => (req, res, next) => Promise.resolve(handler(req, res)).catch(next);
 
-app.get('/api/profile', (req, res) => {
-  res.json({ profile: readProfile() });
+// One-time import of data an older version saved on this laptop. Never available on the hosted site.
+app.get('/api/local-import', (req, res) => {
+  if (IS_HOSTED) return res.status(404).json({ error: 'Not found.' });
+  res.json({ profile: readLegacyProfile(), chats: readLegacyChats() });
 });
 
-// Personal stories and your LinkedIn URL.
-app.put('/api/profile', route(async (req, res) => {
-  const profile = readProfile();
-  profile.personalStories = clean(req.body.personalStories).slice(0, MAX_DOC_CHARS);
-  profile.linkedinUrl = normalizeLinkedinUrl(req.body.linkedinUrl);
-  res.json({ profile: writeProfile(profile) });
-}));
-
-// Your LinkedIn profile, exported from LinkedIn as a PDF (More > Save to PDF).
-app.post('/api/profile/linkedin', upload.single('linkedinFile'), route(async (req, res) => {
-  if (!req.file) throw new HttpError(400, 'Choose your LinkedIn PDF first.');
-  const profile = readProfile();
-  profile.linkedinText = await pdfToText(req.file);
-  res.json({ profile: writeProfile(profile) });
-}));
-
-app.delete('/api/profile/linkedin', route(async (req, res) => {
-  const profile = readProfile();
-  profile.linkedinText = '';
-  res.json({ profile: writeProfile(profile) });
-}));
-
-// Add a resume. A chosen PDF wins over pasted text.
-app.post('/api/resumes', upload.single('resumeFile'), route(async (req, res) => {
-  const profile = readProfile();
-  const text = req.file ? await pdfToText(req.file) : clean(req.body.resumeText).slice(0, MAX_DOC_CHARS);
-  if (!text) throw new HttpError(400, 'Add the resume as a PDF or pasted text.');
-  const resume = {
-    id: crypto.randomUUID(),
-    name: clean(req.body.name).slice(0, 60) || `Resume ${profile.resumes.length + 1}`,
-    text,
-    source: req.file ? 'pdf' : 'text',
-    updatedAt: new Date().toISOString(),
-  };
-  profile.resumes.push(resume);
-  profile.activeResumeId = resume.id;
-  res.json({ profile: writeProfile(profile) });
-}));
-
-// Rename, edit the text of, or replace the PDF for an existing resume.
-app.put('/api/resumes/:id', upload.single('resumeFile'), route(async (req, res) => {
-  const profile = readProfile();
-  const resume = findResume(profile, req.params.id);
-  if (req.body.name !== undefined) resume.name = clean(req.body.name).slice(0, 60) || resume.name;
-  if (req.file) {
-    resume.text = await pdfToText(req.file);
-    resume.source = 'pdf';
-  } else if (req.body.resumeText !== undefined) {
-    const text = clean(req.body.resumeText).slice(0, MAX_DOC_CHARS);
-    if (!text) throw new HttpError(400, "A resume can't be empty. Delete it instead.");
-    resume.text = text;
-    resume.source = 'text';
-  }
-  resume.updatedAt = new Date().toISOString();
-  res.json({ profile: writeProfile(profile) });
-}));
-
-app.delete('/api/resumes/:id', route(async (req, res) => {
-  const profile = readProfile();
-  findResume(profile, req.params.id);
-  profile.resumes = profile.resumes.filter((r) => r.id !== req.params.id);
-  if (profile.activeResumeId === req.params.id) profile.activeResumeId = profile.resumes.length ? profile.resumes[0].id : null;
-  res.json({ profile: writeProfile(profile) });
-}));
-
-// Reads a contact's LinkedIn PDF and returns its text. Nothing is saved.
-app.post('/api/extract-pdf', upload.single('file'), route(async (req, res) => {
+// Reads a PDF (resume or LinkedIn export) and returns its text. Nothing is saved.
+app.post('/api/extract-pdf', pdfLimiter, upload.single('file'), route(async (req, res) => {
   if (!req.file) throw new HttpError(400, 'Choose a PDF first.');
   res.json({ text: await pdfToText(req.file) });
-}));
-
-// ---------- Coffee chat tracker ----------
-// People you've met or plan to meet, saved in data/chats.json (gitignored, like the profile).
-
-const CHAT_STATUSES = ['To reach out', 'Reached out', 'Scheduled', 'Completed', 'Follow-up needed'];
-
-function readChats() {
-  if (!fs.existsSync(CHATS_PATH)) return [];
-  const raw = JSON.parse(fs.readFileSync(CHATS_PATH, 'utf8'));
-  return Array.isArray(raw.chats) ? raw.chats : [];
-}
-
-function writeChats(chats) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(CHATS_PATH, JSON.stringify({ chats }, null, 2));
-  return chats;
-}
-
-// Dates are calendar days in YYYY-MM-DD form (from the browser's date picker), or empty.
-function cleanDate(value, label) {
-  const raw = clean(value);
-  if (!raw) return '';
-  const parsed = new Date(`${raw}T00:00:00Z`);
-  // The round trip rejects impossible dates such as Feb 31.
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(raw) || Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== raw) {
-    throw new HttpError(400, `${label} isn't a valid date.`);
-  }
-  return raw;
-}
-
-// Builds a tracker entry from form input, validating every field.
-function chatFromInput(body, existing = {}) {
-  const name = clean(body.name).slice(0, 100);
-  if (!name) throw new HttpError(400, "Add the person's name.");
-  const email = clean(body.email).slice(0, 200);
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new HttpError(400, "That email address doesn't look right.");
-  return {
-    ...existing,
-    name,
-    email,
-    linkedinUrl: normalizeLinkedinUrl(body.linkedinUrl),
-    company: clean(body.company).slice(0, 100),
-    role: clean(body.role).slice(0, 100),
-    status: CHAT_STATUSES.includes(body.status) ? body.status : 'To reach out',
-    nextChatDate: cleanDate(body.nextChatDate, 'Next chat date'),
-    lastChatDate: cleanDate(body.lastChatDate, 'Last chat date'),
-    followUpDate: cleanDate(body.followUpDate, 'Follow-up date'),
-    howConnected: clean(body.howConnected).slice(0, 300),
-    notes: clean(body.notes).slice(0, 5000),
-    thankYouSent: body.thankYouSent === true || body.thankYouSent === 'true' || body.thankYouSent === 'on',
-    updatedAt: new Date().toISOString(),
-  };
-}
-
-function findChat(chats, id) {
-  const chat = chats.find((c) => c.id === id);
-  if (!chat) throw new HttpError(404, 'That person is no longer in your tracker. Refresh the page.');
-  return chat;
-}
-
-app.get('/api/chats', (req, res) => {
-  res.json({ chats: readChats(), statuses: CHAT_STATUSES });
-});
-
-app.post('/api/chats', route(async (req, res) => {
-  const chats = readChats();
-  if (chats.length >= 1000) throw new HttpError(400, 'Your tracker is full (1,000 people). Delete some to add more.');
-  const chat = chatFromInput(req.body || {}, { id: crypto.randomUUID(), createdAt: new Date().toISOString() });
-  chats.push(chat);
-  writeChats(chats);
-  res.json({ chat, chats });
-}));
-
-app.put('/api/chats/:id', route(async (req, res) => {
-  const chats = readChats();
-  const index = chats.indexOf(findChat(chats, req.params.id));
-  chats[index] = chatFromInput(req.body || {}, chats[index]);
-  writeChats(chats);
-  res.json({ chat: chats[index], chats });
-}));
-
-app.delete('/api/chats/:id', route(async (req, res) => {
-  const chats = readChats();
-  findChat(chats, req.params.id);
-  res.json({ chats: writeChats(chats.filter((c) => c.id !== req.params.id)) });
 }));
 
 const SYSTEM_PROMPT = `You help an MBA student prepare for a coffee chat. Write in the student's first-person voice where applicable.
@@ -387,6 +277,7 @@ const OUTPUT_SCHEMA = {
 };
 
 async function callModel(messages, { system = SYSTEM_PROMPT, schema = OUTPUT_SCHEMA, effort = EFFORT, maxTokens = 16000 } = {}) {
+  checkDailyBudget();
   const request = {
     model: MODEL,
     max_tokens: maxTokens,
@@ -491,17 +382,20 @@ function logCost(calls) {
   );
 }
 
-app.post('/api/generate', async (req, res, next) => {
+app.post('/api/generate', generateLimiter, async (req, res, next) => {
   try {
     const key = process.env.ANTHROPIC_API_KEY || '';
     if (!key || key.includes('replace-with-your-key')) {
       throw new HttpError(500, 'ANTHROPIC_API_KEY is not set. Add your key to the .env file in the repo root and restart the server.');
     }
-    const profile = readProfile();
-    if (!profile.resumes.length) throw new HttpError(400, 'Add a resume to your profile first.');
-
     const input = req.body || {};
-    const resume = input.resumeId ? findResume(profile, input.resumeId) : findResume(profile, profile.activeResumeId);
+    // The browser sends the chosen resume and profile text with each request; the server stores none of it.
+    const resume = { text: clean(input.resumeText).slice(0, MAX_DOC_CHARS) };
+    if (!resume.text) throw new HttpError(400, 'Add a resume to your profile first.');
+    const profile = {
+      personalStories: clean(input.personalStories).slice(0, MAX_DOC_CHARS),
+      linkedinText: clean(input.myLinkedinText).slice(0, MAX_DOC_CHARS),
+    };
     // Up to MAX_TONES tones, comma-separated, e.g. "Warm, Curious".
     const toneItems = clean(input.tone).split(',').map((t) => t.replace(/\s+/g, ' ').trim()).filter(Boolean);
     if (toneItems.length > MAX_TONES) throw new HttpError(400, `Pick up to ${MAX_TONES} tones.`);
@@ -522,11 +416,6 @@ app.post('/api/generate', async (req, res, next) => {
     const isSuggested = (t) => TONE_SUGGESTIONS.some((s) => s.toLowerCase() === t.toLowerCase());
     const toneKind = !toneItems.length ? 'default' : toneItems.every(isSuggested) ? 'suggested' : 'custom';
 
-    // Remember the chosen resume so it's selected next time.
-    if (profile.activeResumeId !== resume.id) {
-      profile.activeResumeId = resume.id;
-      writeProfile(profile);
-    }
 
     const messages = [{ role: 'user', content: buildUserMessage(profile, resume, contact) }];
     const calls = [];
@@ -593,6 +482,6 @@ app.use((err, req, res, next) => {
 });
 
 // Bound to localhost only because this app holds personal data and has no login.
-app.listen(PORT, '127.0.0.1', () => {
+app.listen(PORT, HOST, () => {
   console.log(`Hire Grounds running at http://localhost:${PORT}`);
 });
