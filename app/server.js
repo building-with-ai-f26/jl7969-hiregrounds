@@ -28,6 +28,22 @@ const app = express();
 // Behind Render's proxy, trust one hop so rate limits see each visitor's real IP address.
 if (IS_HOSTED) app.set('trust proxy', 1);
 
+// TEMPORARY (Nov 22): shows the caller their own IP as the server sees it, to count Render's proxy hops
+// for the rate limit. Remove after measuring.
+app.get('/api/ip-check', (req, res) => {
+  const h = req.headers;
+  res.json({
+    reqIp: req.ip,
+    reqIps: req.ips,
+    xForwardedFor: h['x-forwarded-for'] || null,
+    cfConnectingIp: h['cf-connecting-ip'] || null,
+    trueClientIp: h['true-client-ip'] || null,
+    xRealIp: h['x-real-ip'] || null,
+    forwarded: h.forwarded || null,
+    socket: req.socket.remoteAddress,
+  });
+});
+
 // Security headers. The content security policy only allows our own files plus PostHog analytics.
 app.use(helmet({
   contentSecurityPolicy: {
