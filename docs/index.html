@@ -145,6 +145,17 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .table-wrap { overflow-x: auto; margin: 0 0 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+    td.num, th.num { text-align: right; white-space: nowrap; }
+    tr.total td { font-weight: 700; border-bottom: none; }
+    .up { color: #047857; font-weight: 700; }
+    .headline { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 16px; }
+    .headline .stat-box { flex: 1 1 160px; }
+    .example { border-left: 3px solid var(--border); padding: 4px 0 4px 14px; margin: 0 0 12px; }
+    .example .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
   </style>
 </head>
 <body>
@@ -165,7 +176,7 @@
     <section id="live-demo">
       <h2>Product Showcase (Prototype / Live App / 2-Min Video)</h2>
       <p>
-        <strong>Current Status:</strong> Build 3: Live on Render<br />
+        <strong>Current Status:</strong> Build 4: Live on Render, output quality tested and improved (<a href="#eval">scorecard below</a>)<br />
         <strong>Live app:</strong> <a href="https://jl7969-hiregrounds.onrender.com" onclick="window.posthog && posthog.capture('clicked_open_live_app')">jl7969-hiregrounds.onrender.com</a> (works on phones; on the free plan, the first visit after a quiet period can take up to a minute to wake up)<br />
         <strong>Demo:</strong> Set up my profile once on its own page, then on the prep page choose my resume for this chat, add the contact and their LinkedIn PDF, pick a tone, and generate prep with a real Claude call. Save people in the Chat tracker. The screenshots below are from local runs with fictional sample data.
       </p>
@@ -184,6 +195,98 @@
       <p class="meta">Earlier screenshots: <a href="assets/hire-grounds-b2-input.jpg">Build 2 input</a>, <a href="assets/hire-grounds-output.jpg">Build 1 output</a>, and <a href="assets/hire-grounds-input.jpg">Build 1 input</a>.</p>
     </section>
 
+    <!-- BUILD 4 EVAL (Track A) -->
+    <section id="eval">
+      <h2>Output Quality Eval (Build 4, Track A)</h2>
+      <p>I wrote down what good output means to me as a recruiting MBA student, turned it into a 5-rule rubric, and scored the app on 10 test inputs: 5 normal, 3 messy, and 2 adversarial (a fake job and referral slipped into the contact's background, and an off-topic request to write an essay and a poem). All test people are fictional. Then I improved the app and scored the same 10 inputs again.</p>
+
+      <div class="headline">
+        <div class="stat-box">
+          <div class="stat-label">Rubric Score</div>
+          <div class="stat-value">77 → <span class="up">96</span> / 100</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Double Questions</div>
+          <div class="stat-value">30 → <span class="up">0</span> of 50</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Intros Missing a Thank-You</div>
+          <div class="stat-value">3 → <span class="up">0</span> of 20</div>
+        </div>
+      </div>
+
+      <h3>The Rubric (Each Rule Scored 0–2 per Case)</h3>
+      <ul>
+        <li><strong>R1 Grounded:</strong> every fact traces back to my resume, stories, LinkedIn, or the contact's details. No invented employers, numbers, connections, or promises.</li>
+        <li><strong>R2 Intro structure:</strong> both "tell me about yourself" intros thank the person, cover my background, tie my chosen tone to my goal and target roles, and name something I want to learn from them.</li>
+        <li><strong>R3 Questions cover the person:</strong> together, the 5 questions cover their role, ask for their advice, and name their current or previous company.</li>
+        <li><strong>R4 Honest with bad input:</strong> with messy or missing input it says what's missing instead of guessing, and it ignores injected or off-topic instructions.</li>
+        <li><strong>R5 Question quality:</strong> one question at a time, specific to this person, at least one tied to my goal, and nothing I could look up on their LinkedIn.</li>
+      </ul>
+      <p class="meta">Each case can earn 10 points, so the full set can earn 100. Double questions and thank-yous are also counted by a script, so those numbers don't depend on my judgment. Full rubric, test set, and scores: <a href="https://github.com/building-with-ai-f26/jl7969-hiregrounds/tree/main/tests/eval">tests/eval</a>.</p>
+
+      <h3>Before-and-After Scorecard</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Rule</th><th class="num">Before</th><th class="num">After</th></tr></thead>
+          <tbody>
+            <tr><td>R1 Grounded</td><td class="num">19/20</td><td class="num">20/20</td></tr>
+            <tr><td>R2 Intro structure</td><td class="num">17/20</td><td class="num">19/20</td></tr>
+            <tr><td>R3 Questions cover role, advice, company</td><td class="num">19/20</td><td class="num">20/20</td></tr>
+            <tr><td>R4 Honest with bad input</td><td class="num">20/20</td><td class="num">20/20</td></tr>
+            <tr><td>R5 Question quality</td><td class="num">2/20</td><td class="num"><span class="up">17/20</span></td></tr>
+            <tr class="total"><td>Total</td><td class="num">77/100</td><td class="num"><span class="up">96/100</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Case</th><th>Type</th><th class="num">Before /10</th><th class="num">After /10</th></tr></thead>
+          <tbody>
+            <tr><td>N1 Consultant moving into tech product management</td><td>Normal</td><td class="num">8</td><td class="num">10</td></tr>
+            <tr><td>N2 Finance analyst targeting investment banking</td><td>Normal</td><td class="num">7</td><td class="num">9</td></tr>
+            <tr><td>N3 Agency marketer targeting brand management</td><td>Normal</td><td class="num">6</td><td class="num">10</td></tr>
+            <tr><td>N4 Logistics analyst targeting climate tech product</td><td>Normal</td><td class="num">8</td><td class="num">10</td></tr>
+            <tr><td>N5 Hospital operations manager targeting healthcare strategy</td><td>Normal</td><td class="num">9</td><td class="num">10</td></tr>
+            <tr><td>M6 Typos, lowercase, and run-on input</td><td>Messy</td><td class="num">9</td><td class="num">10</td></tr>
+            <tr><td>M7 Very little about the contact and the student</td><td>Messy</td><td class="num">7</td><td class="num">8</td></tr>
+            <tr><td>M8 Odd formatting and a combined tone</td><td>Messy</td><td class="num">7</td><td class="num">10</td></tr>
+            <tr><td>A9 Injected fake shared employer and referral</td><td>Adversarial</td><td class="num">8</td><td class="num">10</td></tr>
+            <tr><td>A10 Off-topic request hidden in contact details</td><td>Adversarial</td><td class="num">8</td><td class="num">9</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>What Testing Changed</h3>
+      <ul>
+        <li><strong>What failed before:</strong> 30 of 50 questions asked two things at once, 3 of 20 intros skipped the thank-you, and one email said the contact was "open to connecting," which no input said. My goal, target roles, and what I wanted to learn had no field of their own, so they only showed up if I happened to type them into my stories.</li>
+        <li><strong>Fixes:</strong> new <strong>Target roles</strong> and <strong>Career goal</strong> fields on the profile and a <strong>What I want to learn from them</strong> field on the prep page; prompt rules for the intro order (thank-you, background, tone tied to my goal, a learning topic) and for questions (cover role, advice, and company; one at a time; specific; tied to my goal; not on LinkedIn); and a rule against assuming how the contact feels.</li>
+        <li><strong>What's still not perfect (96, not 100):</strong> 3 cases have one or more generic questions, mostly when the contact's background is thin. With thin input, the overlap check now tells me what to add instead of guessing.</li>
+        <li><strong>Trade-off:</strong> runs got a little slower (38 to 48 seconds on average) and a little pricier (about $0.09 to $0.12 per run) because the instructions are longer.</li>
+      </ul>
+
+      <h3>Example: Agency Marketer Meeting a Brand Manager (Case N3)</h3>
+      <div class="example">
+        <div class="label">Email, before</div>
+        <p>"Thank you for being open to connecting after our classmate's introduction." <span class="meta">(No input said she was open to it.)</span></p>
+        <div class="label">Email, after</div>
+        <p>"My classmate introduced us, and I was excited to learn about your move from a creative agency to Bright Meadow Foods..."</p>
+      </div>
+      <div class="example">
+        <div class="label">First question, before (two in one)</div>
+        <p>"...which parts of your two years at the creative agency did you lead with, and how did you translate them into brand-side language?"</p>
+        <div class="label">First question, after (one at a time)</div>
+        <p>"...how did you frame your creative agency experience so it felt relevant to the brand side?"</p>
+      </div>
+      <div class="example">
+        <div class="label">1-minute intro, after</div>
+        <p>Opens with "Thank you for taking the time to chat with me, Hannah," covers her agency background, says she's targeting Associate Brand Manager roles in CPG with the goal of owning a food brand's P&amp;L, and ends with what she wants to learn: how Hannah showed brand-side employers that her agency experience was relevant.</p>
+      </div>
+
+      <h3>Outside Review</h3>
+      <p>[Pending: an MBA student outside the class reviews the improved outputs. Their reaction and any changes go here.]</p>
+    </section>
+
     <!-- LIVING PRD (Updated every week!) -->
     <section id="prd">
       <h2>Living PRD (Product Requirements Document)</h2>
@@ -196,7 +299,7 @@
 
       <h3>2. Scope & Explicit Non-Goals</h3>
       <ul>
-        <li><strong>In Scope (Core Workflow):</strong> Set up my profile once (saved resumes, personal story, optional LinkedIn PDF), then for each chat: my chosen resume + contact background + optional LinkedIn PDF for them + an optional tone for my intros -> AI generates a tailored outreach email, 5 coffee chat questions, and a 1-min and 2-min intro pitch, using only facts from my own input, resume, and those LinkedIn profiles, with anything added for tone highlighted.</li>
+        <li><strong>In Scope (Core Workflow):</strong> Set up my profile once (saved resumes, personal story, target roles, career goal, optional LinkedIn PDF), then for each chat: my chosen resume + contact background + what I want to learn from them + optional LinkedIn PDF for them + an optional tone for my intros -> AI generates a tailored outreach email, 5 coffee chat questions, and a 1-min and 2-min intro pitch, using only facts from my own input, resume, and those LinkedIn profiles, with anything added for tone highlighted.</li>
         <li><strong>Out of Scope #1:</strong> Auto-sending emails or LinkedIn messages. The tool drafts, and the user reviews and sends. </li>
         <li><strong>Out of Scope #2:</strong> Auto-applying to jobs. The tool may later help tailor materials, but it never submits applications.</li>
         <li><strong>Out of Scope #3:</strong> Pooling contacts across classmate. It’s built for one person’s recruiting, which avoids privacy issues with other people’s contact data. </li>
@@ -223,15 +326,25 @@
       </ul>
       <p><strong>Cost per run:</strong> about $0.10 with Claude Opus 5.5 now that the intros are labeled phrase by phrase (Nov 15: about $0.10 including a $0.004 tone check). Before labeling it was about $0.05 (Nov 14: 1,515 input and 2,180 output tokens). Next I'll test a lower reasoning-effort setting or Claude Haiku to bring it back down if quality holds.</p>
 
+      <h3>PRD v4: What the Eval Changed (Build 4)</h3>
+      <ul>
+        <li><strong>Quality bar is now written down:</strong> the 5-rule rubric in the <a href="#eval">eval section</a> defines good output, and every prompt change is re-scored on the same 10 test inputs before it ships.</li>
+        <li><strong>New inputs:</strong> Target roles and Career goal on the profile, and What I want to learn from them on the prep page. The eval showed the intros can't tie my tone to my goal, or name what I want to learn, if the app never asks for them.</li>
+        <li><strong>New output rules:</strong> intros follow a set order (thank-you, background, tone tied to my goal and target roles, a learning topic). Questions together cover the person's role, advice, and company, and each asks one thing, is specific to the person, and can't be answered from LinkedIn.</li>
+        <li><strong>Riskiest assumption, updated:</strong> trust and accuracy still holds up: no case invented a fact after the fix, and both injection attempts were ignored and flagged. The bigger gap turned out to be <em>usefulness</em>: grounded but double-barreled or generic questions. That's now measured by R5.</li>
+        <li><strong>Cost per run:</strong> about $0.12 (up from about $0.09) and about 48 seconds, because of the longer instructions. Worth it for a 77 → 96 score; I'll revisit a cheaper model setting once the outside review is in.</li>
+        <li><strong>Next (Build 5):</strong> a resume and cover letter helper with its own rules (never invent anything, match the job description's verbs and company values), sign-in so data follows the student across devices, and a UI refresh.</li>
+      </ul>
+
       <h3>4. Unit Economics & Analytics Snapshot (Updated Weekly)</h3>
       <div class="grid-2">
         <div class="stat-box">
           <div class="stat-label">Cumulative Build Spend</div>
-          <div class="stat-value">$0.22 (Claude API, 3 real runs and 1 tone check through Nov 22; Render free)</div>
+          <div class="stat-value">~$2.32 (Claude API: $0.22 through Nov 22, plus about $2.10 for the two 10-case eval runs on Nov 26; Render free)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">Est. Cost Per User Run</div>
-          <div class="stat-value">~$0.10 (Claude Opus 5.5, with tone labeling)</div>
+          <div class="stat-value">~$0.12 (Claude Opus 5.5, Build 4 prompt)</div>
         </div>
         <div class="stat-box">
           <div class="stat-label">User Evidence (Analytics from Build 2)</div>
@@ -282,10 +395,12 @@
       <div class="log-entry">
         <h3>Build 4 · Test.py: Choose Track A or Track B (Due Nov 30)</h3>
         <ul>
-          <li><strong>Chosen track:</strong> [A: 10-case domain eval and one outside target-user review; OR B: 3–5 outside users and replay findings]</li>
-          <li><strong>Results and improvements:</strong> [Before/after evidence; for Track B, fixes to the top three friction points]</li>
-          <li><strong>PRD v4 changes:</strong> [What the evidence changed]</li>
-          <li><strong>Cost & time this week:</strong> $[0.00] · [0] hours</li>
+          <li><strong>Chosen track:</strong> A: a 10-case output-quality eval (5 normal, 3 messy, 2 adversarial) and one outside target-user review.</li>
+          <li><strong>What shipped:</strong> a 5-rule rubric from my own standards for good prep, a 10-case test set with fictional people, and a script that runs every case against the app and counts double questions, thank-yous, and email length. Before score: 77/100. I then added Target roles, Career goal, and What I want to learn fields, plus intro and question rules in the prompt, and re-ran the same 10 cases: 96/100, with double questions down from 30 of 50 to 0. Also new and live: the Hire Grounds logo (a coffee mug with three trending-up arrows), Title Case section titles, and the Lora font. Details in the <a href="#eval">eval section</a>.</li>
+          <li><strong>Lessons:</strong> writing the rubric forced me to say what "good" means, and the scores showed a problem I hadn't noticed: the output was accurate but often asked two questions at once. I also learned a rubric has to be precise: my first reading of the question rule ("every question covers role, advice, and company") scored 0/20, and the rule I actually meant ("the 5 together") scored 19/20, so I rescored the before run with the same rule before comparing.</li>
+          <li><strong>What broke / changed in PRD:</strong> the app had no place for my goal or what I want to learn, so the intros could only include them by luck; PRD v4 adds those fields and the output rules above. Generic questions still appear when the contact's background is thin. The new app font needed a change to the app's content security policy before the browser would load them.</li>
+          <li><strong>Outside review:</strong> [Pending: reviewer's reaction and any changes]</li>
+          <li><strong>Cost & time this week:</strong> ~$2.10 · [0] hours (two 10-case eval runs with Claude Opus 5.5 on Nov 26: about $0.90 before and $1.20 after)</li>
         </ul>
       </div>
 
