@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Hire Grounds">
+  <title>Hire Grounds</title>
+  <!-- Navy tile -->
+  <rect width="120" height="120" rx="24" fill="#1B2A4A"/>
+  <!-- Steam: three trending-up arrows. Each arrowhead is centered on the last line segment, so both sides match. -->
+  <g fill="none" stroke="#8FB4F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M33 52 L38 41 L42 45 L46 36"/>
+    <path d="M49 52 L54 41 L58 45 L62 36"/>
+    <path d="M65 52 L70 41 L74 45 L78 36"/>
+  </g>
+  <g fill="#8FB4F5" stroke="#8FB4F5" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M50.06 26.86 L50.98 37.12 L41.84 33.06 Z"/>
+    <path d="M66.06 26.86 L66.98 37.12 L57.84 33.06 Z"/>
+    <path d="M82.06 26.86 L82.98 37.12 L73.84 33.06 Z"/>
+  </g>
+  <!-- Purple mug -->
+  <path d="M30 60 H86 V82 Q86 96 72 96 H44 Q30 96 30 82 Z" fill="#8B6CF0"/>
+  <path d="M86 66 H92 Q100 66 100 75 Q100 84 92 84 H86" fill="none" stroke="#8B6CF0" stroke-width="7"/>
+  <rect x="36" y="66" width="18" height="5" rx="2.5" fill="#B9A6F8"/>
+</svg>
