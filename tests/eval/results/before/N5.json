@@ -1,0 +1,160 @@
+{
+  "id": "N5",
+  "category": "normal",
+  "label": "Hospital operations manager targeting healthcare strategy",
+  "mode": "before",
+  "status": 200,
+  "ms": 36832,
+  "request": {
+    "resumeText": "Aisha Bello (sample)\nMBA Candidate, Class of 2028\nOperations Manager, Riverside Community Hospital (fictional), 2019-2026: reduced ER wait times 18% by redesigning triage scheduling; managed a team of 12\nB.S. Nursing, 2015",
+    "personalStories": "I started as a nurse and still think about patients first. I want my next role to change how care is delivered at scale.\nTarget roles: Strategy roles at health systems or healthcare consulting firms\nCareer goal: Move from running one hospital's operations to shaping strategy across a health system",
+    "myLinkedinText": "",
+    "name": "Rahul Mehta (sample)",
+    "role": "Director of Strategy",
+    "company": "Mercy Peak Health",
+    "pastExperience": "Healthcare consultant at Lumen Consulting for 6 years, then joined Mercy Peak Health to lead system-wide strategy.",
+    "connection": "Spoke at our healthcare club event; I asked a question afterward",
+    "notes": "What I want to learn from them: How clinical operations experience translates into strategy work",
+    "linkedinText": "",
+    "tone": "Humble"
+  },
+  "response": {
+    "overlap_assessment": "The real connection is that Rahul spoke at your healthcare club event and you asked him a question afterward. His move from healthcare consulting at Lumen Consulting to leading system-wide strategy at Mercy Peak Health matches your target roles closely, but your backgrounds don't directly overlap: yours is clinical operations and his is consulting.",
+    "outreach_email": "Subject: Following up from the healthcare club event\n\nHi Rahul,\n\nThank you for speaking at our healthcare club event. I'm the student who asked you a question afterward. I'm an MBA candidate (Class of 2028). I started as a nurse and spent 2019-2026 as Operations Manager at Riverside Community Hospital.\n\nI'm hoping to move into health system strategy, and your path from Lumen Consulting to leading system-wide strategy at Mercy Peak Health is one I'd love to learn from. Would you have 20 minutes for a coffee chat in the coming weeks? I'm especially curious how clinical operations experience translates into strategy work.\n\nThank you,\nAisha Bello",
+    "questions": [
+      "After six years at Lumen Consulting, what made you decide to move in-house to Mercy Peak Health instead of staying in consulting?",
+      "How is leading system-wide strategy at Mercy Peak different from advising health systems as a consultant, especially when it comes to getting recommendations implemented?",
+      "In your strategy work, where does clinical operations experience add the most value, and where do former operators usually need to build new skills?",
+      "For someone coming from operations at a single hospital, would you suggest going through consulting first, as you did, or moving directly into a strategy role at a health system?",
+      "How does your team at Mercy Peak bring frontline clinical perspectives, such as nurses and ER teams, into system-wide strategy decisions?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thanks for making the time, Rahul. ",
+        "added": true
+      },
+      {
+        "text": "I'm Aisha, an MBA candidate in the Class of 2028. I started my career as a nurse, after earning my B.S. in Nursing in 2015,",
+        "added": false
+      },
+      {
+        "text": " and honestly,",
+        "added": true
+      },
+      {
+        "text": " I still think about patients first. From 2019 to 2026, I was Operations Manager at Riverside Community Hospital, where I managed a team of 12 and redesigned triage scheduling, which reduced ER wait times by 18%.",
+        "added": false
+      },
+      {
+        "text": " I'm proud of that, but it was very much a team effort.",
+        "added": true
+      },
+      {
+        "text": " What I've come to realize is that",
+        "added": true
+      },
+      {
+        "text": " I want to change how care is delivered at scale, so I'm hoping to move from running one hospital's operations to shaping strategy across a health system. Your path from Lumen Consulting to leading system-wide strategy at Mercy Peak Health",
+        "added": false
+      },
+      {
+        "text": " is exactly the kind I'm trying to learn from, and I'd be grateful to hear",
+        "added": true
+      },
+      {
+        "text": " how clinical operations experience translates into strategy work.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you again for taking the time, Rahul.",
+        "added": true
+      },
+      {
+        "text": " We met when you spoke at our healthcare club event, and I asked you a question afterward.",
+        "added": false
+      },
+      {
+        "text": " I really appreciated your time that day.",
+        "added": true
+      },
+      {
+        "text": "\n\nI'm Aisha, and I'm an MBA candidate in the Class of 2028. My background is in nursing. I earned my B.S. in Nursing in 2015 and started my career as a nurse.",
+        "added": false
+      },
+      {
+        "text": " That experience shaped me more than anything else,",
+        "added": true
+      },
+      {
+        "text": " and I still think about patients first.",
+        "added": false
+      },
+      {
+        "text": "\n\nFrom 2019 to 2026, I was Operations Manager at Riverside Community Hospital, where I managed a team of 12.",
+        "added": false
+      },
+      {
+        "text": " I learned a lot from that team, and I'm still learning how to be a better leader.",
+        "added": true
+      },
+      {
+        "text": " One project that meant a lot to me",
+        "added": true
+      },
+      {
+        "text": " was redesigning triage scheduling, which reduced ER wait times by 18%.",
+        "added": false
+      },
+      {
+        "text": " Seeing how one change in process could affect so many patients made me want to think bigger.",
+        "added": true
+      },
+      {
+        "text": "\n\nI want my next role to change how care is delivered at scale. My goal is to move from running one hospital's operations to shaping strategy across a health system, so I'm focused on strategy roles at health systems and healthcare consulting firms.",
+        "added": false
+      },
+      {
+        "text": " I'll be honest that I know I have a lot to learn about the strategy side.",
+        "added": true
+      },
+      {
+        "text": "\n\nThat's a big part of why I wanted to talk with you.",
+        "added": true
+      },
+      {
+        "text": " You spent six years as a healthcare consultant at Lumen Consulting and then joined Mercy Peak Health to lead system-wide strategy,",
+        "added": false
+      },
+      {
+        "text": " which is a path I really admire. I'd be grateful to hear your perspective on",
+        "added": true
+      },
+      {
+        "text": " how clinical operations experience translates into strategy work",
+        "added": false
+      },
+      {
+        "text": ", and where you think someone with my background could be most useful.",
+        "added": true
+      }
+    ],
+    "email_words": 107,
+    "email_over_limit": false,
+    "tone": "Humble",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "emailWords": 107,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 3,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 151,
+    "tmay2Words": 278,
+    "addedPhrases1": 5,
+    "addedPhrases2": 10
+  }
+}

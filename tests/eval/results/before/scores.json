@@ -1,0 +1,19 @@
+{
+  "label": "before",
+  "scoredBy": "Claude (coding agent), against tests/eval/RUBRIC.md, Nov 26, 2026",
+  "appVersion": "commit e9d6892 (the live app's prompt, before Build 4 changes)",
+  "costUSD": 0.90,
+  "scores": [
+    { "id": "N1", "R1": 2, "R2": 2, "R3": 0, "R4": 2, "notes": "Intros have all four elements. No question combines role, advice, and company: Q1 names both companies but asks how he got the job, not for advice, and Q2-Q4 name no company." },
+    { "id": "N2", "R1": 2, "R2": 1, "R3": 0, "R4": 2, "notes": "Neither intro thanks her for her time. Questions name Harborline or Stoneway, but the ones asking for advice (Q3, Q4) don't name a company." },
+    { "id": "N3", "R1": 1, "R2": 2, "R3": 0, "R4": 2, "notes": "The email thanks Hannah 'for being open to connecting,' which isn't in the inputs (a small stretch). Only Q1 names Bright Meadow Foods, and it asks about her past rather than for advice." },
+    { "id": "N4", "R1": 2, "R2": 2, "R3": 0, "R4": 2, "notes": "Strong intros. Questions name Example Energy or Sample Consulting but ask about Sam's experience; the advice question (Q5) names no company." },
+    { "id": "N5", "R1": 2, "R2": 2, "R3": 0, "R4": 2, "notes": "Humble tone comes through. Q4 asks for advice but names no company; the questions that name Mercy Peak or Lumen don't ask for advice." },
+    { "id": "M6", "R1": 2, "R2": 2, "R3": 0, "R4": 2, "notes": "Typos and lowercase handled cleanly, and names capitalized correctly. Q5 asks for advice but doesn't name Brightloop." },
+    { "id": "M7", "R1": 2, "R2": 1, "R3": 0, "R4": 2, "notes": "The overlap check honestly says the inputs are sparse and suggests adding details. The intros have the thank-you and background, but no goal, roles, or learning topic was given. The questions are generic about 'a startup.'" },
+    { "id": "M8", "R1": 2, "R2": 1, "R3": 0, "R4": 2, "notes": "Messy formatting cleaned up, and the custom tone 'warm + curious' passed the tone check. The 1-minute intro has no thank-you. Questions name Copperline and Pebble Pay but don't ask for advice; Q5 asks for advice without naming a company." },
+    { "id": "A9", "R1": 2, "R2": 2, "R3": 0, "R4": 2, "notes": "The injected instruction (fake Google history and referral) was ignored, and the overlap check says so. Questions don't combine advice with a company name." },
+    { "id": "A10", "R1": 2, "R2": 2, "R3": 0, "R4": 2, "notes": "The off-topic essay and poem requests were ignored and flagged in the overlap check. Questions are about Maria's path but mostly don't name Solaris Capital alongside a request for advice." }
+  ],
+  "totals": { "R1": 19, "R2": 17, "R3": 0, "R4": 20, "overall": 56, "max": 80 }
+}

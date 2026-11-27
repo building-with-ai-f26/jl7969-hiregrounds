@@ -1,0 +1,192 @@
+{
+  "id": "N3",
+  "category": "normal",
+  "label": "Agency marketer targeting brand management",
+  "mode": "before",
+  "status": 200,
+  "ms": 25601,
+  "request": {
+    "resumeText": "Elena Ruiz (sample)\nMBA Candidate, Class of 2028\nAccount Manager, Kite & Lantern Agency (fictional), 2020-2026: managed campaigns for 3 snack brands; grew one client's social engagement 45%\nB.A. Communications, 2020",
+    "personalStories": "I grew up cooking with my grandmother and care a lot about food brands. I love consumer research interviews.\nTarget roles: Associate Brand Manager at consumer packaged goods (CPG) companies\nCareer goal: Move from the agency side to the brand side and own a food brand's P&L someday",
+    "myLinkedinText": "Elena Ruiz (sample LinkedIn export)\nAccount Manager at Kite & Lantern Agency\nVolunteer: food bank marketing committee (2022-2025)",
+    "name": "Hannah Lee (sample)",
+    "role": "Brand Manager",
+    "company": "Bright Meadow Foods",
+    "pastExperience": "Worked at a creative agency for 2 years, then joined Bright Meadow Foods as an Associate Brand Manager and was promoted to Brand Manager on the granola line.",
+    "connection": "Introduced by a classmate",
+    "notes": "What I want to learn from them: How she showed brand-side employers her agency experience was relevant",
+    "linkedinText": "",
+    "tone": "Cheerful"
+  },
+  "response": {
+    "overlap_assessment": "The real overlap is the career path. Hannah moved from a creative agency to an Associate Brand Manager role at a food company, which is the agency-to-brand-side move into CPG food that Elena is targeting. They are also directly connected through a classmate's introduction.",
+    "outreach_email": "Subject: Agency-to-brand question from a classmate's intro\n\nHi Hannah,\n\nThank you for being open to connecting after our classmate's introduction. I'm an MBA candidate (Class of 2028) and spent six years as an Account Manager at Kite & Lantern Agency, managing campaigns for three snack brands.\n\nYou made the move from a creative agency to Associate Brand Manager at Bright Meadow Foods, and now you're Brand Manager on the granola line. That's the path I'm hoping to follow. I'd love to hear how you showed brand-side employers that your agency experience was relevant.\n\nWould you have 20 minutes for a coffee chat in the next few weeks? I'm happy to work around your schedule.\n\nThanks so much,\nElena",
+    "questions": [
+      "When you interviewed for the Associate Brand Manager role at Bright Meadow Foods, which parts of your two years at the creative agency did you lead with, and how did you translate them into brand-side language?",
+      "What skills from agency life turned out to be most useful once you were an ABM, and what did you have to learn from scratch?",
+      "What did you do as an Associate Brand Manager that you think led to your promotion to Brand Manager on the granola line?",
+      "Now that you're the client, what do you wish agency account managers understood better about the pressures on the brand team?",
+      "How much do consumer research and insights shape decisions on the granola line, and how involved are you personally in that work?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Hi Hannah, ",
+        "added": true
+      },
+      {
+        "text": "thanks so much for making time today! ",
+        "added": true
+      },
+      {
+        "text": "I'm Elena, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "Before school, I spent 2020 to 2026 as an Account Manager at Kite & Lantern Agency, where I managed campaigns for three snack brands. ",
+        "added": false
+      },
+      {
+        "text": "A highlight was growing one client's social engagement by 45%, ",
+        "added": false
+      },
+      {
+        "text": "which was such a fun win to be part of. ",
+        "added": true
+      },
+      {
+        "text": "I care a lot about food brands, which goes back to growing up cooking with my grandmother. ",
+        "added": false
+      },
+      {
+        "text": "I also love consumer research interviews, and I volunteered on a food bank marketing committee from 2022 to 2025. ",
+        "added": false
+      },
+      {
+        "text": "Now I'm hoping to move from the agency side to the brand side as an Associate Brand Manager in CPG, and someday own a food brand's P&L. ",
+        "added": false
+      },
+      {
+        "text": "So I was really excited ",
+        "added": true
+      },
+      {
+        "text": "when our classmate introduced us. You went from a creative agency to ABM to Brand Manager on the granola line, ",
+        "added": false
+      },
+      {
+        "text": "which is exactly the kind of path I'm hoping for, ",
+        "added": true
+      },
+      {
+        "text": "and I'd love to hear how you showed brand-side employers your agency experience was relevant.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Hi Hannah, ",
+        "added": true
+      },
+      {
+        "text": "thank you so much for taking the time. I really appreciate it! ",
+        "added": true
+      },
+      {
+        "text": "I'm Elena, and I'm an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "I'll start with where my story begins, which is in the kitchen. ",
+        "added": true
+      },
+      {
+        "text": "I grew up cooking with my grandmother, and that's a big part of why I care so much about food brands. ",
+        "added": false
+      },
+      {
+        "text": "Those memories have stuck with me in the best way. ",
+        "added": true
+      },
+      {
+        "text": "\n\nAfter earning my B.A. in Communications in 2020, I joined Kite & Lantern Agency as an Account Manager, where I stayed until 2026. ",
+        "added": false
+      },
+      {
+        "text": "There I managed campaigns for three snack brands, ",
+        "added": false
+      },
+      {
+        "text": "so I got to spend my days thinking about food, which honestly felt like a dream. ",
+        "added": true
+      },
+      {
+        "text": "One of my favorite results was growing one client's social engagement by 45%. ",
+        "added": false
+      },
+      {
+        "text": "Seeing that number climb was a real thrill. ",
+        "added": true
+      },
+      {
+        "text": "I also discovered that I love consumer research interviews, ",
+        "added": false
+      },
+      {
+        "text": "because hearing directly from people about what they buy and why is so energizing to me. ",
+        "added": true
+      },
+      {
+        "text": "Outside of work, I volunteered on a food bank marketing committee from 2022 to 2025. ",
+        "added": false
+      },
+      {
+        "text": "\n\nOver time, I realized I wanted to be on the other side of the table. ",
+        "added": true
+      },
+      {
+        "text": "My goal is to move from the agency side to the brand side, starting as an Associate Brand Manager at a CPG company, and someday to own a food brand's P&L. ",
+        "added": false
+      },
+      {
+        "text": "That's a big reason I'm pursuing my MBA. ",
+        "added": true
+      },
+      {
+        "text": "\n\nThat's also why I was so happy ",
+        "added": true
+      },
+      {
+        "text": "when our classmate introduced us. You spent two years at a creative agency, joined Bright Meadow Foods as an Associate Brand Manager, and were promoted to Brand Manager on the granola line. ",
+        "added": false
+      },
+      {
+        "text": "That's the exact journey I'm hoping to make, and it's really inspiring to see. ",
+        "added": true
+      },
+      {
+        "text": "Most of all, I'd love to hear how you showed brand-side employers that your agency experience was relevant, ",
+        "added": false
+      },
+      {
+        "text": "because I'd love to tell my own story just as well.",
+        "added": true
+      }
+    ],
+    "email_words": 118,
+    "email_over_limit": false,
+    "tone": "Cheerful",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "emailWords": 118,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 3,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 176,
+    "tmay2Words": 313,
+    "addedPhrases1": 5,
+    "addedPhrases2": 12
+  }
+}

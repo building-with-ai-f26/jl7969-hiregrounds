@@ -1,0 +1,176 @@
+{
+  "id": "M6",
+  "category": "messy",
+  "label": "Typos, lowercase, and run-on input",
+  "mode": "before",
+  "status": 200,
+  "ms": 40836,
+  "request": {
+    "resumeText": "chris park (sample) mba candiate 2028. sales associate at nimbus cloud (fictional) 2021-2026 closed 1.2m in new bussiness, top rep 2024. ba history",
+    "personalStories": "i like helping customers solve problmes, i played college soccer\nTarget roles: product marketing manager at saas companys\nCareer goal: go from sales to product marketing",
+    "myLinkedinText": "",
+    "name": "taylor nguyen (sample)",
+    "role": "sr product marketing mgr",
+    "company": "brightloop software",
+    "pastExperience": "was in sales at brightloop for 2 yrs then moved to pmm, been pmm 4 years",
+    "connection": "linkedin cold outreach",
+    "notes": "What I want to learn from them: how she switched from sales to pmm",
+    "linkedinText": "",
+    "tone": "Professional"
+  },
+  "response": {
+    "overlap_assessment": "There is one real overlap: Taylor started in sales at Brightloop and moved into product marketing, which is the move Chris wants to make into PMM at a SaaS company. There is no shared employer, school, or mutual connection, since this is a cold LinkedIn outreach.",
+    "outreach_email": "Subject: Your path from sales to PMM at Brightloop\n\nHi Taylor,\n\nI'm Chris, a 2028 MBA candidate. From 2021 to 2026 I was a sales associate at Nimbus Cloud, where I closed $1.2M in new business and was top rep in 2024. I'm now working toward product marketing roles at SaaS companies.\n\nI saw that you spent two years in sales at Brightloop before moving into PMM, where you've been for four years. Would you be open to a 20-minute chat? I'd like to hear how you made that switch and what carried over from sales. I'm happy to work around your schedule.\n\nThanks,\nChris Park",
+    "questions": [
+      "When you moved from sales into PMM at Brightloop, how did the move actually happen? Did you pitch the idea, apply to an open role, or have someone advocate for you?",
+      "Which skills from your two years in sales carried over most directly to product marketing, and what did you have to learn from scratch in your first year as a PMM?",
+      "Now that you're a senior PMM, how does your sales background shape the way you work with Brightloop's sales team?",
+      "Over your four years in PMM, what separated growing into a senior product marketing role from being a strong individual PMM?",
+      "Your switch was internal, and I'd likely be coming from outside the company. How would you suggest someone with a sales track record show they're ready for a PMM role?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Hi Taylor, ",
+        "added": false
+      },
+      {
+        "text": "thanks for making the time today. ",
+        "added": true
+      },
+      {
+        "text": "I'm Chris Park, and I'm an MBA candidate in the class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "From 2021 to 2026, I worked as a sales associate at Nimbus Cloud. ",
+        "added": false
+      },
+      {
+        "text": "Over that time, I closed $1.2 million in new business and was the top rep in 2024. ",
+        "added": false
+      },
+      {
+        "text": "I like helping customers solve problems, ",
+        "added": false
+      },
+      {
+        "text": "and that's a big part of why I'm drawn to product marketing. ",
+        "added": true
+      },
+      {
+        "text": "My goal is to move from sales into a product marketing manager role at a SaaS company. ",
+        "added": false
+      },
+      {
+        "text": "I reached out because you made that same move at Brightloop. You spent two years in sales before moving into PMM, where you've now been for four years. ",
+        "added": false
+      },
+      {
+        "text": "I'd value hearing ",
+        "added": true
+      },
+      {
+        "text": "how you made that switch, ",
+        "added": false
+      },
+      {
+        "text": "and what you think someone with my background should focus on first.",
+        "added": true
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Hi Taylor, ",
+        "added": false
+      },
+      {
+        "text": "thanks for making the time today. ",
+        "added": true
+      },
+      {
+        "text": "I'm Chris Park, an MBA candidate in the class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "My undergraduate degree is a BA in history, ",
+        "added": false
+      },
+      {
+        "text": "and I've found that background useful for thinking about how to tell a clear, well-supported story.",
+        "added": true
+      },
+      {
+        "text": "\n\nFrom 2021 to 2026, I worked as a sales associate at Nimbus Cloud. ",
+        "added": false
+      },
+      {
+        "text": "During that time, I closed $1.2 million in new business, and in 2024 I was the top rep. ",
+        "added": false
+      },
+      {
+        "text": "I like helping customers solve problems, ",
+        "added": false
+      },
+      {
+        "text": "and over time I became more interested in the questions behind each conversation: why a customer cares, and how best to explain what a product can do for them. Working directly with customers gave me a close view of what they needed and how they responded to different messages. ",
+        "added": true
+      },
+      {
+        "text": "I also played college soccer, ",
+        "added": false
+      },
+      {
+        "text": "and that experience shaped how I think about working as part of a team toward a shared goal.",
+        "added": true
+      },
+      {
+        "text": "\n\nThat interest in the customer side of the story is what's pulling me toward product marketing. ",
+        "added": true
+      },
+      {
+        "text": "My goal is to move from sales into a product marketing manager role at a SaaS company, ",
+        "added": false
+      },
+      {
+        "text": "and I'm using the MBA to build the skills to make that shift deliberately. I see product marketing as a natural place to combine a customer-facing perspective with a sharper focus on positioning and messaging.",
+        "added": true
+      },
+      {
+        "text": "\n\nThat's why I wanted to speak with you specifically. ",
+        "added": true
+      },
+      {
+        "text": "You spent two years in sales at Brightloop before moving into product marketing, and you've now been in PMM for four years. Today you're a senior product marketing manager there. ",
+        "added": false
+      },
+      {
+        "text": "I'd value understanding ",
+        "added": true
+      },
+      {
+        "text": "how you made that switch from sales to PMM, ",
+        "added": false
+      },
+      {
+        "text": "what carried over from your sales experience, and what you'd recommend I focus on as I prepare to make a similar move.",
+        "added": true
+      }
+    ],
+    "email_words": 106,
+    "email_over_limit": false,
+    "tone": "Professional",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "emailWords": 106,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 2,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 134,
+    "tmay2Words": 293,
+    "addedPhrases1": 4,
+    "addedPhrases2": 9
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "id": "N4",
+  "category": "normal",
+  "label": "Logistics analyst targeting climate tech product roles",
+  "mode": "before",
+  "status": 200,
+  "ms": 47927,
+  "request": {
+    "resumeText": "Jordan Rivera (sample)\nMBA Candidate, Class of 2028\nProduct Analyst, Fictional Logistics Co., 2022-2026: led a warehouse scheduling pilot across two sites",
+    "personalStories": "Grew up helping at my family's bakery. Interested in climate tech and operations. I like telling the story of our first failed pilot and what it taught me.\nTarget roles: Product Manager roles at climate tech or energy software companies\nCareer goal: Bring operations and product experience into climate tech",
+    "myLinkedinText": "Jordan Rivera (sample LinkedIn export)\nVolunteer: logistics coordinator, Sample Community Food Bank (2023-2025)",
+    "name": "Sam Okafor (sample)",
+    "role": "Director of Product",
+    "company": "Example Energy",
+    "pastExperience": "Operations Consultant at Sample Consulting Group (2016-2020), then Example Energy (2021-present).",
+    "connection": "Same MBA program, alumni directory",
+    "notes": "Spoke on a climate tech panel\nWhat I want to learn from them: Which operations skills carried over into product, and how to break into energy software",
+    "linkedinText": "Sam Okafor (sample LinkedIn export)\nDirector of Product, Example Energy (2021-present)\nOperations Consultant, Sample Consulting Group (2016-2020)",
+    "tone": "Warm, Curious"
+  },
+  "response": {
+    "overlap_assessment": "We're in the same MBA program (I found Sam through the alumni directory), and we both come from operations before product. Sam went from operations consulting to Director of Product at Example Energy, which is the operations-to-product, energy-focused move I'm hoping to make. We have no shared employers or other direct connections.",
+    "outreach_email": "Subject: Your path from operations to product\n\nHi Sam,\n\nI found you through our MBA program's alumni directory. I'm Jordan Rivera, Class of 2028. Before school I was a Product Analyst at Fictional Logistics Co., where I led a warehouse scheduling pilot across two sites.\n\nI'm hoping to move into product at a climate tech or energy software company. Your path from operations consulting to Director of Product at Example Energy is one I'd love to learn from. I also saw you spoke on a climate tech panel.\n\nWould you be open to a 20-minute chat? I'm especially curious which operations skills carried over into product.\n\nThanks,\nJordan",
+    "questions": [
+      "When you moved from Sample Consulting Group to Example Energy in 2021, which operations consulting skills carried over most directly into product work, and which habits did you have to unlearn?",
+      "How did you frame your consulting background when you first went after a product role at an energy company? Was there a particular story or skill that made the case for you?",
+      "For someone coming from logistics product work like warehouse scheduling, which parts of product at Example Energy would feel familiar, and which would feel most foreign?",
+      "What did you take away from speaking on the climate tech panel? Were there topics there that you think people trying to break into energy software are underestimating?",
+      "As Director of Product, what do you look for when you consider PM candidates who come from operations rather than from traditional software product roles?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thanks so much for making time, Sam. ",
+        "added": true
+      },
+      {
+        "text": "I'm Jordan Rivera, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "I grew up helping at my family's bakery, ",
+        "added": false
+      },
+      {
+        "text": "which is where I first got curious about how things run day to day. ",
+        "added": true
+      },
+      {
+        "text": "From 2022 to 2026, I was a Product Analyst at Fictional Logistics Co., where I led a warehouse scheduling pilot across two sites. ",
+        "added": false
+      },
+      {
+        "text": "Outside of work, I volunteered as a logistics coordinator at Sample Community Food Bank. ",
+        "added": false
+      },
+      {
+        "text": "One of my favorite stories to tell is about our first failed pilot and what it taught me. ",
+        "added": false
+      },
+      {
+        "text": "Now I'm hoping to bring my operations and product experience into climate tech as a Product Manager, ideally at a climate tech or energy software company. ",
+        "added": false
+      },
+      {
+        "text": "I was really curious to talk with you, ",
+        "added": true
+      },
+      {
+        "text": "since you made the jump from operations consulting into product at Example Energy, ",
+        "added": false
+      },
+      {
+        "text": "and I'd love to hear which operations skills carried over for you.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thanks so much for making time, Sam. I really appreciate it. ",
+        "added": true
+      },
+      {
+        "text": "I'm Jordan Rivera, an MBA candidate in the Class of 2028, ",
+        "added": false
+      },
+      {
+        "text": "and I found you through our program's alumni directory.",
+        "added": false
+      },
+      {
+        "text": "\n\nMy story really starts at ",
+        "added": true
+      },
+      {
+        "text": "my family's bakery, where I grew up helping out. ",
+        "added": false
+      },
+      {
+        "text": "Looking back, that's probably where I first fell for the puzzle of how a day's work actually gets done.",
+        "added": true
+      },
+      {
+        "text": "\n\nFrom 2022 to 2026, I worked as a Product Analyst at Fictional Logistics Co. ",
+        "added": false
+      },
+      {
+        "text": "The project I'm proudest of is ",
+        "added": true
+      },
+      {
+        "text": "leading a warehouse scheduling pilot across two sites. ",
+        "added": false
+      },
+      {
+        "text": "Working across two sites gave me a real appreciation for the operational side of product work. ",
+        "added": true
+      },
+      {
+        "text": "Alongside that, from 2023 to 2025, I volunteered as a logistics coordinator at Sample Community Food Bank, ",
+        "added": false
+      },
+      {
+        "text": "which kept me close to operations in a very different setting.",
+        "added": true
+      },
+      {
+        "text": "\n\nOne story I love telling is about our first failed pilot and what it taught me. ",
+        "added": false
+      },
+      {
+        "text": "Honestly, I think I grew more from that stumble than from the things that went smoothly, ",
+        "added": true
+      },
+      {
+        "text": "and it's a big part of how I approach new projects now.",
+        "added": true
+      },
+      {
+        "text": "\n\nThese days, I'm interested in climate tech and operations, ",
+        "added": false
+      },
+      {
+        "text": "and my goal is to bring my operations and product experience into climate tech, ",
+        "added": false
+      },
+      {
+        "text": "ideally as a Product Manager at a climate tech or energy software company. ",
+        "added": false
+      },
+      {
+        "text": "That's a big part of why I was so excited to talk with you. ",
+        "added": true
+      },
+      {
+        "text": "Your path from Operations Consultant at Sample Consulting Group to Director of Product at Example Energy ",
+        "added": false
+      },
+      {
+        "text": "is exactly the kind of bridge I'm hoping to build, ",
+        "added": true
+      },
+      {
+        "text": "and I saw you spoke on a climate tech panel, too. ",
+        "added": false
+      },
+      {
+        "text": "I'm really curious ",
+        "added": true
+      },
+      {
+        "text": "which operations skills carried over into product for you, and how you'd think about breaking into energy software today.",
+        "added": false
+      }
+    ],
+    "email_words": 108,
+    "email_over_limit": false,
+    "tone": "Warm, Curious",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "emailWords": 108,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 2,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 154,
+    "tmay2Words": 289,
+    "addedPhrases1": 3,
+    "addedPhrases2": 11
+  }
+}

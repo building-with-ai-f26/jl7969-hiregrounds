@@ -1,0 +1,116 @@
+{
+  "id": "M7",
+  "category": "messy",
+  "label": "Very little information about the contact and the student",
+  "mode": "before",
+  "status": 200,
+  "ms": 33821,
+  "request": {
+    "resumeText": "Kim Alvarez (sample)\nMBA Candidate, Class of 2028\nAnalyst, 2023-2026",
+    "personalStories": "",
+    "myLinkedinText": "",
+    "name": "Jo (sample)",
+    "role": "PM",
+    "company": "a startup",
+    "pastExperience": "",
+    "connection": "",
+    "notes": "",
+    "linkedinText": "",
+    "tone": ""
+  },
+  "response": {
+    "overlap_assessment": "There is little genuine overlap based on the inputs. Your resume shows only that you were an analyst (2023-2026) and are an MBA candidate (Class of 2028), and Jo's profile shows only that they are a PM at a startup, with no shared employer, school, or stated connection. The inputs are very sparse, so most of each intro is framing rather than facts. Add your employer and specific experiences before the chat.",
+    "outreach_email": "Subject: Question about your work as a startup PM\n\nHi Jo,\n\nI'm Kim Alvarez, an MBA candidate in the Class of 2028. Before the program, I worked as an analyst from 2023 to 2026. I'm trying to understand how product management works in practice, and I'd value hearing about your experience as a PM at a startup: how you spend your time, how you decide what to prioritize, and how you came into the role.\n\nWould you be open to a 20-minute call or coffee in the coming weeks? I'm happy to work around your schedule.\n\nThank you,\nKim Alvarez",
+    "questions": [
+      "What does a typical week look like for you as a PM at your startup, and how much of your time goes to customers, engineering, and strategy?",
+      "At a startup, where resources are limited, how do you decide what gets built next when several priorities compete?",
+      "How did you come into a PM role at a startup, and what made that setting the right fit for you?",
+      "Which skills have mattered most in your PM work, and which ones did you have to build on the job?",
+      "For someone coming from an analyst role, which habits carry over well to startup product management, and which ones would I need to unlearn?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thanks for making the time to speak with me, Jo. ",
+        "added": true
+      },
+      {
+        "text": "I'm Kim Alvarez, and I'm an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "Before business school, I worked as an analyst from 2023 to 2026. ",
+        "added": false
+      },
+      {
+        "text": "I value the discipline that analyst work builds: breaking a problem into its parts, being rigorous about the details, and communicating conclusions clearly. ",
+        "added": true
+      },
+      {
+        "text": "Now that I'm in the MBA program, I'm using this time to learn how different roles actually work in practice, rather than relying on job descriptions alone. ",
+        "added": true
+      },
+      {
+        "text": "You're a PM at a startup, ",
+        "added": false
+      },
+      {
+        "text": "and I'm curious about what product management looks like in that setting, where priorities can shift quickly and one person often covers a lot of ground. I'd appreciate hearing how you approach the role day to day, what you think makes someone effective in it, and how you got there.",
+        "added": true
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you for taking the time to meet with me, Jo. I appreciate it, and I'll keep my introduction brief so we have plenty of time for your perspective. ",
+        "added": true
+      },
+      {
+        "text": "My name is Kim Alvarez, and I'm an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "Before starting the program, I worked as an analyst from 2023 to 2026. ",
+        "added": false
+      },
+      {
+        "text": "Looking back, what I value most from that period is the discipline it built. Analyst work rewards structured thinking: taking an ambiguous question, breaking it into manageable pieces, being careful with the details, and then presenting a conclusion clearly enough that others can act on it. Those are habits I want to keep developing.\n\n",
+        "added": true
+      },
+      {
+        "text": "Business school has given me a chance to step back and think deliberately about what comes next. Rather than choosing a direction based on titles or job descriptions, I'm trying to understand how roles work in practice, which is why conversations like this one are so valuable to me.\n\n",
+        "added": true
+      },
+      {
+        "text": "You're a PM at a startup, ",
+        "added": false
+      },
+      {
+        "text": "and that combination is one I'd like to understand better. My impression is that product management at a startup can look quite different from the same title at a larger organization, with fewer layers, faster decisions, and a wider range of responsibilities. I'd value hearing how that matches your experience. ",
+        "added": true
+      },
+      {
+        "text": "In particular, I'm interested in how you spend your time across a typical week, how you decide what to prioritize when everything feels urgent, and which skills have mattered most in your role. I'd also like to hear how you found your way to it. ",
+        "added": true
+      },
+      {
+        "text": "I'm still early in figuring out my own path, so I'm here mainly to listen and learn.",
+        "added": true
+      }
+    ],
+    "email_words": 100,
+    "email_over_limit": false,
+    "tone": "Professional",
+    "tone_kind": "default"
+  },
+  "checks": {
+    "emailWords": 100,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 4,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 141,
+    "tmay2Words": 278,
+    "addedPhrases1": 4,
+    "addedPhrases2": 6
+  }
+}
