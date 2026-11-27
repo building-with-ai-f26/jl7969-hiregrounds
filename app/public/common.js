@@ -92,7 +92,9 @@ function writeStore(key, value) {
   }
 }
 
-const emptyProfile = () => ({ resumes: [], activeResumeId: null, personalStories: '', linkedinUrl: '', linkedinText: '', updatedAt: null });
+const emptyProfile = () => ({
+  resumes: [], activeResumeId: null, targetRoles: '', careerGoal: '', personalStories: '', linkedinUrl: '', linkedinText: '', updatedAt: null,
+});
 
 function loadProfile() {
   const profile = { ...emptyProfile(), ...readStore(STORE_KEYS.profile, {}) };

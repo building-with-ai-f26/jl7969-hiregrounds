@@ -1,0 +1,156 @@
+{
+  "id": "M7",
+  "category": "messy",
+  "label": "Very little information about the contact and the student",
+  "mode": "after",
+  "status": 200,
+  "ms": 45473,
+  "request": {
+    "resumeText": "Kim Alvarez (sample)\nMBA Candidate, Class of 2028\nAnalyst, 2023-2026",
+    "personalStories": "",
+    "myLinkedinText": "",
+    "name": "Jo (sample)",
+    "role": "PM",
+    "company": "a startup",
+    "pastExperience": "",
+    "connection": "",
+    "notes": "",
+    "linkedinText": "",
+    "tone": "",
+    "targetRoles": "",
+    "careerGoal": "",
+    "wantToLearn": ""
+  },
+  "response": {
+    "overlap_assessment": "There is little genuine overlap here. The inputs show no shared employer, school, connection, or stated goal, only that I'm an MBA candidate and former analyst and Jo is a PM at a startup. These materials would be much stronger if I added my analyst employer and function, my target roles and career goal, Jo's company name and past experience, how we're connected, and what I specifically want to learn.",
+    "outreach_email": "Subject: MBA student curious about your PM work at a startup\n\nHi Jo,\n\nI'm Kim Alvarez, an MBA candidate in the Class of 2028. I worked as an analyst from 2023 to 2026, and I'm using my MBA to learn about different career paths. I'd like to understand what product management looks like at a startup from someone doing the work.\n\nWould you have 20 minutes for a short call or coffee in the coming weeks? I'm happy to work around your schedule.\n\nThank you,\nKim Alvarez",
+    "questions": [
+      "What does a typical week look like for you as a PM at your startup?",
+      "How does working at a startup shape the way you set priorities as a PM?",
+      "What skills have mattered most in your product management work at the startup?",
+      "Which parts of an analyst background tend to carry over well into a PM role at a startup?",
+      "Coming from an analyst role, what would you recommend I focus on during my MBA to test whether startup product management fits me?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thank you for taking the time to speak with me, Jo. ",
+        "added": false
+      },
+      {
+        "text": "I'm Kim Alvarez, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "From 2023 to 2026, I worked as an analyst. ",
+        "added": false
+      },
+      {
+        "text": "I value the experience that role gave me, and it's part of what I bring into this next chapter. ",
+        "added": true
+      },
+      {
+        "text": "I'm using my time in the MBA program as an opportunity to explore where I can contribute most next. ",
+        "added": true
+      },
+      {
+        "text": "I want to approach that decision thoughtfully, and I believe conversations with people who are doing the work are one of the best ways to do that. ",
+        "added": true
+      },
+      {
+        "text": "That's a big part of why I wanted to speak with you. ",
+        "added": true
+      },
+      {
+        "text": "You're a PM at a startup, ",
+        "added": false
+      },
+      {
+        "text": "and I'd like to understand what product management looks like day to day in that setting, as well as what advice you'd have for someone with an analyst background who is exploring it.",
+        "added": true
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you for taking the time to speak with me today, Jo. ",
+        "added": false
+      },
+      {
+        "text": "I'll keep my introduction brief so we have plenty of time for your perspective.",
+        "added": true
+      },
+      {
+        "text": "\n\nTo start with my background, ",
+        "added": false
+      },
+      {
+        "text": "I'm Kim Alvarez, and I'm an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "From 2023 to 2026, I worked as an analyst. ",
+        "added": false
+      },
+      {
+        "text": "Spending those years in an analyst role gave me experience I value, and I see it as a solid foundation for what comes next. ",
+        "added": true
+      },
+      {
+        "text": "Analytical work also gave me an appreciation for asking good questions before drawing conclusions, which is how I'm approaching this stage of my career.",
+        "added": true
+      },
+      {
+        "text": "\n\nLooking ahead, I see the MBA as a deliberate opportunity to explore where I can add the most value. ",
+        "added": true
+      },
+      {
+        "text": "Being clear about my options early in the program matters to me. ",
+        "added": true
+      },
+      {
+        "text": "I'd rather make that decision based on real insight than on assumptions, so I'm making a point of learning directly from professionals across different roles and environments. ",
+        "added": true
+      },
+      {
+        "text": "I want to be thoughtful and disciplined about this process, and conversations like this one are central to how I'm doing that.",
+        "added": true
+      },
+      {
+        "text": "\n\nThat brings me to why I was especially glad to connect with you. ",
+        "added": true
+      },
+      {
+        "text": "You're a PM at a startup, ",
+        "added": false
+      },
+      {
+        "text": "which is a path I'd like to understand much better. ",
+        "added": true
+      },
+      {
+        "text": "In particular, I'm interested in learning what product management looks like day to day in a startup setting, how you think about the PM role in that environment, and what advice you'd offer someone with an analyst background who is exploring this direction. ",
+        "added": true
+      },
+      {
+        "text": "I'm looking forward to hearing your perspective.",
+        "added": true
+      }
+    ],
+    "email_words": 87,
+    "email_over_limit": false,
+    "tone": "Professional",
+    "tone_kind": "default"
+  },
+  "checks": {
+    "doubleQuestions": 0,
+    "emailWords": 87,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 5,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 147,
+    "tmay2Words": 260,
+    "addedPhrases1": 5,
+    "addedPhrases2": 11
+  }
+}

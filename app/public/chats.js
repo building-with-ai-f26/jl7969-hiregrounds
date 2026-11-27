@@ -36,9 +36,9 @@ function render() {
     .sort((a, b) => (b.lastChatDate || b.updatedAt).localeCompare(a.lastChatDate || a.updatedAt));
 
   const groups = [
-    ['Upcoming chats', upcoming, 'No upcoming chats scheduled.'],
-    ['Needs follow-up', followUps, 'No follow-ups due.'],
-    ['Everyone else', rest, chats.length ? 'Nobody else here.' : 'No one yet. Click "Add a person" to start your tracker.'],
+    ['Upcoming Chats', upcoming, 'No upcoming chats scheduled.'],
+    ['Needs Follow-Up', followUps, 'No follow-ups due.'],
+    ['Everyone Else', rest, chats.length ? 'Nobody else here.' : 'No one yet. Click "Add a person" to start your tracker.'],
   ];
   $('chat-groups').replaceChildren(...groups
     .filter(([, list], i) => list.length || i === 2 || !(query || status))
@@ -158,7 +158,7 @@ function openChatEditor(chat = null) {
   editingChatId = chat ? chat.id : null;
   const form = $('chat-editor');
   form.reset();
-  $('chat-editor-title').textContent = chat ? `Edit ${chat.name}` : 'Add a person';
+  $('chat-editor-title').textContent = chat ? `Edit ${chat.name}` : 'Add a Person';
   if (chat) {
     for (const key of ['name', 'role', 'company', 'email', 'linkedinUrl', 'status', 'nextChatDate', 'lastChatDate', 'followUpDate', 'howConnected', 'notes']) {
       form.elements[key].value = chat[key] || '';

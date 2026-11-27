@@ -1,0 +1,184 @@
+{
+  "id": "M8",
+  "category": "messy",
+  "label": "Odd formatting: bullet symbols, extra spacing, and a combined tone",
+  "mode": "after",
+  "status": 200,
+  "ms": 54302,
+  "request": {
+    "resumeText": "•••  NOAH  BENNETT (sample)  •••\n>> MBA Candidate || Class of 2028\n>> ANALYST @ Copperline Bank (fictional) || 2021 - 2026 ||| built 3 credit risk models ;; trained 5 new hires\n>> B.S.    Mathematics",
+    "personalStories": "  - interested in fintech\n  - love teaching / mentoring\n  - chess club president  ",
+    "myLinkedinText": "",
+    "name": "Grace   Kim (sample)",
+    "role": "Head   of   Lending   Product",
+    "company": "Pebble   Pay",
+    "pastExperience": "Risk  Analyst @ Copperline Bank (2014-2018)   ||   Pebble Pay (2018-now)",
+    "connection": "Both worked at Copperline Bank (different years)",
+    "notes": "",
+    "linkedinText": "",
+    "tone": "warm + curious",
+    "targetRoles": "Product roles at fintech companies (lending or payments)",
+    "careerGoal": "Use my risk modeling background to build lending products",
+    "wantToLearn": "how risk experience helps in lending product roles"
+  },
+  "response": {
+    "overlap_assessment": "There is strong, genuine overlap: you both worked at Copperline Bank in risk-related analyst roles (in different years), and Grace moved from risk analysis into leading lending product at a fintech, Pebble Pay, which is the path your goal describes. Adding your MBA program name or any lending or payments product exposure you have would make the outreach a bit more concrete.",
+    "outreach_email": "Subject: Copperline risk analyst exploring lending product\n\nHi Grace,\n\nI'm Noah Bennett, an MBA candidate in the Class of 2028. I spent 2021 to 2026 as an analyst at Copperline Bank, where I built credit risk models, so I was excited to see that you started as a risk analyst there before moving to Pebble Pay.\n\nI'm aiming for product roles at fintech companies, with the goal of using my risk modeling background to build lending products. I'd be grateful for 20 minutes to hear how your risk experience has shaped your work leading lending product.\n\nWould you be open to a short coffee chat in the coming weeks? I'm happy to work around your schedule.\n\nBest,\nNoah Bennett",
+    "questions": [
+      "How has your time as a risk analyst at Copperline Bank shaped the way you make decisions as Head of Lending Product at Pebble Pay?",
+      "When you moved from risk at Copperline to product at Pebble Pay, which skills from your risk work turned out to matter most?",
+      "What gaps did you have to close when you shifted from analyzing credit risk to owning lending product decisions at Pebble Pay?",
+      "What does leading the lending product team at Pebble Pay look like day to day?",
+      "What advice would you give someone who has built credit risk models at a bank and now wants a lending product role at a fintech company?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thank you ",
+        "added": false
+      },
+      {
+        "text": "so much ",
+        "added": true
+      },
+      {
+        "text": "for taking the time to talk with me, Grace. I'm Noah Bennett, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "Before business school, ",
+        "added": true
+      },
+      {
+        "text": "I spent 2021 to 2026 as an analyst at Copperline Bank, where I built three credit risk models and trained five new hires. I studied mathematics in undergrad. I'm interested in fintech, and my career goal is to use my risk modeling background to build lending products, so I'm targeting product roles at fintech companies in lending or payments. ",
+        "added": false
+      },
+      {
+        "text": "I've grown really curious about what happens after a model is built, when risk thinking shapes a product people actually use. It's fun that ",
+        "added": true
+      },
+      {
+        "text": "we both spent time at Copperline. Since you started as a risk analyst there before moving into lending product at Pebble Pay, ",
+        "added": false
+      },
+      {
+        "text": "I'd love to hear ",
+        "added": true
+      },
+      {
+        "text": "how your risk experience has helped you in lending product.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you ",
+        "added": false
+      },
+      {
+        "text": "so much ",
+        "added": true
+      },
+      {
+        "text": "for taking the time to talk with me, Grace. ",
+        "added": false
+      },
+      {
+        "text": "I really appreciate it.",
+        "added": true
+      },
+      {
+        "text": "\n\nI'm Noah Bennett, and I'm an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "My foundation is quantitative: ",
+        "added": true
+      },
+      {
+        "text": "I earned a B.S. in Mathematics, ",
+        "added": false
+      },
+      {
+        "text": "and I've always enjoyed working through problems with a lot of moving pieces. ",
+        "added": true
+      },
+      {
+        "text": "From 2021 to 2026, I worked as an analyst at Copperline Bank. While I was there, I built three credit risk models, ",
+        "added": false
+      },
+      {
+        "text": "which taught me a lot about how lending decisions get made. ",
+        "added": true
+      },
+      {
+        "text": "I also trained five new hires, ",
+        "added": false
+      },
+      {
+        "text": "and that turned out to be one of my favorite parts of the job. ",
+        "added": true
+      },
+      {
+        "text": "I love teaching and mentoring, and I've also been chess club president, ",
+        "added": false
+      },
+      {
+        "text": "another place where I've gotten to help people think a few moves ahead.",
+        "added": true
+      },
+      {
+        "text": "\n\n",
+        "added": false
+      },
+      {
+        "text": "Over time, ",
+        "added": true
+      },
+      {
+        "text": "I've become interested in fintech. My career goal is to use my risk modeling background to build lending products, so I'm focusing on product roles at fintech companies in lending or payments. ",
+        "added": false
+      },
+      {
+        "text": "What draws me in is the idea of taking the thinking behind a risk model and turning it into something customers actually experience. I'm genuinely curious about how that shift works in practice, and what it's like to own the product rather than just the model behind it.",
+        "added": true
+      },
+      {
+        "text": "\n\n",
+        "added": false
+      },
+      {
+        "text": "That's a big part of why I was excited to talk with you. It's fun that ",
+        "added": true
+      },
+      {
+        "text": "we both spent time at Copperline, just in different years. You started as a risk analyst there and then moved to Pebble Pay, where you now lead lending product. ",
+        "added": false
+      },
+      {
+        "text": "I'd love to learn ",
+        "added": true
+      },
+      {
+        "text": "how your risk experience has helped you in lending product roles.",
+        "added": false
+      }
+    ],
+    "email_words": 119,
+    "email_over_limit": false,
+    "tone": "warm + curious",
+    "tone_kind": "custom"
+  },
+  "checks": {
+    "doubleQuestions": 0,
+    "emailWords": 119,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 4,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 146,
+    "tmay2Words": 273,
+    "addedPhrases1": 4,
+    "addedPhrases2": 11
+  }
+}

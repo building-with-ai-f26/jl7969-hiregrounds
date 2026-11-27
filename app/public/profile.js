@@ -22,6 +22,8 @@ function renderProfile(next) {
   }
 
   if (!aboutDirty) {
+    $('target-roles').value = profile.targetRoles || '';
+    $('career-goal').value = profile.careerGoal || '';
     $('personal-stories').value = profile.personalStories || '';
     $('my-linkedin-url').value = profile.linkedinUrl || '';
     updateMyOpen();
@@ -92,7 +94,7 @@ function resumeCard(resume) {
 
 function openEditor(resume = null) {
   editingId = resume ? resume.id : null;
-  $('editor-title').textContent = resume ? `Edit "${resume.name}"` : 'Add a resume';
+  $('editor-title').textContent = resume ? `Edit "${resume.name}"` : 'Add a Resume';
   $('editor-name').value = resume ? resume.name : '';
   $('editor-text').value = resume ? resume.text : '';
   $('editor-file').value = '';
@@ -184,7 +186,7 @@ function deleteResume(resume) {
 
 // ---------- About you ----------
 
-for (const id of ['personal-stories', 'my-linkedin-url']) {
+for (const id of ['target-roles', 'career-goal', 'personal-stories', 'my-linkedin-url']) {
   $(id).addEventListener('input', () => {
     aboutDirty = true;
     setMessage($('profile-message'), 'Unsaved changes.');
@@ -196,11 +198,18 @@ function saveAbout() {
   const href = linkedinHref(url);
   if (url && !href) throw new Error('Use a linkedin.com profile URL.');
   const next = loadProfile();
+  next.targetRoles = $('target-roles').value.trim().slice(0, 300);
+  next.careerGoal = $('career-goal').value.trim().slice(0, 300);
   next.personalStories = $('personal-stories').value.trim().slice(0, MAX_DOC_CHARS);
   next.linkedinUrl = href;
   saveProfile(next);
   aboutDirty = false;
-  track('profile saved', { has_stories: Boolean(next.personalStories), has_linkedin_url: Boolean(next.linkedinUrl) });
+  track('profile saved', {
+    has_stories: Boolean(next.personalStories),
+    has_linkedin_url: Boolean(next.linkedinUrl),
+    has_target_roles: Boolean(next.targetRoles),
+    has_career_goal: Boolean(next.careerGoal),
+  });
   renderProfile(next);
 }
 

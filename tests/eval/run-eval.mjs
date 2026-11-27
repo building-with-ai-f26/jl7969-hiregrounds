@@ -72,7 +72,10 @@ function autoChecks(c, out) {
   const q = out.questions || [];
   const t1 = joinSegments(out.tmay_1min);
   const t2 = joinSegments(out.tmay_2min);
+  // A "double" question asks two things: more than one question mark, or a second question joined with "and".
+  const isDouble = (x) => (x.match(/\?/g) || []).length > 1 || /,? and (what|how|which|where|why|who|when|did|do|does|would|is|are|was)\b/i.test(x);
   return {
+    doubleQuestions: q.filter(isDouble).length,
     emailWords: words(out.outreach_email),
     emailUnder120: words(out.outreach_email) < 120,
     questionCount: q.length,

@@ -1,0 +1,148 @@
+{
+  "id": "N1",
+  "category": "normal",
+  "label": "Consultant moving into tech product management",
+  "mode": "after",
+  "status": 200,
+  "ms": 42190,
+  "request": {
+    "resumeText": "Priya Nair (sample)\nMBA Candidate, Class of 2028\nSenior Consultant, Fictional Advisory Partners, 2021-2026: led 4 digital transformation projects for retail clients; built a pricing dashboard used by 30 store managers\nB.S. Information Systems, 2021",
+    "personalStories": "I love turning messy data into tools people actually use. My favorite story is building a pricing dashboard that store managers kept asking for more features on.",
+    "myLinkedinText": "",
+    "name": "Daniel Cho (sample)",
+    "role": "Group Product Manager",
+    "company": "Northwind Software",
+    "pastExperience": "Consultant at Fictional Advisory Partners for 3 years, then joined Northwind Software as a PM and now leads the analytics product group.",
+    "connection": "Both worked at Fictional Advisory Partners (different years)",
+    "notes": "",
+    "linkedinText": "",
+    "tone": "Warm, Curious",
+    "targetRoles": "Product Manager roles at B2B software companies",
+    "careerGoal": "Move from consulting into product management and own a product end to end",
+    "wantToLearn": "How he made the jump from consulting to PM, and what skills he had to build first"
+  },
+  "response": {
+    "overlap_assessment": "Real overlap: you and Daniel both worked at Fictional Advisory Partners (in different years), and he made the consulting-to-PM move you're aiming for. His analytics product group also connects naturally to your pricing dashboard work. The inputs don't say whether Northwind Software is a B2B company, so check that before treating it as an example of your target roles.",
+    "outreach_email": "Subject: Fellow Fictional Advisory Partners alum exploring PM\n\nHi Daniel,\n\nI'm Priya, an MBA candidate (Class of 2028) and a former Senior Consultant at Fictional Advisory Partners, where I led digital transformation projects for retail clients. I'm working to move from consulting into product management at a B2B software company. Your path from Fictional Advisory Partners to leading the analytics product group at Northwind Software stood out to me.\n\nWould you be open to a 20-minute call in the coming weeks? I'd love to hear how you made the jump into PM and which skills you had to build first.\n\nThanks for considering it,\nPriya Nair",
+    "questions": [
+      "When you moved from consulting at Fictional Advisory Partners to a PM role at Northwind Software, what was the first skill you realized you had to build?",
+      "Which habit from your consulting years at Fictional Advisory Partners turned out to be most useful once you became a PM?",
+      "As the leader of the analytics product group at Northwind Software, what does owning a product end to end actually look like in your week?",
+      "Given that my strongest example is a pricing dashboard used by 30 store managers, what advice would you give me on framing it for PM roles at B2B software companies?",
+      "What surprised you most about the shift from advising clients to leading a product group at Northwind Software?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thank you for taking the time to talk with me, Daniel. ",
+        "added": false
+      },
+      {
+        "text": "I'm Priya, an MBA candidate in the Class of 2028. Before business school, I was a Senior Consultant at Fictional Advisory Partners from 2021 to 2026, where I led four digital transformation projects for retail clients. ",
+        "added": false
+      },
+      {
+        "text": "I love turning messy data into tools people actually use, and my favorite project was a pricing dashboard I built that 30 store managers used. They kept asking me for more features. ",
+        "added": false
+      },
+      {
+        "text": "That's what sparked my curiosity about product. ",
+        "added": true
+      },
+      {
+        "text": "Now I want to move from consulting into product management, aiming for Product Manager roles at B2B software companies, so I can own a product end to end. ",
+        "added": false
+      },
+      {
+        "text": "Since you also started at Fictional Advisory Partners before becoming a PM at Northwind Software, ",
+        "added": false
+      },
+      {
+        "text": "I'd love to hear ",
+        "added": true
+      },
+      {
+        "text": "how you made that jump, and what skills you had to build first.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you for making the time to talk with me today, Daniel. ",
+        "added": false
+      },
+      {
+        "text": "I've been looking forward to it.",
+        "added": true
+      },
+      {
+        "text": "\n\nI'm Priya, and I'm an MBA candidate in the Class of 2028. I earned my B.S. in Information Systems in 2021, and from 2021 to 2026 I was a Senior Consultant at Fictional Advisory Partners. There, I led four digital transformation projects for retail clients. ",
+        "added": false
+      },
+      {
+        "text": "What I found myself drawn to most was the data side of the work. ",
+        "added": true
+      },
+      {
+        "text": "I love turning messy data into tools people actually use.",
+        "added": false
+      },
+      {
+        "text": "\n\nMy favorite example is a pricing dashboard I built that ended up being used by 30 store managers. They kept asking for more features, ",
+        "added": false
+      },
+      {
+        "text": "which told me it was solving a real problem for them. I realized I wanted to be the one deciding what to build next, rather than handing it off at the end of a project.",
+        "added": true
+      },
+      {
+        "text": "\n\nThat's why I'm moving from consulting into product management. I'm targeting Product Manager roles at B2B software companies, and my goal is to own a product end to end. ",
+        "added": false
+      },
+      {
+        "text": "I'm excited about that next chapter, and I'm also very aware that I still have a lot to learn.",
+        "added": true
+      },
+      {
+        "text": "\n\n",
+        "added": false
+      },
+      {
+        "text": "That's a big part of why I wanted to talk with you. ",
+        "added": true
+      },
+      {
+        "text": "We both worked at Fictional Advisory Partners, in different years, and you went on to join Northwind Software as a PM and now lead the analytics product group. ",
+        "added": false
+      },
+      {
+        "text": "I'm really curious about ",
+        "added": true
+      },
+      {
+        "text": "how you made the jump from consulting to PM, and which skills you had to build first. ",
+        "added": false
+      },
+      {
+        "text": "I'd love to hear what that transition was actually like for you.",
+        "added": true
+      }
+    ],
+    "email_words": 106,
+    "email_over_limit": false,
+    "tone": "Warm, Curious",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "doubleQuestions": 0,
+    "emailWords": 106,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 4,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 146,
+    "tmay2Words": 267,
+    "addedPhrases1": 2,
+    "addedPhrases2": 7
+  }
+}

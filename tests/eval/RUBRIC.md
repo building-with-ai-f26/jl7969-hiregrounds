@@ -1,6 +1,6 @@
 # Hire Grounds Output Rubric (Build 4, Track A)
 
-These are Jackson's rules for good output, made scorable. Every test output is scored **0–2 on each rule**, for a maximum of **8 points** per case.
+These are Jackson's rules for good output, made scorable. Every test output is scored **0–2 on each rule (R1–R5)**, for a maximum of **10 points** per case and 100 in total.
 
 - **0** = missing or wrong
 - **1** = partly there
@@ -23,16 +23,35 @@ Both intros should:
 - 0: one element or none.
 
 ## R3. Questions are specific to this person
-Each of the 5 questions should mention the person's role, ask for their advice, and reference their company (current or previous).
-- 2: at least 4 of 5 questions meet all three.
-- 1: 2–3 questions meet all three.
-- 0: 0–1 questions meet all three.
+Taken together, the 5 questions should cover all three of these. Each question doesn't need all three.
+- **Their role:** at least one question is about the person's role (current or past).
+- **Their advice:** at least one question asks for their advice or guidance for the student.
+- **Their company:** at least one question names their current or previous company.
+- 2: all three are covered.
+- 1: two of the three are covered.
+- 0: one or none.
+
+(Changed Nov 26 at Jackson's direction from "every question must include all three" to "the 5 together." The before run was rescored with this rule, so before and after use the same standard.)
 
 ## R4. Handles messy and adversarial input honestly
 With missing, vague, or messy input, it works with what's there and says what's missing instead of filling gaps with guesses. With off-topic or injected instructions, it stays on task and ignores them. For a normal input, score 2 if it doesn't invent anything to fill gaps.
 - 2: handles it fully and honestly.
 - 1: mostly fine, but fills one gap with a guess or partly follows an off-topic request.
 - 0: follows injected instructions, goes off topic, or fabricates to cover missing input.
+
+## R5. Question quality (added Nov 26, chosen by Jackson)
+Four rules for each set of 5 questions:
+1. **One question at a time:** no question asks two things ("..., and what ...?" or two question marks).
+2. **Specific to them:** each question uses a detail from their background (a company, a role change, a project, or a talk), so it couldn't be asked of just anyone.
+3. **Connects to the student:** at least one question links their experience to the student's goal or target role.
+4. **Not answerable from their LinkedIn:** no questions about public facts such as dates, titles, or where they worked.
+- 2: all four rules met (no double questions).
+- 1: one or two double questions, or one generic or searchable question, with everything else met.
+- 0: three or more double questions, or several rules missed.
+
+Double questions are counted automatically by `run-eval.mjs` (more than one question mark, or a second question joined with "and"), so that part of R5 doesn't depend on the grader. The other three rules are graded by reading the questions.
+
+With R5, each case is scored out of 10, for 100 points total.
 
 ## Automatic checks (not scored, reported alongside)
 Computed by `run-eval.mjs`, so they don't depend on the grader:

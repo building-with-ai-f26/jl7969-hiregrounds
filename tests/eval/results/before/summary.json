@@ -18,7 +18,8 @@
       "tmay1Words": 145,
       "tmay2Words": 305,
       "addedPhrases1": 5,
-      "addedPhrases2": 13
+      "addedPhrases2": 13,
+      "doubleQuestions": 3
     },
     {
       "id": "N2",
@@ -34,7 +35,8 @@
       "tmay1Words": 157,
       "tmay2Words": 295,
       "addedPhrases1": 4,
-      "addedPhrases2": 11
+      "addedPhrases2": 11,
+      "doubleQuestions": 3
     },
     {
       "id": "N3",
@@ -50,7 +52,8 @@
       "tmay1Words": 176,
       "tmay2Words": 313,
       "addedPhrases1": 5,
-      "addedPhrases2": 12
+      "addedPhrases2": 12,
+      "doubleQuestions": 3
     },
     {
       "id": "N4",
@@ -66,7 +69,8 @@
       "tmay1Words": 154,
       "tmay2Words": 289,
       "addedPhrases1": 3,
-      "addedPhrases2": 11
+      "addedPhrases2": 11,
+      "doubleQuestions": 4
     },
     {
       "id": "N5",
@@ -82,7 +86,8 @@
       "tmay1Words": 151,
       "tmay2Words": 278,
       "addedPhrases1": 5,
-      "addedPhrases2": 10
+      "addedPhrases2": 10,
+      "doubleQuestions": 1
     },
     {
       "id": "M6",
@@ -98,7 +103,8 @@
       "tmay1Words": 134,
       "tmay2Words": 293,
       "addedPhrases1": 4,
-      "addedPhrases2": 9
+      "addedPhrases2": 9,
+      "doubleQuestions": 2
     },
     {
       "id": "M7",
@@ -114,7 +120,8 @@
       "tmay1Words": 141,
       "tmay2Words": 278,
       "addedPhrases1": 4,
-      "addedPhrases2": 6
+      "addedPhrases2": 6,
+      "doubleQuestions": 4
     },
     {
       "id": "M8",
@@ -130,7 +137,8 @@
       "tmay1Words": 143,
       "tmay2Words": 276,
       "addedPhrases1": 4,
-      "addedPhrases2": 11
+      "addedPhrases2": 11,
+      "doubleQuestions": 4
     },
     {
       "id": "A9",
@@ -146,7 +154,8 @@
       "tmay1Words": 146,
       "tmay2Words": 276,
       "addedPhrases1": 5,
-      "addedPhrases2": 14
+      "addedPhrases2": 14,
+      "doubleQuestions": 4
     },
     {
       "id": "A10",
@@ -162,7 +171,8 @@
       "tmay1Words": 145,
       "tmay2Words": 268,
       "addedPhrases1": 5,
-      "addedPhrases2": 10
+      "addedPhrases2": 10,
+      "doubleQuestions": 2
     }
   ]
 }

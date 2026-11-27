@@ -1,0 +1,192 @@
+{
+  "id": "N2",
+  "category": "normal",
+  "label": "Corporate finance analyst targeting investment banking",
+  "mode": "after",
+  "status": 200,
+  "ms": 62114,
+  "request": {
+    "resumeText": "Marcus Hale (sample)\nMBA Candidate, Class of 2028\nFinancial Analyst, Redwood Manufacturing (fictional), 2022-2026: built the annual budget model; supported due diligence on one $40M acquisition\nB.A. Economics, 2022",
+    "personalStories": "Working on the acquisition was the moment I realized I wanted to be on the deal side. I'm a long-distance runner and like the discipline of training plans.",
+    "myLinkedinText": "",
+    "name": "Sofia Grant (sample)",
+    "role": "Vice President, Industrials Group",
+    "company": "Harborline Capital",
+    "pastExperience": "Started in corporate development at Stoneway Industries, moved to Harborline Capital 5 years ago, now VP in Industrials.",
+    "connection": "MBA alumni directory",
+    "notes": "She is a recruiting point of contact for our school.",
+    "linkedinText": "",
+    "tone": "Confident, Professional",
+    "targetRoles": "Investment Banking Associate (summer internship)",
+    "careerGoal": "Break into investment banking, ideally industrials coverage",
+    "wantToLearn": "What made her corporate development experience useful in banking, and how to talk about my acquisition work"
+  },
+  "response": {
+    "overlap_assessment": "There is genuine overlap. Sofia moved from the corporate side (corporate development at Stoneway Industries) into industrials banking at Harborline Capital, which is the path you want, starting from acquisition diligence at a manufacturer, and you found her through the MBA alumni directory, where she is also a recruiting point of contact for your school. Adding both LinkedIn profiles could surface more specific shared details, such as her graduation year or the deals she has worked on.",
+    "outreach_email": "Subject: Corp dev to industrials banking\n\nHi Sofia,\n\nI'm Marcus Hale, a Class of 2028 MBA candidate; I found you through the MBA alumni directory. Before school I was a financial analyst at Redwood Manufacturing, where I built the annual budget model and supported due diligence on a $40M acquisition. That's when I realized I wanted to be on the deal side.\n\nI'm recruiting for investment banking summer associate roles, ideally in industrials, so your move from corporate development at Stoneway Industries to Harborline Capital stood out. Would you have 20 minutes for a call in the coming weeks? I'd like to hear what carried over from corp dev into banking.\n\nThanks,\nMarcus Hale",
+    "questions": [
+      "What part of your corporate development work at Stoneway Industries turned out to be most useful once you moved into banking at Harborline Capital?",
+      "How would you advise me to frame my support on a $40M acquisition diligence process from the company side when I interview for industrials banking roles?",
+      "As a VP in the Industrials Group, how does your role on a live deal differ from what you did in your earlier corporate development seat?",
+      "Which skills from a corporate finance background do industrials bankers value most in a summer associate?",
+      "Having made the move from corporate development into banking yourself, what advice would you give me for standing out in summer associate recruiting?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thanks for taking the time to speak with me, Sofia. ",
+        "added": false
+      },
+      {
+        "text": "I'm Marcus Hale, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "I studied economics, then worked from 2022 to 2026 as a financial analyst at Redwood Manufacturing, where I built the annual budget model ",
+        "added": false
+      },
+      {
+        "text": "and supported due diligence on a $40 million acquisition. ",
+        "added": false
+      },
+      {
+        "text": "Working on that acquisition was the moment I realized I wanted to be on the deal side. ",
+        "added": false
+      },
+      {
+        "text": "I'm now focused on breaking into investment banking through a summer associate internship, ideally in industrials coverage, ",
+        "added": false
+      },
+      {
+        "text": "because I've seen the sector from the inside and I'm ready to work on transactions directly. ",
+        "added": true
+      },
+      {
+        "text": "Outside of work, I'm a long-distance runner, and I like the discipline of training plans",
+        "added": false
+      },
+      {
+        "text": ", which is the same discipline I bring to my work. ",
+        "added": true
+      },
+      {
+        "text": "Since you started in corporate development at Stoneway Industries before moving to Harborline Capital, ",
+        "added": false
+      },
+      {
+        "text": "I'd especially value hearing ",
+        "added": true
+      },
+      {
+        "text": "what made that corporate development experience useful in banking, and how I should talk about my own acquisition work.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you for making time for this, Sofia. ",
+        "added": false
+      },
+      {
+        "text": "I came across you through the MBA alumni directory, ",
+        "added": false
+      },
+      {
+        "text": "and your path from corporate development into industrials banking stood out to me right away.\n\n",
+        "added": true
+      },
+      {
+        "text": "I'm Marcus Hale, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "I studied economics in undergrad, graduating in 2022, and then worked as a financial analyst at Redwood Manufacturing through 2026. ",
+        "added": false
+      },
+      {
+        "text": "My core responsibility there was building the company's annual budget model, ",
+        "added": false
+      },
+      {
+        "text": "which gave me a strong grounding in how a manufacturing business runs its numbers. ",
+        "added": true
+      },
+      {
+        "text": "The experience that changed my direction, though, ",
+        "added": true
+      },
+      {
+        "text": "was supporting due diligence on a $40 million acquisition. ",
+        "added": false
+      },
+      {
+        "text": "Working on that deal was the moment I realized I wanted to be on the deal side. ",
+        "added": false
+      },
+      {
+        "text": "Seeing a transaction from the company's seat made me want to be closer to advising on and executing deals.\n\n",
+        "added": true
+      },
+      {
+        "text": "So my goal now is to break into investment banking, starting with a summer associate internship, and ideally to cover industrials. ",
+        "added": false
+      },
+      {
+        "text": "I'm confident my manufacturing background gives me a practical lens on the sector, and I'm ready to build the technical deal skills to go with it. ",
+        "added": true
+      },
+      {
+        "text": "Outside of work, I'm a long-distance runner, and I like the discipline of training plans. ",
+        "added": false
+      },
+      {
+        "text": "I approach recruiting the same way, with steady preparation, clear milestones, and consistent effort.\n\n",
+        "added": true
+      },
+      {
+        "text": "Because you began in corporate development at Stoneway Industries before moving to Harborline Capital, where you're now a VP in the Industrials Group, ",
+        "added": false
+      },
+      {
+        "text": "your perspective is especially relevant to me. ",
+        "added": true
+      },
+      {
+        "text": "I'd like to understand what made your corporate development experience useful once you were in banking, ",
+        "added": false
+      },
+      {
+        "text": "and how I should talk about my own acquisition work",
+        "added": false
+      },
+      {
+        "text": " in a way that lands with an industrials team. ",
+        "added": true
+      },
+      {
+        "text": "I also know you serve as a recruiting point of contact for our school, ",
+        "added": false
+      },
+      {
+        "text": "so any perspective on the process would be helpful as well.",
+        "added": true
+      }
+    ],
+    "email_words": 114,
+    "email_over_limit": false,
+    "tone": "Confident, Professional",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "doubleQuestions": 0,
+    "emailWords": 114,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 1,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 165,
+    "tmay2Words": 306,
+    "addedPhrases1": 3,
+    "addedPhrases2": 9
+  }
+}

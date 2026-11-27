@@ -212,6 +212,8 @@ $('contact-form').addEventListener('submit', async (event) => {
         resumeText: resume.text,
         personalStories: fresh.personalStories,
         myLinkedinText: fresh.linkedinText,
+        targetRoles: fresh.targetRoles,
+        careerGoal: fresh.careerGoal,
       }),
     });
     // Remember the chosen resume so it's selected next time.
@@ -222,14 +224,14 @@ $('contact-form').addEventListener('submit', async (event) => {
     $('overlap').textContent = result.overlap_assessment;
     $('cards').replaceChildren();
     addCard({
-      title: 'Outreach email',
+      title: 'Outreach Email',
       text: result.outreach_email,
       note: result.email_over_limit
         ? `${result.email_words} words, which is over the 120-word limit. Trim before sending.`
         : `${result.email_words} words`,
       noteIsError: result.email_over_limit,
     });
-    addCard({ title: '5 questions to ask', list: result.questions });
+    addCard({ title: '5 Questions to Ask', list: result.questions });
     const legendFor = (segments) => {
       const count = segments.filter((s) => s.added).length;
       const base = `Tone: ${result.tone}. `;
@@ -237,8 +239,8 @@ $('contact-form').addEventListener('submit', async (event) => {
         ? `${base}Highlighted text was added for tone or flow. It isn't a fact from your resume, stories, or LinkedIn. The AI labels these, so give it a quick read.`
         : `${base}No added phrases were flagged. The AI labels these, so give it a quick read.`;
     };
-    addCard({ title: 'Tell me about yourself: 1 minute', segments: result.tmay_1min, legend: legendFor(result.tmay_1min) });
-    addCard({ title: 'Tell me about yourself: 2 minutes', segments: result.tmay_2min, legend: legendFor(result.tmay_2min) });
+    addCard({ title: 'Tell Me About Yourself: 1 Minute', segments: result.tmay_1min, legend: legendFor(result.tmay_1min) });
+    addCard({ title: 'Tell Me About Yourself: 2 Minutes', segments: result.tmay_2min, legend: legendFor(result.tmay_2min) });
     $('results').hidden = false;
     showTrackerCta();
     setMessage($('generate-message'), '');

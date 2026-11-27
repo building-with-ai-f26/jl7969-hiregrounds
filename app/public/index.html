@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hire Grounds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <!-- PostHog analytics: library from PostHog's US servers, then our settings in analytics.js. -->
@@ -18,9 +21,9 @@
         <span class="brand-name">Hire Grounds</span>
       </a>
       <nav class="site-nav" aria-label="Pages">
-        <a href="/profile" data-page="profile">Your profile</a>
-        <a href="/" data-page="prep">Coffee chat prep</a>
-        <a href="/chats" data-page="chats">Chat tracker</a>
+        <a href="/profile" data-page="profile">Your Profile</a>
+        <a href="/" data-page="prep">Coffee Chat Prep</a>
+        <a href="/chats" data-page="chats">Chat Tracker</a>
       </nav>
     </div>
   </header>
@@ -34,7 +37,7 @@
     <section class="panel">
       <div class="panel-head">
         <span class="step" aria-hidden="true">1</span>
-        <h2 class="panel-title">Who are you meeting?</h2>
+        <h2 class="panel-title">Who Are You Meeting?</h2>
       </div>
       <p class="welcome" id="from-tracker" hidden></p>
       <form id="contact-form">
@@ -71,6 +74,10 @@
         </div>
         <label>Past experience <textarea name="pastExperience" rows="4"></textarea></label>
         <label>How you're connected <textarea name="connection" rows="2"></textarea></label>
+        <label>What I want to learn from them
+          <span class="hint">One or two things you'd like their take on. Your intros will mention it.</span>
+          <textarea name="wantToLearn" rows="2" maxlength="500" placeholder="How they moved from consulting into product, and what skills they built first"></textarea>
+        </label>
         <label>Anything else <textarea name="notes" rows="2"></textarea></label>
         <div class="tone-field">
           <label for="tone">Tone for your intros
@@ -80,7 +87,7 @@
           <div class="chips" id="tone-chips" role="group" aria-label="Suggested tones, pick up to 3"></div>
           <p class="hint tone-count" id="tone-count" aria-live="polite"></p>
           <div class="tone-feedback" id="tone-feedback" role="alert" hidden>
-            <p class="tone-feedback-title">Let's try a different tone</p>
+            <p class="tone-feedback-title">Let's Try a Different Tone</p>
             <p id="tone-feedback-text"></p>
             <div class="chips" id="tone-feedback-chips" role="group" aria-label="Suggested alternatives"></div>
           </div>
@@ -95,10 +102,10 @@
     <section id="results" hidden>
       <div class="panel-head">
         <span class="step" aria-hidden="true">2</span>
-        <h2 class="panel-title">Your prep</h2>
+        <h2 class="panel-title">Your Prep</h2>
       </div>
       <div class="overlap">
-        <span class="overlap-label">Overlap check</span>
+        <span class="overlap-label">Overlap Check</span>
         <p id="overlap" class="ph-no-capture"></p>
       </div>
       <div id="cards"></div>

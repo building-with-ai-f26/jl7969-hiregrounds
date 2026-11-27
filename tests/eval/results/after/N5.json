@@ -1,0 +1,204 @@
+{
+  "id": "N5",
+  "category": "normal",
+  "label": "Hospital operations manager targeting healthcare strategy",
+  "mode": "after",
+  "status": 200,
+  "ms": 49582,
+  "request": {
+    "resumeText": "Aisha Bello (sample)\nMBA Candidate, Class of 2028\nOperations Manager, Riverside Community Hospital (fictional), 2019-2026: reduced ER wait times 18% by redesigning triage scheduling; managed a team of 12\nB.S. Nursing, 2015",
+    "personalStories": "I started as a nurse and still think about patients first. I want my next role to change how care is delivered at scale.",
+    "myLinkedinText": "",
+    "name": "Rahul Mehta (sample)",
+    "role": "Director of Strategy",
+    "company": "Mercy Peak Health",
+    "pastExperience": "Healthcare consultant at Lumen Consulting for 6 years, then joined Mercy Peak Health to lead system-wide strategy.",
+    "connection": "Spoke at our healthcare club event; I asked a question afterward",
+    "notes": "",
+    "linkedinText": "",
+    "tone": "Humble",
+    "targetRoles": "Strategy roles at health systems or healthcare consulting firms",
+    "careerGoal": "Move from running one hospital's operations to shaping strategy across a health system",
+    "wantToLearn": "How clinical operations experience translates into strategy work"
+  },
+  "response": {
+    "overlap_assessment": "The real overlap is that you heard Rahul speak at your healthcare club event and asked him a question afterward, and his path from Lumen Consulting into system-wide strategy at Mercy Peak Health matches both of your target role types. Your backgrounds differ (clinical and operations versus consulting). Adding what his talk covered, or the question you asked, would let you reference it more specifically.",
+    "outreach_email": "Subject: Question from your healthcare club talk\n\nHi Rahul,\n\nI'm Aisha, an MBA candidate who asked you a question after your talk at our healthcare club event. I started as a nurse, then worked as an operations manager at Riverside Community Hospital, where I redesigned triage scheduling and reduced ER wait times 18%.\n\nI'm hoping to move into strategy at a health system or healthcare consulting firm, so your path from Lumen Consulting to system-wide strategy at Mercy Peak Health is one I'd love to learn from. Would you have 20 minutes for a coffee chat in the coming weeks? I'm especially curious how clinical operations experience translates into strategy work.\n\nThank you,\nAisha",
+    "questions": [
+      "In your strategy role at Mercy Peak Health, where do you see clinical operations experience making the biggest difference?",
+      "When you moved from Lumen Consulting into leading system-wide strategy at Mercy Peak Health, what turned out to be the biggest adjustment?",
+      "Having made the move from consulting into a health system yourself, what advice would you give me for framing my nursing and hospital operations background when I apply to health system strategy roles?",
+      "Looking back on your time at Lumen Consulting, what consulting skills do you think someone coming from hospital operations would most need to build?",
+      "As someone who leads system-wide strategy, how do you keep the patient perspective central when decisions span an entire health system?"
+    ],
+    "tmay_1min": [
+      {
+        "text": "Thank you for your time, Rahul. ",
+        "added": false
+      },
+      {
+        "text": "I really appreciate it. ",
+        "added": true
+      },
+      {
+        "text": "I'm Aisha, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "I started my career as a nurse, ",
+        "added": false
+      },
+      {
+        "text": "and I still think about patients first. ",
+        "added": false
+      },
+      {
+        "text": "After nursing, I became an operations manager at Riverside Community Hospital, where I managed a team of 12 and redesigned triage scheduling, which reduced ER wait times by 18%. ",
+        "added": false
+      },
+      {
+        "text": "That work also showed me how much I still have to learn. ",
+        "added": true
+      },
+      {
+        "text": "My goal is to move from running one hospital's operations to shaping strategy across a health system, through a strategy role at a health system or a healthcare consulting firm, ",
+        "added": false
+      },
+      {
+        "text": "because I want to help change how care is delivered at scale. ",
+        "added": false
+      },
+      {
+        "text": "I know that's a big step. ",
+        "added": true
+      },
+      {
+        "text": "Since you moved from Lumen Consulting into leading system-wide strategy at Mercy Peak Health, ",
+        "added": false
+      },
+      {
+        "text": "I'd be grateful to hear ",
+        "added": true
+      },
+      {
+        "text": "how clinical operations experience translates into strategy work.",
+        "added": false
+      }
+    ],
+    "tmay_2min": [
+      {
+        "text": "Thank you for your time, Rahul. ",
+        "added": false
+      },
+      {
+        "text": "I really appreciate it. ",
+        "added": true
+      },
+      {
+        "text": "I asked you a question after you spoke at our healthcare club event, ",
+        "added": false
+      },
+      {
+        "text": "and I've wanted to learn more about your path since then.\n\n",
+        "added": true
+      },
+      {
+        "text": "I'm Aisha, an MBA candidate in the Class of 2028. ",
+        "added": false
+      },
+      {
+        "text": "I started out as a nurse, with a B.S. in Nursing, ",
+        "added": false
+      },
+      {
+        "text": "and honestly, that's still how I see things: ",
+        "added": true
+      },
+      {
+        "text": "I think about patients first. ",
+        "added": false
+      },
+      {
+        "text": "From there, I moved into operations as an operations manager at Riverside Community Hospital, where I managed a team of 12. ",
+        "added": false
+      },
+      {
+        "text": "The project I'm proudest of ",
+        "added": true
+      },
+      {
+        "text": "was redesigning triage scheduling, which reduced ER wait times by 18%. ",
+        "added": false
+      },
+      {
+        "text": "It was a team effort, and it taught me how much operations depends on the people doing the work.\n\n",
+        "added": true
+      },
+      {
+        "text": "Through that work, I came to realize that one hospital can only change so much. ",
+        "added": true
+      },
+      {
+        "text": "My goal is to move from running one hospital's operations to shaping strategy across a health system. ",
+        "added": false
+      },
+      {
+        "text": "I'm targeting strategy roles at health systems or healthcare consulting firms, ",
+        "added": false
+      },
+      {
+        "text": "because I want my next role to change how care is delivered at scale. ",
+        "added": false
+      },
+      {
+        "text": "I know I have a lot to learn about the strategy side, ",
+        "added": true
+      },
+      {
+        "text": "and I'm trying to approach this transition with humility and curiosity.\n\n",
+        "added": true
+      },
+      {
+        "text": "That's a big part of why I wanted to talk with you. ",
+        "added": true
+      },
+      {
+        "text": "You spent six years as a healthcare consultant at Lumen Consulting, then joined Mercy Peak Health to lead system-wide strategy, ",
+        "added": false
+      },
+      {
+        "text": "which is very close to the path I'm hoping to take. ",
+        "added": true
+      },
+      {
+        "text": "I'd be really grateful to hear ",
+        "added": true
+      },
+      {
+        "text": "how clinical operations experience translates into strategy work, ",
+        "added": false
+      },
+      {
+        "text": "and any advice you might have for someone making that shift.",
+        "added": true
+      }
+    ],
+    "email_words": 114,
+    "email_over_limit": false,
+    "tone": "Humble",
+    "tone_kind": "suggested"
+  },
+  "checks": {
+    "doubleQuestions": 0,
+    "emailWords": 114,
+    "emailUnder120": true,
+    "questionCount": 5,
+    "questionsMentioningCompany": 3,
+    "tmay1Thanks": true,
+    "tmay2Thanks": true,
+    "tmay1Words": 150,
+    "tmay2Words": 272,
+    "addedPhrases1": 4,
+    "addedPhrases2": 12
+  }
+}

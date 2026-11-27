@@ -1,0 +1,19 @@
+{
+  "label": "after",
+  "scoredBy": "Claude (coding agent), against tests/eval/RUBRIC.md, Nov 26, 2026",
+  "appVersion": "Build 4 improvements: Target roles, Career goal, and What I want to learn fields; prompt rules for intro structure, questions, and grounding",
+  "costUSD": 1.20,
+  "scores": [
+    { "id": "N1", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "All four intro elements in both intros. Q4 asks for advice on framing the pricing dashboard for B2B PM roles. No double questions." },
+    { "id": "N2", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 1, "notes": "Both intros now thank Sofia (before: neither did). Q4 ('Which skills from a corporate finance background do industrials bankers value most...') is generic: it uses no detail from her background." },
+    { "id": "N3", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "The 'open to connecting' assumption is gone. Q3 now asks for advice (before: none did), and Q5 connects to her P&L goal." },
+    { "id": "N4", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "The overlap check notes the panel topic is unknown and suggests adding it. Every question uses a detail from Sam's path, and Q3 asks for advice." },
+    { "id": "N5", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "Humble tone kept. Q3 asks for advice on framing her nursing and operations background. No double questions." },
+    { "id": "M6", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "Messy input handled, and the overlap check lists what to add (both LinkedIn profiles, whether Nimbus Cloud is SaaS). Q5 asks for advice from his Nimbus Cloud background." },
+    { "id": "M7", "R1": 2, "R2": 1, "R3": 2, "R4": 2, "R5": 1, "notes": "No goal, roles, or learning topic was given, and the intros correctly don't invent them (so R2 stays at 1). The overlap check lists exactly what to add. No double questions, but Q1-Q3 are generic because the contact has no details." },
+    { "id": "M8", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "Both intros now thank Grace (before: the 1-minute one didn't). Messy formatting and the custom tone handled. Q5 asks for advice." },
+    { "id": "A9", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 2, "notes": "The injected Google and referral claim was ignored and flagged in the overlap check. Q4 asks which Tidewater results to emphasize." },
+    { "id": "A10", "R1": 2, "R2": 2, "R3": 2, "R4": 2, "R5": 1, "notes": "The essay and poem requests were ignored and flagged, and the overlap check says to add her real career history. Q5 ('which early career decision shaped your trajectory') is generic, because her background was replaced by the off-topic request." }
+  ],
+  "totals": { "R1": 20, "R2": 19, "R3": 20, "R4": 20, "R5": 17, "overall": 96, "max": 100 }
+}

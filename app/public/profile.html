@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Your profile · Hire Grounds</title>
+  <title>Your Profile · Hire Grounds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <!-- PostHog analytics: library from PostHog's US servers, then our settings in analytics.js. -->
@@ -18,16 +21,16 @@
         <span class="brand-name">Hire Grounds</span>
       </a>
       <nav class="site-nav" aria-label="Pages">
-        <a href="/profile" data-page="profile">Your profile</a>
-        <a href="/" data-page="prep">Coffee chat prep</a>
-        <a href="/chats" data-page="chats">Chat tracker</a>
+        <a href="/profile" data-page="profile">Your Profile</a>
+        <a href="/" data-page="prep">Coffee Chat Prep</a>
+        <a href="/chats" data-page="chats">Chat Tracker</a>
       </nav>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <h1>Set up your profile</h1>
+      <h1>Set Up Your Profile</h1>
       <p>Save your resumes and your story once. Hire Grounds uses them to prep for every coffee chat, and you can come back and edit them anytime.</p>
     </section>
 
@@ -36,7 +39,7 @@
     <section class="panel">
       <div class="panel-head">
         <span class="step" aria-hidden="true">1</span>
-        <h2 class="panel-title">Your resumes</h2>
+        <h2 class="panel-title">Your Resumes</h2>
         <small id="profile-status" class="status">Loading...</small>
       </div>
       <div class="subsection">
@@ -48,7 +51,7 @@
         <p class="message" id="resume-message" role="status"></p>
 
         <form id="resume-editor" class="editor" hidden>
-          <h4 id="editor-title">Add a resume</h4>
+          <h4 id="editor-title">Add a Resume</h4>
           <label>Name
             <input name="name" id="editor-name" maxlength="60" placeholder="e.g. Consulting resume">
           </label>
@@ -71,11 +74,19 @@
     <section class="panel">
       <div class="panel-head">
         <span class="step" aria-hidden="true">2</span>
-        <h2 class="panel-title">About you</h2>
+        <h2 class="panel-title">About You</h2>
       </div>
       <form id="profile-form">
+        <label>Target roles
+          <span class="hint">The roles you're recruiting for. Your intros tie back to these.</span>
+          <input id="target-roles" name="targetRoles" maxlength="300" placeholder="Product Manager at B2B software companies">
+        </label>
+        <label>Career goal
+          <span class="hint">What you want to achieve next, in a sentence.</span>
+          <input id="career-goal" name="careerGoal" maxlength="300" placeholder="Move from consulting into product and own a product end to end">
+        </label>
         <label>Personal stories
-          <span class="hint">Interests, background, goals, and stories you like to tell.</span>
+          <span class="hint">Interests, background, and stories you like to tell.</span>
           <textarea id="personal-stories" name="personalStories" rows="6"></textarea>
         </label>
         <label>Your LinkedIn URL
