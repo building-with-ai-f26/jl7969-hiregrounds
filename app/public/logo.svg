@@ -2,16 +2,17 @@
   <title>Hire Grounds</title>
   <!-- Navy tile -->
   <rect width="120" height="120" rx="24" fill="#1B2A4A"/>
-  <!-- Steam: three trending-up arrows. Each arrowhead is centered on the last line segment, so both sides match. -->
+  <!-- Steam: three trending-up arrows spread across the mug rim (30 to 86), with the middle arrow starting at the mug center (x=58).
+       Each arrowhead is centered on its last line segment, so both sides match. -->
   <g fill="none" stroke="#8FB4F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M33 52 L38 41 L42 45 L46 36"/>
-    <path d="M49 52 L54 41 L58 45 L62 36"/>
-    <path d="M65 52 L70 41 L74 45 L78 36"/>
+    <path d="M39 52 L44 41 L48 45 L52 36"/>
+    <path d="M58 52 L63 41 L67 45 L71 36"/>
+    <path d="M77 52 L82 41 L86 45 L90 36"/>
   </g>
   <g fill="#8FB4F5" stroke="#8FB4F5" stroke-width="1.5" stroke-linejoin="round">
-    <path d="M50.06 26.86 L50.98 37.12 L41.84 33.06 Z"/>
-    <path d="M66.06 26.86 L66.98 37.12 L57.84 33.06 Z"/>
-    <path d="M82.06 26.86 L82.98 37.12 L73.84 33.06 Z"/>
+    <path d="M56.06 26.86 L56.98 37.12 L47.84 33.06 Z"/>
+    <path d="M75.06 26.86 L75.98 37.12 L66.84 33.06 Z"/>
+    <path d="M94.06 26.86 L94.98 37.12 L85.84 33.06 Z"/>
   </g>
   <!-- Purple mug -->
   <path d="M30 60 H86 V82 Q86 96 72 96 H44 Q30 96 30 82 Z" fill="#8B6CF0"/>
