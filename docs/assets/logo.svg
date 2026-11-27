@@ -2,20 +2,24 @@
   <title>Hire Grounds</title>
   <!-- Navy tile -->
   <rect width="120" height="120" rx="24" fill="#1B2A4A"/>
-  <!-- Steam: three trending-up arrows spread across the mug rim (30 to 86), with the middle arrow starting at the mug center (x=58).
-       Each arrowhead is centered on its last line segment, so both sides match. -->
-  <g fill="none" stroke="#8FB4F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M39 52 L44 41 L48 45 L52 36"/>
-    <path d="M58 52 L63 41 L67 45 L71 36"/>
-    <path d="M77 52 L82 41 L86 45 L90 36"/>
+  <!-- Mug and arrows move together. The mug plus handle spans x 30 to 103.5, so shifting left by 7 centers it in the tile. -->
+  <g transform="translate(-7 0)">
+    <!-- Steam: three trending-up arrows spread across the mug rim, with the middle arrow starting at the mug center (x=58).
+         Each arrowhead is centered on its last line segment, so both sides match. -->
+    <g fill="none" stroke="#8FB4F5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M39 52 L44 41 L48 45 L52 36"/>
+      <path d="M58 52 L63 41 L67 45 L71 36"/>
+      <path d="M77 52 L82 41 L86 45 L90 36"/>
+    </g>
+    <g fill="#8FB4F5" stroke="#8FB4F5" stroke-width="1.5" stroke-linejoin="round">
+      <path d="M56.06 26.86 L56.98 37.12 L47.84 33.06 Z"/>
+      <path d="M75.06 26.86 L75.98 37.12 L66.84 33.06 Z"/>
+      <path d="M94.06 26.86 L94.98 37.12 L85.84 33.06 Z"/>
+    </g>
+    <!-- Purple mug with "HG" (Hire Grounds) -->
+    <path d="M30 60 H86 V82 Q86 96 72 96 H44 Q30 96 30 82 Z" fill="#8B6CF0"/>
+    <path d="M86 66 H92 Q100 66 100 75 Q100 84 92 84 H86" fill="none" stroke="#8B6CF0" stroke-width="7"/>
+    <text x="58" y="78" text-anchor="middle" dominant-baseline="central" fill="#F4F0FF"
+          font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" letter-spacing="1">HG</text>
   </g>
-  <g fill="#8FB4F5" stroke="#8FB4F5" stroke-width="1.5" stroke-linejoin="round">
-    <path d="M56.06 26.86 L56.98 37.12 L47.84 33.06 Z"/>
-    <path d="M75.06 26.86 L75.98 37.12 L66.84 33.06 Z"/>
-    <path d="M94.06 26.86 L94.98 37.12 L85.84 33.06 Z"/>
-  </g>
-  <!-- Purple mug -->
-  <path d="M30 60 H86 V82 Q86 96 72 96 H44 Q30 96 30 82 Z" fill="#8B6CF0"/>
-  <path d="M86 66 H92 Q100 66 100 75 Q100 84 92 84 H86" fill="none" stroke="#8B6CF0" stroke-width="7"/>
-  <rect x="36" y="66" width="18" height="5" rx="2.5" fill="#B9A6F8"/>
 </svg>
